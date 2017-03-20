@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320132529) do
+ActiveRecord::Schema.define(version: 20170320134102) do
+
+  create_table "domain_ranks", force: :cascade do |t|
+    t.integer  "level"
+    t.integer  "user_id"
+    t.integer  "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_domain_ranks_on_topic_id"
+    t.index ["user_id"], name: "index_domain_ranks_on_user_id"
+  end
 
   create_table "question_attachments", force: :cascade do |t|
     t.binary   "question_attachment"

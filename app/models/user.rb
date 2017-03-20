@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_one :rank 
   has_many :questions
+  has_many :domain_ranks
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
           :recoverable, :rememberable, :trackable, :validatable,
