@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :question_attachments
   resources :questions
   resources :tags
   resources :topics
