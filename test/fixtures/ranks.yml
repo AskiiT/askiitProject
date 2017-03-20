@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  clarity: 1
+  quickness: 1
+  efectiveness: 1
+  user: one
+
+two:
+  clarity: 1
+  quickness: 1
+  efectiveness: 1
+  user: two
