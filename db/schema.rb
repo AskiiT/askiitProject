@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320060805) do
+ActiveRecord::Schema.define(version: 20170320061953) do
 
   create_table "ranks", force: :cascade do |t|
     t.integer  "clarity"
@@ -20,6 +20,21 @@ ActiveRecord::Schema.define(version: 20170320060805) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["user_id"], name: "index_ranks_on_user_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "tag_name"
+    t.integer  "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["topic_id"], name: "index_tags_on_topic_id"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string   "topic_name"
+    t.text     "topic_description"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
   create_table "users", force: :cascade do |t|
