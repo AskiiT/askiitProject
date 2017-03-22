@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   has_many :domain_ranks
   has_many :questions, through: :postulates
   has_many :postulates
-
+  has_many :followers, :foreign_key => :follower_id
+  has_many :followed, :through => :followers, :source => :followed_id
 
   # Include default devise modules.
   devise :database_authenticatable, :registerable,

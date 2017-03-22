@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322020417) do
+ActiveRecord::Schema.define(version: 20170322023719) do
 
   create_table "domain_ranks", force: :cascade do |t|
     t.integer  "level"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 20170322020417) do
     t.datetime "updated_at", null: false
     t.index ["topic_id"], name: "index_domain_ranks_on_topic_id"
     t.index ["user_id"], name: "index_domain_ranks_on_user_id"
+  end
+
+  create_table "followers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["follower_id"], name: "index_followers_on_follower_id"
+    t.index ["user_id"], name: "index_followers_on_user_id"
   end
 
   create_table "postulates", force: :cascade do |t|
