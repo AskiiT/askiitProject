@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :followers
+  resources :postulates
+  resources :question_has_tags
   resources :domain_ranks
   resources :question_attachments
   resources :questions

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170320134102) do
+ActiveRecord::Schema.define(version: 20170322023719) do
 
   create_table "domain_ranks", force: :cascade do |t|
     t.integer  "level"
@@ -22,6 +22,24 @@ ActiveRecord::Schema.define(version: 20170320134102) do
     t.index ["user_id"], name: "index_domain_ranks_on_user_id"
   end
 
+  create_table "followers", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["follower_id"], name: "index_followers_on_follower_id"
+    t.index ["user_id"], name: "index_followers_on_user_id"
+  end
+
+  create_table "postulates", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_postulates_on_question_id"
+    t.index ["user_id"], name: "index_postulates_on_user_id"
+  end
+
   create_table "question_attachments", force: :cascade do |t|
     t.binary   "question_attachment"
     t.string   "archive_type"
@@ -29,6 +47,15 @@ ActiveRecord::Schema.define(version: 20170320134102) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.index ["question_id"], name: "index_question_attachments_on_question_id"
+  end
+
+  create_table "question_has_tags", force: :cascade do |t|
+    t.integer  "question_id"
+    t.integer  "tag_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["question_id"], name: "index_question_has_tags_on_question_id"
+    t.index ["tag_id"], name: "index_question_has_tags_on_tag_id"
   end
 
   create_table "questions", force: :cascade do |t|
