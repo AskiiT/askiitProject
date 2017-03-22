@@ -4,4 +4,6 @@ class Question < ApplicationRecord
   has_many :question_attachments
   has_many :tags, through: :question_has_tags
   has_many :question_has_tags
+  has_many :users, through: :postulates
+  has_many :postulates
 end

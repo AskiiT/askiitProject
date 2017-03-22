@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :postulates
   resources :question_has_tags
   resources :domain_ranks
   resources :question_attachments
