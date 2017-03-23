@@ -23,12 +23,12 @@ ActiveRecord::Schema.define(version: 20170322023719) do
   end
 
   create_table "followers", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "followed_id"
     t.integer  "follower_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.index ["followed_id"], name: "index_followers_on_followed_id"
     t.index ["follower_id"], name: "index_followers_on_follower_id"
-    t.index ["user_id"], name: "index_followers_on_user_id"
   end
 
   create_table "postulates", force: :cascade do |t|
@@ -59,10 +59,10 @@ ActiveRecord::Schema.define(version: 20170322023719) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",       null: false
     t.text     "body"
-    t.datetime "date_posted"
-    t.integer  "difficulty"
+    t.datetime "date_posted", null: false
+    t.integer  "difficulty",  null: false
     t.integer  "user_id"
     t.integer  "topic_id"
     t.datetime "created_at",  null: false
@@ -90,10 +90,11 @@ ActiveRecord::Schema.define(version: 20170322023719) do
   end
 
   create_table "topics", force: :cascade do |t|
-    t.string   "topic_name"
+    t.string   "topic_name",        null: false
     t.text     "topic_description"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.index ["topic_name"], name: "index_topics_on_topic_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -112,22 +113,20 @@ ActiveRecord::Schema.define(version: 20170322023719) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "name"
-    t.string   "nickname"
-    t.string   "image"
-    t.string   "email"
+    t.string   "first_name",                               null: false
+    t.string   "last_name",                                null: false
+    t.string   "email",                                    null: false
+    t.string   "username",                                 null: false
+    t.datetime "date_created",                             null: false
+    t.text     "description"
     t.text     "tokens"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "username"
-    t.datetime "date_created"
-    t.text     "description"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
 end
