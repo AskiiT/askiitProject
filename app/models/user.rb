@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   validates :first_name, :last_name, :username, presence: true
   validates :username, uniqueness: true, length: {minimum: 5 }
-  validates :username, format: { with: /\A[a-zA-Z0-9]+\Z/ }
+  validates :username, format: { with: /\A[a-zA-Z][a-zA-Z0-9]+\Z/ }
   validates :first_name, :last_name, length: {minimum: 4}
   validates_format_of :first_name, :last_name, :with => /\A[^0-9`!@#\$%\^&*+_=]+\z/
   validates :description, length: {maximum: 200}, allow_blank: true
