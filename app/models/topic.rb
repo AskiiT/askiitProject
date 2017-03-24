@@ -6,5 +6,5 @@ class Topic < ApplicationRecord
 	validates :topic_name, presence: true
 	validates :topic_name, uniqueness: true
 	validates :topic_name, length: { minimum: 2, maximum: 20 }
-	validates :tag_description, length: { minimum: 200 }
+	validates :topic_description, length: { maximum: 200 }
 end
