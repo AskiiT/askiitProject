@@ -69,6 +69,6 @@ class QuestionAttachmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_attachment_params
-      params.require(:question_attachment).permit(:question_attachment, :archive_type, :question_id)
+      params.require(:question_attachment).permit(:question_id, :attachment)
     end
 end

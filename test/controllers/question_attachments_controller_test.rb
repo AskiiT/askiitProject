@@ -17,7 +17,7 @@ class QuestionAttachmentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create question_attachment" do
     assert_difference('QuestionAttachment.count') do
-      post question_attachments_url, params: { question_attachment: { archive_type: @question_attachment.archive_type, question_attachment: @question_attachment.question_attachment, question_id: @question_attachment.question_id } }
+      post question_attachments_url, params: { question_attachment: { question_id: @question_attachment.question_id } }
     end
 
     assert_redirected_to question_attachment_url(QuestionAttachment.last)
@@ -34,7 +34,7 @@ class QuestionAttachmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update question_attachment" do
-    patch question_attachment_url(@question_attachment), params: { question_attachment: { archive_type: @question_attachment.archive_type, question_attachment: @question_attachment.question_attachment, question_id: @question_attachment.question_id } }
+    patch question_attachment_url(@question_attachment), params: { question_attachment: { question_id: @question_attachment.question_id } }
     assert_redirected_to question_attachment_url(@question_attachment)
   end
 
