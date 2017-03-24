@@ -18,8 +18,8 @@ class User < ActiveRecord::Base
   validates :first_name, :last_name, length: {minimum: 4}
   validates_format_of :first_name, :last_name, :with => /\A[^0-9`!@#\$%\^&*+_=]+\z/
   validates :description, length: {maximum: 200}, allow_blank: true
-
-
+  validates :first_name, :last_name, length: {maximum: 30}
+  validates :username, length: {maximum: 20}
   # Just in case, it says at:https://eureka.ykyuen.info/2011/03/03/rails-%E2%80%93-add-custom-fields-to-devise-user-model/
   # Uncomment next two lines
 

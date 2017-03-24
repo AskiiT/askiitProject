@@ -6,6 +6,7 @@ class Rank < ApplicationRecord
   validates_inclusion_of :clarity, in: 0..5741
   validates_inclusion_of :efectiveness, in: 0..5741
   validates_inclusion_of :quickness, in: 0..5741
+  validates :clarity, :efectiveness, :quickness, presence: true
   #Lv1: 0-20
   #Lv2: 21-55
   #Lv3: 56-114
