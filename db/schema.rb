@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170322023719) do
+ActiveRecord::Schema.define(version: 20170324041353) do
 
   create_table "domain_ranks", force: :cascade do |t|
     t.integer  "level",      default: 0, null: false
@@ -41,11 +41,13 @@ ActiveRecord::Schema.define(version: 20170322023719) do
   end
 
   create_table "question_attachments", force: :cascade do |t|
-    t.binary   "question_attachment"
-    t.string   "archive_type"
     t.integer  "question_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
     t.index ["question_id"], name: "index_question_attachments_on_question_id"
   end
 
