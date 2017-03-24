@@ -1,4 +1,20 @@
 class Rank < ApplicationRecord
   belongs_to :user
   validates_uniqueness_of :user_id
+  #Cada uno se califica de 1 a 5 por pregunta.
+  #Por la dificultad de E=E+Calificacion*(Dificultad)
+  validates_inclusion_of :clarity, in: 0..5741
+  validates_inclusion_of :efectiveness, in: 0..5741
+  validates_inclusion_of :quickness, in: 0..5741
+  #Lv1: 0-20
+  #Lv2: 21-55
+  #Lv3: 56-114
+  #Lv4: 115-213
+  #Lv5: 214-381
+  #Lv6: 382-666
+  #Lv7: 667-1150
+  #Lv8: 1151-1972
+  #Lv9: 1973-3368
+  #Lv10: 3369-5740
+  #MAX > 5741
 end

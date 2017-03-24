@@ -13,11 +13,11 @@
 ActiveRecord::Schema.define(version: 20170322023719) do
 
   create_table "domain_ranks", force: :cascade do |t|
-    t.integer  "level"
+    t.integer  "level",      default: 0, null: false
     t.integer  "user_id"
     t.integer  "topic_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.index ["topic_id"], name: "index_domain_ranks_on_topic_id"
     t.index ["user_id"], name: "index_domain_ranks_on_user_id"
   end
@@ -72,12 +72,12 @@ ActiveRecord::Schema.define(version: 20170322023719) do
   end
 
   create_table "ranks", force: :cascade do |t|
-    t.integer  "clarity"
-    t.integer  "quickness"
-    t.integer  "efectiveness"
+    t.integer  "clarity",      default: 0, null: false
+    t.integer  "quickness",    default: 0, null: false
+    t.integer  "efectiveness", default: 0, null: false
     t.integer  "user_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.index ["user_id"], name: "index_ranks_on_user_id"
   end
 
