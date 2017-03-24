@@ -82,10 +82,11 @@ ActiveRecord::Schema.define(version: 20170322023719) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string   "tag_name"
+    t.string   "tag_name",   null: false
     t.integer  "topic_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["tag_name"], name: "index_tags_on_tag_name", unique: true
     t.index ["topic_id"], name: "index_tags_on_topic_id"
   end
 
