@@ -14,4 +14,9 @@ class Tag < ApplicationRecord
     	includes(:topic, question_has_tags:[questions:[:question_attachments, :users, :topics]])
     	.find_by_id(id)
   	end
+
+ 	def self.tags_by_name(tag_name)
+	   load_tags.where("tags.tag_name LIKE ?", "%#{tag_name.downcase}%")
+	end
+
 end

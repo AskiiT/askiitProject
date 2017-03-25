@@ -17,4 +17,8 @@ class Topic < ApplicationRecord
     	.find_by_id(id)
   	end
 
+	def self.topics_by_name(topic_name)
+	   load_topics.where("topics.topic_name LIKE ?", "#{topic_name.downcase}%")
+	end
+
 end

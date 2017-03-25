@@ -34,4 +34,18 @@ class User < ActiveRecord::Base
     includes(:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags])
     .find_by_id(id)    
   end
+
+  def self.users_by_username(username)
+    load_users.where("users.username LIKE ?", "#{username.downcase}%")
+  end
+
+  def self.users_by_firstname(first_name)
+    load_users.where("users.first_name LIKE ?", "%#{first_name.downcase}%")
+  end
+
+  def self.users_by_lastname(last_name)
+    load_users.where("users.last_name LIKE ?", "%#{last_name.downcase}%")
+  end
+
+
 end

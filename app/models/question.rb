@@ -29,6 +29,10 @@ class Question < ApplicationRecord
     .find_by_id(id)
   end
 
+  def self.questions_by_title(title)
+    load_questions.where("questions.title LIKE ?", "%#{title.downcase}%")
+  end
+
 
 
 end
