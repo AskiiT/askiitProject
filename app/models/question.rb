@@ -37,6 +37,12 @@ class Question < ApplicationRecord
     load_questions.where(questions:{user_id: user})
   end
 
-  
+  def self.postulated_question
+    joins(:postulates)
+    .select("questions.id").group("questions.id")
+  end
 
+  def self.not_postulated_question
+    load_questions.where.not('id IN (?)', postulated_question)
+  end
 end
