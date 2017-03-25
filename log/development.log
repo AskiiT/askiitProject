@@ -11400,3 +11400,531 @@ Migrating to AddAttachToQuestionAttachments (20170324041353)
             FROM sqlite_temp_master
             WHERE name='index_users_on_email' AND type='index'
 [0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "juasmartinezbel"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = ? AND "users"."email" = ?[0m  [["provider", "email"], ["email", "juasmartinezbel@unal.edu.co"]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "users" ("id", "uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "first_name", "last_name", "email", "username", "date_created", "tokens", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 1], ["uid", "juasmartinezbel@unal.edu.co"], ["encrypted_password", "$2a$10$09xnBkM0KS8h/Ck5P2k0zuXAeXvYIQvXi7bXbxBLjJ7WC26Z8O2cO"], ["confirmation_token", "qcvoKJuVSd5HYVwdriys"], ["confirmation_sent_at", 2017-03-25 22:44:52 UTC], ["first_name", "Zebitas"], ["last_name", "Martinez"], ["email", "juasmartinezbel@unal.edu.co"], ["username", "juasmartinezbel"], ["date_created", 2017-03-25 00:00:00 UTC], ["tokens", "{}"], ["created_at", 2017-03-25 22:44:52 UTC], ["updated_at", 2017-03-25 22:44:52 UTC]]
+  [1m[35m (102.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "jsviveroj"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = ? AND "users"."email" = ?[0m  [["provider", "email"], ["email", "jsviveroj@unal.edu.co"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("id", "uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "first_name", "last_name", "email", "username", "date_created", "tokens", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 2], ["uid", "jsviveroj@unal.edu.co"], ["encrypted_password", "$2a$10$.81zdZspdvXW3qcn11EHBuSW1/gUFvLPb0F04nDxd9KQvhhs1YX5K"], ["confirmation_token", "JRosktFabLoii9VYPXw5"], ["confirmation_sent_at", 2017-03-25 22:44:52 UTC], ["first_name", "Juan"], ["last_name", "Vivero"], ["email", "jsviveroj@unal.edu.co"], ["username", "jsviveroj"], ["date_created", 2017-03-25 00:00:00 UTC], ["tokens", "{}"], ["created_at", 2017-03-25 22:44:52 UTC], ["updated_at", 2017-03-25 22:44:52 UTC]]
+  [1m[35m (94.6ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "luegilca"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = ? AND "users"."email" = ?[0m  [["provider", "email"], ["email", "luegilca@unal.edu.co"]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "users" ("id", "uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "first_name", "last_name", "email", "username", "date_created", "tokens", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 3], ["uid", "luegilca@unal.edu.co"], ["encrypted_password", "$2a$10$rwaQEncjMrWAYKUCK0pYXuQVHgvfoyOrobJ8v7/MP2Ihk8ZHyq4NC"], ["confirmation_token", "y3fnespkjJyvHZgYvyya"], ["confirmation_sent_at", 2017-03-25 22:44:53 UTC], ["first_name", "Luis"], ["last_name", "Gil Castellanos"], ["email", "luegilca@unal.edu.co"], ["username", "luegilca"], ["date_created", 2017-03-25 00:00:00 UTC], ["tokens", "{}"], ["created_at", 2017-03-25 22:44:53 UTC], ["updated_at", 2017-03-25 22:44:53 UTC]]
+  [1m[35m (76.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "users" WHERE "users"."username" = ? LIMIT ?[0m  [["username", "JUAAAN"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."provider" = ? AND "users"."email" = ?[0m  [["provider", "email"], ["email", "juaaan@unal.edu.co"]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "users" ("id", "uid", "encrypted_password", "confirmation_token", "confirmation_sent_at", "first_name", "last_name", "email", "username", "date_created", "tokens", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 4], ["uid", "juaaan@unal.edu.co"], ["encrypted_password", "$2a$10$9JqKip4af7lkMnCo7AUkO.wtr0D69cFg4b4mfK7LmFeIffBxOfY7S"], ["confirmation_token", "-QHKc3YzQF_ABnk48iuV"], ["confirmation_sent_at", 2017-03-25 22:44:53 UTC], ["first_name", "Juan"], ["last_name", "Gil Castellanos"], ["email", "juaaan@unal.edu.co"], ["username", "JUAAAN"], ["date_created", 2017-03-25 00:00:00 UTC], ["tokens", "{}"], ["created_at", 2017-03-25 22:44:53 UTC], ["updated_at", 2017-03-25 22:44:53 UTC]]
+  [1m[35m (127.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTopic Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "topics" WHERE "topics"."topic_name" = ? LIMIT ?[0m  [["topic_name", "Quimica"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "topics" ("id", "topic_name", "topic_description", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["id", 1], ["topic_name", "Quimica"], ["topic_description", "Pregunta sobre quimica"], ["created_at", 2017-03-25 22:44:53 UTC], ["updated_at", 2017-03-25 22:44:53 UTC]]
+  [1m[35m (77.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTopic Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "topics" WHERE "topics"."topic_name" = ? LIMIT ?[0m  [["topic_name", "Informatica"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "topics" ("id", "topic_name", "topic_description", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?)[0m  [["id", 2], ["topic_name", "Informatica"], ["topic_description", "Pregunta sobre informatica"], ["created_at", 2017-03-25 22:44:53 UTC], ["updated_at", 2017-03-25 22:44:53 UTC]]
+  [1m[35m (77.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT  "topics".* FROM "topics" WHERE "topics"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "questions" ("id", "title", "date_posted", "difficulty", "user_id", "topic_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 100], ["title", "Quien hizo esto?"], ["date_posted", 2017-03-25 00:00:00 UTC], ["difficulty", 1], ["user_id", 1], ["topic_id", 1], ["created_at", 2017-03-25 22:44:53 UTC], ["updated_at", 2017-03-25 22:44:53 UTC]]
+  [1m[35m (84.5ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT  "topics".* FROM "topics" WHERE "topics"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "questions" ("id", "title", "date_posted", "difficulty", "user_id", "topic_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 102], ["title", "Quien hizo eso?"], ["date_posted", 2017-03-25 00:00:00 UTC], ["difficulty", 1], ["user_id", 1], ["topic_id", 2], ["created_at", 2017-03-25 22:44:53 UTC], ["updated_at", 2017-03-25 22:44:53 UTC]]
+  [1m[35m (84.4ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT  "topics".* FROM "topics" WHERE "topics"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "questions" ("id", "title", "date_posted", "difficulty", "user_id", "topic_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 103], ["title", "Quien hizo eso de alla?"], ["date_posted", 2017-03-25 00:00:00 UTC], ["difficulty", 3], ["user_id", 2], ["topic_id", 2], ["created_at", 2017-03-25 22:44:53 UTC], ["updated_at", 2017-03-25 22:44:53 UTC]]
+  [1m[35m (83.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT  "topics".* FROM "topics" WHERE "topics"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTag Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "tags" WHERE "tags"."tag_name" = ? LIMIT ?[0m  [["tag_name", "Transtopic"], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "tags" ("tag_name", "topic_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tag_name", "Transtopic"], ["topic_id", 1], ["created_at", 2017-03-25 22:44:54 UTC], ["updated_at", 2017-03-25 22:44:54 UTC]]
+  [1m[35m (86.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT  "topics".* FROM "topics" WHERE "topics"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTag Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "tags" WHERE "tags"."tag_name" = ? LIMIT ?[0m  [["tag_name", "Especial Transtopic"], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "tags" ("tag_name", "topic_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tag_name", "Especial Transtopic"], ["topic_id", 1], ["created_at", 2017-03-25 22:44:54 UTC], ["updated_at", 2017-03-25 22:44:54 UTC]]
+  [1m[35m (85.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT  "topics".* FROM "topics" WHERE "topics"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mTag Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "tags" WHERE "tags"."tag_name" = ? LIMIT ?[0m  [["tag_name", "Informatica Especial"], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "tags" ("tag_name", "topic_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["tag_name", "Informatica Especial"], ["topic_id", 2], ["created_at", 2017-03-25 22:44:54 UTC], ["updated_at", 2017-03-25 22:44:54 UTC]]
+  [1m[35m (92.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT  "topics".* FROM "topics" WHERE "topics"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mDomainRank Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "domain_ranks" WHERE "domain_ranks"."user_id" = ? AND "domain_ranks"."topic_id" = 1 LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "domain_ranks" ("user_id", "topic_id", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["user_id", 1], ["topic_id", 1], ["created_at", 2017-03-25 22:44:54 UTC], ["updated_at", 2017-03-25 22:44:54 UTC]]
+  [1m[35m (69.7ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRank Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "ranks" WHERE "ranks"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "ranks" ("user_id", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["user_id", 1], ["created_at", 2017-03-25 22:44:54 UTC], ["updated_at", 2017-03-25 22:44:54 UTC]]
+  [1m[35m (68.3ms)[0m  [1m[36mcommit transaction[0m
+Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-128u4ky.png'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]' -auto-orient -resize "1280x720" '/tmp/1f8c09d618b9acc29a39a5bb957981a920170325-15979-8jtgsc'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]' -auto-orient -resize "800x600" '/tmp/1f8c09d618b9acc29a39a5bb957981a920170325-15979-1rauivc'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-espek8.png[0]' -auto-orient -resize "400x200" '/tmp/1f8c09d618b9acc29a39a5bb957981a920170325-15979-rvt26g'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 100], ["LIMIT", 1]]
+Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170325-15979-q5oo19.png'
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "question_attachments" ("id", "question_id", "created_at", "updated_at", "attachment_file_name", "attachment_content_type", "attachment_file_size", "attachment_updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 1], ["question_id", 100], ["created_at", 2017-03-25 22:44:55 UTC], ["updated_at", 2017-03-25 22:44:55 UTC], ["attachment_file_name", "ER0.7.png"], ["attachment_content_type", "image/png"], ["attachment_file_size", 111368], ["attachment_updated_at", 2017-03-25 22:44:54 UTC]]
+  [1m[35m (96.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[34mSELECT "ranks"."id" AS t0_r0, "ranks"."clarity" AS t0_r1, "ranks"."quickness" AS t0_r2, "ranks"."efectiveness" AS t0_r3, "ranks"."user_id" AS t0_r4, "ranks"."created_at" AS t0_r5, "ranks"."updated_at" AS t0_r6, "users"."id" AS t1_r0, "users"."provider" AS t1_r1, "users"."uid" AS t1_r2, "users"."encrypted_password" AS t1_r3, "users"."reset_password_token" AS t1_r4, "users"."reset_password_sent_at" AS t1_r5, "users"."remember_created_at" AS t1_r6, "users"."sign_in_count" AS t1_r7, "users"."current_sign_in_at" AS t1_r8, "users"."last_sign_in_at" AS t1_r9, "users"."current_sign_in_ip" AS t1_r10, "users"."last_sign_in_ip" AS t1_r11, "users"."confirmation_token" AS t1_r12, "users"."confirmed_at" AS t1_r13, "users"."confirmation_sent_at" AS t1_r14, "users"."unconfirmed_email" AS t1_r15, "users"."first_name" AS t1_r16, "users"."last_name" AS t1_r17, "users"."email" AS t1_r18, "users"."username" AS t1_r19, "users"."date_created" AS t1_r20, "users"."description" AS t1_r21, "users"."tokens" AS t1_r22, "users"."created_at" AS t1_r23, "users"."updated_at" AS t1_r24, "domain_ranks"."id" AS t2_r0, "domain_ranks"."level" AS t2_r1, "domain_ranks"."user_id" AS t2_r2, "domain_ranks"."topic_id" AS t2_r3, "domain_ranks"."created_at" AS t2_r4, "domain_ranks"."updated_at" AS t2_r5, "questions"."id" AS t3_r0, "questions"."title" AS t3_r1, "questions"."body" AS t3_r2, "questions"."date_posted" AS t3_r3, "questions"."difficulty" AS t3_r4, "questions"."user_id" AS t3_r5, "questions"."topic_id" AS t3_r6, "questions"."created_at" AS t3_r7, "questions"."updated_at" AS t3_r8 FROM "ranks" LEFT OUTER JOIN "users" ON "users"."id" = "ranks"."user_id" LEFT OUTER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" LEFT OUTER JOIN "postulates" ON "postulates"."user_id" = "users"."id" LEFT OUTER JOIN "questions" ON "questions"."id" = "postulates"."question_id" WHERE "rank"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mRank Load (0.5ms)[0m  [1m[34mSELECT  "ranks".* FROM "ranks" WHERE "ranks"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mPostulate Load (0.1ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" = 1[0m
+  [1m[35mSQL (1.2ms)[0m  [1m[34mSELECT "ranks"."id" AS t0_r0, "ranks"."clarity" AS t0_r1, "ranks"."quickness" AS t0_r2, "ranks"."efectiveness" AS t0_r3, "ranks"."user_id" AS t0_r4, "ranks"."created_at" AS t0_r5, "ranks"."updated_at" AS t0_r6, "users"."id" AS t1_r0, "users"."provider" AS t1_r1, "users"."uid" AS t1_r2, "users"."encrypted_password" AS t1_r3, "users"."reset_password_token" AS t1_r4, "users"."reset_password_sent_at" AS t1_r5, "users"."remember_created_at" AS t1_r6, "users"."sign_in_count" AS t1_r7, "users"."current_sign_in_at" AS t1_r8, "users"."last_sign_in_at" AS t1_r9, "users"."current_sign_in_ip" AS t1_r10, "users"."last_sign_in_ip" AS t1_r11, "users"."confirmation_token" AS t1_r12, "users"."confirmed_at" AS t1_r13, "users"."confirmation_sent_at" AS t1_r14, "users"."unconfirmed_email" AS t1_r15, "users"."first_name" AS t1_r16, "users"."last_name" AS t1_r17, "users"."email" AS t1_r18, "users"."username" AS t1_r19, "users"."date_created" AS t1_r20, "users"."description" AS t1_r21, "users"."tokens" AS t1_r22, "users"."created_at" AS t1_r23, "users"."updated_at" AS t1_r24, "domain_ranks"."id" AS t2_r0, "domain_ranks"."level" AS t2_r1, "domain_ranks"."user_id" AS t2_r2, "domain_ranks"."topic_id" AS t2_r3, "domain_ranks"."created_at" AS t2_r4, "domain_ranks"."updated_at" AS t2_r5, "questions"."id" AS t3_r0, "questions"."title" AS t3_r1, "questions"."body" AS t3_r2, "questions"."date_posted" AS t3_r3, "questions"."difficulty" AS t3_r4, "questions"."user_id" AS t3_r5, "questions"."topic_id" AS t3_r6, "questions"."created_at" AS t3_r7, "questions"."updated_at" AS t3_r8 FROM "ranks" LEFT OUTER JOIN "users" ON "users"."id" = "ranks"."user_id" LEFT OUTER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" LEFT OUTER JOIN "postulates" ON "postulates"."user_id" = "users"."id" LEFT OUTER JOIN "questions" ON "questions"."id" = "postulates"."question_id" WHERE "rank"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mQuestion Load (0.6ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (1, 2)[0m
+  [1m[36mQuestionAttachment Load (0.7ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" IN (100, 102)[0m
+  [1m[36mQuestionHasTag Load (0.2ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" IN (100, 102)[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mRank Load (0.2ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 1[0m
+  [1m[36mDomainRank Load (0.1ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mRank Load (0.4ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks"[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mPostulate Load (0.2ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" = 1[0m
+  [1m[36mRank Load (1.7ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks"[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mDomainRank Load (0.1ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mPostulate Load (0.1ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" = 1[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[34mSELECT "ranks"."id" AS t0_r0, "ranks"."clarity" AS t0_r1, "ranks"."quickness" AS t0_r2, "ranks"."efectiveness" AS t0_r3, "ranks"."user_id" AS t0_r4, "ranks"."created_at" AS t0_r5, "ranks"."updated_at" AS t0_r6, "users"."id" AS t1_r0, "users"."provider" AS t1_r1, "users"."uid" AS t1_r2, "users"."encrypted_password" AS t1_r3, "users"."reset_password_token" AS t1_r4, "users"."reset_password_sent_at" AS t1_r5, "users"."remember_created_at" AS t1_r6, "users"."sign_in_count" AS t1_r7, "users"."current_sign_in_at" AS t1_r8, "users"."last_sign_in_at" AS t1_r9, "users"."current_sign_in_ip" AS t1_r10, "users"."last_sign_in_ip" AS t1_r11, "users"."confirmation_token" AS t1_r12, "users"."confirmed_at" AS t1_r13, "users"."confirmation_sent_at" AS t1_r14, "users"."unconfirmed_email" AS t1_r15, "users"."first_name" AS t1_r16, "users"."last_name" AS t1_r17, "users"."email" AS t1_r18, "users"."username" AS t1_r19, "users"."date_created" AS t1_r20, "users"."description" AS t1_r21, "users"."tokens" AS t1_r22, "users"."created_at" AS t1_r23, "users"."updated_at" AS t1_r24, "domain_ranks"."id" AS t2_r0, "domain_ranks"."level" AS t2_r1, "domain_ranks"."user_id" AS t2_r2, "domain_ranks"."topic_id" AS t2_r3, "domain_ranks"."created_at" AS t2_r4, "domain_ranks"."updated_at" AS t2_r5, "questions"."id" AS t3_r0, "questions"."title" AS t3_r1, "questions"."body" AS t3_r2, "questions"."date_posted" AS t3_r3, "questions"."difficulty" AS t3_r4, "questions"."user_id" AS t3_r5, "questions"."topic_id" AS t3_r6, "questions"."created_at" AS t3_r7, "questions"."updated_at" AS t3_r8 FROM "ranks" LEFT OUTER JOIN "users" ON "users"."id" = "ranks"."user_id" LEFT OUTER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" LEFT OUTER JOIN "postulates" ON "postulates"."user_id" = "users"."id" LEFT OUTER JOIN "questions" ON "questions"."id" = "postulates"."question_id" WHERE "rank"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mRank Load (0.6ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks"[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mPostulate Load (0.1ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" = 1[0m
+  [1m[36mRank Load (0.4ms)[0m  [1m[34mSELECT  "ranks".* FROM "ranks" WHERE "ranks"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mDomainRank Load (0.1ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mPostulate Load (0.1ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" = 1[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT  "ranks".* FROM "ranks" WHERE "ranks"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mDomainRank Load (0.1ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mPostulate Load (0.1ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" = 1[0m
+  [1m[36mRank Load (0.1ms)[0m  [1m[34mSELECT  "ranks".* FROM "ranks" WHERE "ranks"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRank Load (0.1ms)[0m  [1m[34mSELECT  "ranks".* FROM "ranks" WHERE "ranks"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mRank Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "ranks" WHERE "ranks"."user_id" = ? LIMIT ?[0m  [["user_id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mrollback transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRank Exists (0.2ms)[0m  [1m[34mSELECT  1 AS one FROM "ranks" WHERE "ranks"."user_id" = ? LIMIT ?[0m  [["user_id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "ranks" ("user_id", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["user_id", 2], ["created_at", 2017-03-25 22:57:03 UTC], ["updated_at", 2017-03-25 22:57:03 UTC]]
+  [1m[35m (109.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT  "ranks".* FROM "ranks" WHERE "ranks"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mPostulate Load (0.2ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" = 1[0m
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" = ?[0m  [["user_id", 1]]
+  [1m[36mTopic Load (0.4ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (1, 2)[0m
+  [1m[36mQuestionAttachment Load (1.8ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" IN (100, 102)[0m
+  [1m[36mQuestionHasTag Load (0.7ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" IN (100, 102)[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 1[0m
+  [1m[36mDomainRank Load (0.1ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" = ?[0m  [["user_id", 2]]
+  [1m[36mTopic Load (0.4ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" = 2[0m
+  [1m[36mQuestionAttachment Load (0.4ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" = 103[0m
+  [1m[36mQuestionHasTag Load (0.3ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" = 103[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 2[0m
+  [1m[36mDomainRank Load (0.4ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 2[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", :environment]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", :environment]]
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ?[0m  [["key", :environment]]
+  [1m[35m (123.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (98.6ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to DeviseTokenAuthCreateUsers (20170320051219)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "provider" varchar DEFAULT 'email' NOT NULL, "uid" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "confirmation_token" varchar, "confirmed_at" datetime, "confirmation_sent_at" datetime, "unconfirmed_email" varchar, "first_name" varchar NOT NULL, "last_name" varchar NOT NULL, "email" varchar NOT NULL, "username" varchar NOT NULL, "date_created" datetime NOT NULL, "description" text, "tokens" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_uid_and_provider" ON "users" ("uid", "provider")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_uid_and_provider' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_uid_and_provider' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_uid_and_provider' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_uid_and_provider' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_confirmation_token" ON "users" ("confirmation_token")[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_confirmation_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_confirmation_token' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_uid_and_provider' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_uid_and_provider' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_username" ON "users" ("username")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170320051219"]]
+  [1m[35m (129.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateRanks (20170320060805)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "ranks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "clarity" integer DEFAULT 0 NOT NULL, "quickness" integer DEFAULT 0 NOT NULL, "efectiveness" integer DEFAULT 0 NOT NULL, "user_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_ranks_on_user_id" ON "ranks" ("user_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170320060805"]]
+  [1m[35m (225.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateTopics (20170320061837)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE TABLE "topics" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "topic_name" varchar NOT NULL, "topic_description" text, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_topics_on_topic_name" ON "topics" ("topic_name")[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170320061837"]]
+  [1m[35m (122.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateTags (20170320061953)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE TABLE "tags" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "tag_name" varchar NOT NULL, "topic_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_tags_on_topic_id" ON "tags" ("topic_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_tags_on_topic_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_tags_on_topic_id' AND type='index'
+[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_tags_on_tag_name" ON "tags" ("tag_name")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170320061953"]]
+  [1m[35m (155.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateQuestions (20170320063007)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "questions" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "title" varchar NOT NULL, "body" text, "date_posted" datetime NOT NULL, "difficulty" integer NOT NULL, "user_id" integer, "topic_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_questions_on_user_id" ON "questions" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_questions_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_questions_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_questions_on_topic_id" ON "questions" ("topic_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170320063007"]]
+  [1m[35m (123.5ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateDomainRanks (20170320133438)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "domain_ranks" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "level" integer DEFAULT 0 NOT NULL, "user_id" integer, "topic_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE  INDEX "index_domain_ranks_on_user_id" ON "domain_ranks" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_domain_ranks_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_domain_ranks_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_domain_ranks_on_topic_id" ON "domain_ranks" ("topic_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170320133438"]]
+  [1m[35m (109.7ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateQuestionHasTags (20170322014136)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE TABLE "question_has_tags" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "question_id" integer, "tag_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_question_has_tags_on_question_id" ON "question_has_tags" ("question_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_question_has_tags_on_question_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_question_has_tags_on_question_id' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX "index_question_has_tags_on_tag_id" ON "question_has_tags" ("tag_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170322014136"]]
+  [1m[35m (123.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreatePostulates (20170322020417)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "postulates" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "user_id" integer, "question_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX "index_postulates_on_user_id" ON "postulates" ("user_id")[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_postulates_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_postulates_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_postulates_on_question_id" ON "postulates" ("question_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170322020417"]]
+  [1m[35m (133.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateFollowers (20170322023719)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE TABLE "followers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "followed_id" integer, "follower_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCREATE  INDEX "index_followers_on_followed_id" ON "followers" ("followed_id")[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_followers_on_followed_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_followers_on_followed_id' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE  INDEX "index_followers_on_follower_id" ON "followers" ("follower_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170322023719"]]
+  [1m[35m (108.3ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateQuestionAttachments (20170324041232)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE TABLE "question_attachments" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "question_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE  INDEX "index_question_attachments_on_question_id" ON "question_attachments" ("question_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170324041232"]]
+  [1m[35m (114.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddAttachToQuestionAttachments (20170324041353)
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mALTER TABLE "question_attachments" ADD "attachment_file_name" varchar[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "question_attachments" ADD "attachment_content_type" varchar[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "question_attachments" ADD "attachment_file_size" integer[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "question_attachments" ADD "attachment_updated_at" datetime[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170324041353"]]
+  [1m[35m (71.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.4ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", 2017-03-25 22:57:45 UTC], ["updated_at", 2017-03-25 22:57:45 UTC]]
+  [1m[35m (84.9ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_domain_ranks_on_topic_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_domain_ranks_on_topic_id' AND type='index'
+[0m
+  [1m[35m (0.4ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_domain_ranks_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_domain_ranks_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_followers_on_follower_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_followers_on_follower_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_followers_on_followed_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_followers_on_followed_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_postulates_on_question_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_postulates_on_question_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_postulates_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_postulates_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_question_attachments_on_question_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_question_attachments_on_question_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_question_has_tags_on_tag_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_question_has_tags_on_tag_id' AND type='index'
+[0m
+  [1m[35m (0.3ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_question_has_tags_on_question_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_question_has_tags_on_question_id' AND type='index'
+[0m
+  [1m[35m (0.7ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_questions_on_topic_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_questions_on_topic_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_questions_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_questions_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_ranks_on_user_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_ranks_on_user_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_tags_on_tag_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_tags_on_tag_name' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_tags_on_topic_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_tags_on_topic_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_topics_on_topic_name' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_topics_on_topic_name' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_username' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_username' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_confirmation_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_confirmation_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_uid_and_provider' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_uid_and_provider' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
