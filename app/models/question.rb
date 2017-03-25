@@ -37,5 +37,6 @@ class Question < ApplicationRecord
     load_questions.where(questions:{user_id: user})
   end
 
+  
 
 end

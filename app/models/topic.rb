@@ -21,4 +21,7 @@ class Topic < ApplicationRecord
 	   load_topics.where("topics.topic_name LIKE ?", "#{topic_name.downcase}%")
 	end
 
+	def self.topics_by_user(user)
+		load_topics.joins(questions: [:user]).where(questions:{user_id: user})
+	end
 end

@@ -47,5 +47,4 @@ class User < ActiveRecord::Base
     load_users.where("users.last_name LIKE ?", "%#{last_name.downcase}%")
   end
 
-  
 end
