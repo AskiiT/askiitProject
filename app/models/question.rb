@@ -20,7 +20,15 @@ class Question < ApplicationRecord
   end
 
   def self.load_questions
-    includes(:topic, :tags, :question_attachments, question_has_tags:[:tags], user: [:rank, :domain_ranks])
+    includes(:topic, :question_attachments, question_has_tags:[:tags], user: [:rank, :domain_ranks])
   end
   
+
+  def self.question_by_id(id)
+    includes(:topic, :question_attachments, question_has_tags:[:tags], user: [:rank, :domain_ranks])
+    .find_by_id(id)
+  end
+
+
+
 end

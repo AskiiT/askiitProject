@@ -23,4 +23,9 @@ class Rank < ApplicationRecord
     includes(user:[:domain_ranks, :questions])
   end
 
+  def self.rank_by_id(id)
+    includes(user:[:domain_ranks, :questions])
+    .find_by_id(id)
+  end
+
 end

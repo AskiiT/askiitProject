@@ -7,6 +7,13 @@ class QuestionAttachment < ApplicationRecord
 
 
   def self.load_que_attachments
-    includes(question:[:user, :topic, :quesion_has_tags])
+    includes(question:[:user, :topic, :question_has_tags])
   end
+
+  def self.que_attachment_by_id(id)
+    includes(question:[:user, :topic, :question_has_tags])
+    .find_by_id(id)
+  end
+
+
 end

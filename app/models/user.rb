@@ -27,6 +27,11 @@ class User < ActiveRecord::Base
   # attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :username, :date_created, :description
   include DeviseTokenAuth::Concerns::User
   def self.load_users
-    includes(:rank, domain_ranks: [:topics], questions:[:question_attachments, :topic, :question_has_tags])
+    includes(:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags])
   end 
+
+  def self.user_by_id(id)
+    includes(:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags])
+    .find_by_id(id)    
+  end
 end

@@ -9,4 +9,10 @@ class DomainRank < ApplicationRecord
   def self.load_domain_ranks
   	includes(topic: [:tags], user:[:rank, :questions])
   end
+
+  def self.domain_rank_by_id(id)
+    includes(topic: [:tags], user:[:rank, :questions])
+    .find_by_id(id)
+  end
+
 end
