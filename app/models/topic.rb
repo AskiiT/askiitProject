@@ -7,4 +7,9 @@ class Topic < ApplicationRecord
 	validates :topic_name, uniqueness: true
 	validates :topic_name, length: { minimum: 2, maximum: 20 }
 	validates :topic_description, length: { maximum: 200 }
+	
+	def self.load_topics
+    	includes(:tags, questions: [:question_attachments, :users, :question_has_tags], domain_ranks:[:users])
+  	end
+
 end

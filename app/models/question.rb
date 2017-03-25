@@ -1,7 +1,7 @@
 class Question < ApplicationRecord
   belongs_to :user
   belongs_to :topic
-  has_many :question_attachments,
+  has_many :question_attachments
   has_many :tags, through: :question_has_tags
   has_many :question_has_tags
   has_many :users, through: :postulates
@@ -19,4 +19,8 @@ class Question < ApplicationRecord
       end
   end
 
+  def self.load_questions
+    includes(:topic, :tags, :question_attachments, question_has_tags:[:tags], user: [:rank, :domain_ranks])
+  end
+  
 end

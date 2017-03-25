@@ -18,4 +18,9 @@ class Rank < ApplicationRecord
   #Lv9: 1973-3368
   #Lv10: 3369-5740
   #MAX > 5741
+
+  def self.load_ranks
+    includes(user:[:domain_ranks, :questions])
+  end
+
 end
