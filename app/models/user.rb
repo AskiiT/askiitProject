@@ -1,8 +1,8 @@
 class User < ActiveRecord::Base
   has_one :rank
-  has_many :questions
   has_many :domain_ranks
-  has_many :questions, through: :postulates
+  has_many :questions
+  has_many :p_questions, through: :postulates, source: :question
   has_many :postulates
   has_many :followers, :foreign_key => :follower_id
   has_many :followed, :through => :followers, :source => :followed_id
@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   # attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :username, :date_created, :description
   include DeviseTokenAuth::Concerns::User
   def self.load_users
-    includes(:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags])
+    includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags])
   end 
 
   def self.user_by_id(id)
