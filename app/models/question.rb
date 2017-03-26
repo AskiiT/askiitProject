@@ -20,7 +20,7 @@ class Question < ApplicationRecord
   end
 
   def self.load_questions
-    includes(:p_users, :topic, :question_attachments, question_has_tags:[:tags], user: [:rank, :domain_ranks], postulates: [:user])
+    includes(:p_users, :topic, :question_attachments, question_has_tags:[:tags], user: [:rank, :domain_ranks, :p_questions])
   end
   
 

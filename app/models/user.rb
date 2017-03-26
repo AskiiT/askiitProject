@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   # attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :username, :date_created, :description
   include DeviseTokenAuth::Concerns::User
   def self.load_users
-    includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags])
+    includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags, :p_users])
   end 
 
   def self.user_by_id(id)
@@ -47,4 +47,12 @@ class User < ActiveRecord::Base
     load_users.where("users.last_name LIKE ?", "%#{last_name.downcase}%")
   end
 
+  #def self.postulated_to_user(id)
+  #  g=Question.questions_by_user(id).select("questions.id").group("questions.id")
+  #  joins(questions: :p_users).where("users.id = postulates.user_id WHERE (questions.id in (?))", g).distinct
+  #end
+
+  def self.users_by_domain_rank_level(topic)
+    joins(domain_ranks: :topic).where("domain_ranks.topic_id = ?",topic).order("domain_ranks.level desc")
+  end
 end
