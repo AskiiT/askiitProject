@@ -20,12 +20,12 @@ class Question < ApplicationRecord
   end
 
   def self.load_questions
-    includes(:p_users, :topic, :question_attachments, question_has_tags:[:tags], user: [:rank, :domain_ranks, :p_questions])
+    includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
   end
   
 
   def self.question_by_id(id)
-    includes(:topic, :question_attachments, question_has_tags:[:tags], user: [:rank, :domain_ranks])
+    includes(:topic, :question_attachments, question_has_tags:[:tag], user: [:rank, :domain_ranks])
     .find_by_id(id)
   end
 
@@ -45,4 +45,12 @@ class Question < ApplicationRecord
   def self.not_postulated_question
     load_questions.where.not('id IN (?)', postulated_question)
   end
+
+  def self.questions_by_tags(tag)
+    g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
+    load_questions.where('questions.id in (?)', g)
+  end
+
+
+
 end
