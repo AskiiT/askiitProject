@@ -28,6 +28,7 @@ class Rank < ApplicationRecord
     .find_by_id(id)
   end
 
+  #Me retorna el rank de un usuario dado
   def self.rank_of_user(user)
     load_ranks.joins(:user).where(rank:{user_id: user})
   end

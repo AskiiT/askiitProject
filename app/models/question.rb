@@ -23,29 +23,34 @@ class Question < ApplicationRecord
     includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
   end
   
-
+  #Retorna una pregunta por id
   def self.question_by_id(id)
     includes(:topic, :question_attachments, question_has_tags:[:tag], user: [:rank, :domain_ranks])
     .find_by_id(id)
   end
 
+  #Busca coincidencias del titulo de una pregunta
   def self.questions_by_title(title)
     load_questions.where("questions.title LIKE ?", "%#{title.downcase}%")
   end
 
+  #Consulta las preguntas hechas por un usuario
   def self.questions_by_user(user)
     load_questions.where(questions:{user_id: user})
   end
 
+  #Consulta que preguntas tienen o han tenido postulaciones
   def self.postulated_question
     joins(:postulates)
     .select("questions.id").group("questions.id")
   end
 
+  #Consulta que preguntas NO tienen o NUNCA han tenido postulaciones
   def self.not_postulated_question
     load_questions.where.not('id IN (?)', postulated_question)
   end
 
+  #Me retorna los tags que hay en una pregunta
   def self.questions_by_tags(tag)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
     load_questions.where('questions.id in (?)', g)

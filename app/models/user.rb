@@ -30,29 +30,37 @@ class User < ActiveRecord::Base
     includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags, :p_users])
   end 
 
+  #Selecciona segun id
   def self.user_by_id(id)
     includes(:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags])
     .find_by_id(id)    
   end
 
+  #Busca coincidencias con el nombre de usuario
   def self.users_by_username(username)
     load_users.where("users.username LIKE ?", "#{username.downcase}%")
   end
 
+  #Busca coincidencias del nombre de un usuario
   def self.users_by_firstname(first_name)
     load_users.where("users.first_name LIKE ?", "%#{first_name.downcase}%")
   end
 
+  #Busca coincidencias del apellido de un usuario
   def self.users_by_lastname(last_name)
     load_users.where("users.last_name LIKE ?", "%#{last_name.downcase}%")
   end
 
-  #def self.postulated_to_user(id)
-  #  g=Question.questions_by_user(id).select("questions.id").group("questions.id")
-  #  joins(questions: :p_users).where("users.id = postulates.user_id WHERE (questions.id in (?))", g).distinct
-  #end
-
+  #Ordena los usuarios según su rango en el tema dado
   def self.users_by_domain_rank_level(topic)
     joins(domain_ranks: :topic).where("domain_ranks.topic_id = ?",topic).order("domain_ranks.level desc")
   end
+
+  #Que usuarios se postularon a la pregunta de un usuario dado.
+  def self.postulated_to_user(id)
+    g=Question.questions_by_user(id).select("questions.id").group("questions.id")
+    m=Postulate.where("question_id in (?)", g).select("user_id").group("user_id")
+    load_users.where("users.id in (?)", m)
+  end
+
 end

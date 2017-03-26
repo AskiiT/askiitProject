@@ -17,10 +17,12 @@ class Topic < ApplicationRecord
     	.find_by_id(id)
   	end
 
+  	#Me retorna coincidencias con el titulo de un tema
 	def self.topics_by_name(topic_name)
 	   load_topics.where("topics.topic_name LIKE ?", "#{topic_name.downcase}%")
 	end
 
+	#Retorna a que temas un usuario ha dado una pregunta
 	def self.topics_by_user(user)
 		load_topics.joins(questions: [:user]).where(questions:{user_id: user})
 	end
