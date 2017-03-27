@@ -56,6 +56,13 @@ class Question < ApplicationRecord
     load_questions.where('questions.id in (?)', g)
   end
 
+  #Ver los adjuntos que tiene la pregunta
+  def self.attachments(id)
+    current = Question.question_by_id( id )
+    joins( :question_attachments )
+    .select( current.attachment )
+  end
+
 
 
 end

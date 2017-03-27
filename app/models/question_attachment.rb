@@ -5,8 +5,7 @@ class QuestionAttachment < ApplicationRecord
   #Validates ONLY (so far) image's data types.
   validates_attachment_content_type :attachment, content_type: /\Aimage\/.*\Z/
 
-
-  def self.load_que_attachments
+  def self.load_question_attachments
     includes(question:[:user, :topic, :question_has_tags])
   end
 
