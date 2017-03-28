@@ -75,5 +75,12 @@ class User < ActiveRecord::Base
     Question.load_questions.where("questions.id in (?)", m)
   end
 
+  #Ver qué rango tengo en un Topic específico
+  def self.user_level_by_topic( userid, topicic )
+    joins( domain_ranks: :topic )
+    .where( [ "domain_ranks.topic_id = ? AND domain_ranks.user_id = ?", topicic, userid ] )
+    .select( "users.id, topic_name, level" )
+  end
+
 
 end
