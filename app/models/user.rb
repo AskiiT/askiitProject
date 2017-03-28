@@ -53,7 +53,8 @@ class User < ActiveRecord::Base
 
   #Ordena los usuarios según su rango en el tema dado
   def self.users_by_domain_rank_level(topic)
-    joins(domain_ranks: :topic).where("domain_ranks.topic_id = ?",topic).order("domain_ranks.level desc")
+    joins(domain_ranks: :topic).where("domain_ranks.topic_id = ?",topic)
+    .select("users.*, topic_id, topic_name, level").order("domain_ranks.level DESC")
   end
 
   #Que usuarios se postularon a la pregunta de un usuario dado.

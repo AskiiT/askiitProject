@@ -22310,3 +22310,74 @@ Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170327-28565-1
   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
   [1m[36mRank Load (0.1ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 1[0m
   [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mPostulate Load (0.2ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" IN (1, 2, 3, 4)[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" IN (101, 102, 201)[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" IN (1, 2, 3, 4)[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" IN (1, 2, 3, 4)[0m
+  [1m[36mTopic Load (0.2ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (1, 2)[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" IN (1, 2, 3, 4)[0m
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" IN (101, 102, 201, 202)[0m
+  [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (1, 2)[0m
+  [1m[36mQuestionHasTag Load (0.2ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" IN (101, 102, 201, 202)[0m
+  [1m[36mPostulate Load (1.2ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."question_id" IN (101, 102, 201, 202)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (2, 4, 3)[0m
+  [1m[36mUser Load (0.9ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.8ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT user_id, topic_id, level FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 101], ["LIMIT", 1]]
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" = 1[0m
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" = 101[0m
+  [1m[36mQuestionHasTag Load (0.3ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" = 101[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 1[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 101], ["LIMIT", 1]]
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" = 1[0m
+  [1m[36mQuestionAttachment Load (0.3ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" = 101[0m
+  [1m[36mQuestionHasTag Load (0.2ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" = 101[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mRank Load (0.2ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 1[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 101], ["LIMIT", 1]]
+  [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" = 1[0m
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" = 101[0m
+  [1m[36mQuestionHasTag Load (0.2ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" = 101[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mRank Load (0.2ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 1[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mQuestion Load (0.5ms)[0m  [1m[34mSELECT attachment_file_name FROM "questions" INNER JOIN "question_attachments" ON "question_attachments"."question_id" = "questions"."id"[0m
+  [1m[36mQuestion Load (0.1ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 101], ["LIMIT", 1]]
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" = 1[0m
+  [1m[36mQuestionAttachment Load (0.1ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" = 101[0m
+  [1m[36mQuestionHasTag Load (0.1ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" = 101[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mRank Load (0.1ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 1[0m
+  [1m[36mDomainRank Load (0.1ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" = 1[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT attachment_file_name FROM "questions" INNER JOIN "question_attachments" ON "question_attachments"."question_id" = "questions"."id"[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT user.*, topic.*, level FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 101) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT user.*, topic.*, level FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 101) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT user.*, topic.*, level FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT user.* FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT users.* FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT level, users.* FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT level, users.* FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 2) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT level, users.*, topics.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(level, users.*, topics.* ) FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1)[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT level, users.*, topics.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT level, users.*, topics.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level desc[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT level, topic.id, topic.topic_name, users.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level DESC[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT level, topic_id, topic_name, users.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level DESC[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT level, topic_id, topic_name, users.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 2) ORDER BY domain_ranks.level DESC[0m
+  [1m[36mTopic Load (0.2ms)[0m  [1m[34mSELECT "topics".* FROM "topics"[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT level, topic_id, topic_name, users.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 3) ORDER BY domain_ranks.level DESC[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT level, topic_id, topic_name, users.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 2) ORDER BY domain_ranks.level DESC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT COUNT(level, topic_id, topic_name, users.* ) FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 2)[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT level, topic_id, topic_name, users.*  FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 2) ORDER BY domain_ranks.level DESC[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT users.*, topic_id, topic_name, level FROM "users" INNER JOIN "domain_ranks" ON "domain_ranks"."user_id" = "users"."id" INNER JOIN "topics" ON "topics"."id" = "domain_ranks"."topic_id" WHERE (domain_ranks.topic_id = 1) ORDER BY domain_ranks.level DESC[0m
