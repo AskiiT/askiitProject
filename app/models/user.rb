@@ -68,4 +68,12 @@ class User < ActiveRecord::Base
     load_users.where("users.id in (?)", m)
   end
 
+  #A qué preguntas se postuló un usuario dado su id
+  def self.user_postulated_to(id)
+    u = user_by_id( id )
+    m = Postulate.where("user_id in (?)", u).select("question_id")
+    Question.load_questions.where("questions.id in (?)", m)
+  end
+
+
 end

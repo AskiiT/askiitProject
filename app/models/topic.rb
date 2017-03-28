@@ -24,6 +24,6 @@ class Topic < ApplicationRecord
 
 	#Retorna a que temas un usuario ha dado una pregunta
 	def self.topics_by_user(user)
-		load_topics.joins(questions: [:user]).where(questions:{user_id: user})
+		load_topics.joins(questions: [:user]).where(questions:{user_id: user}).distinct
 	end
 end
