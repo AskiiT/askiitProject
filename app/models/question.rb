@@ -1,4 +1,7 @@
 class Question < ApplicationRecord
+  
+  scope :order_by_date_posted, -> { order("questions.date_posted DESC") }
+
   belongs_to :user
   belongs_to :topic
   has_many :question_attachments
