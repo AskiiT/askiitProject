@@ -14,5 +14,9 @@ class QuestionAttachment < ApplicationRecord
     .find_by_id(id)
   end
 
+  def self.get_attachments( id )
+    joins( :question ).where( "question_id = ?", id )
+  end
+
 
 end

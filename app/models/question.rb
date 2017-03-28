@@ -57,10 +57,8 @@ class Question < ApplicationRecord
   end
 
   #Ver los adjuntos que tiene la pregunta
-  def self.attachments(id)
-    current = Question.question_by_id( id )
-    joins( :question_attachments )
-    .select( current.attachment )
+  def self.all_attachments(id)
+    QuestionAttachment.get_attachments( id )
   end
 
 
