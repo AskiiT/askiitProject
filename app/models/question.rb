@@ -1,6 +1,7 @@
 class Question < ApplicationRecord
   
   scope :order_by_date_posted, -> { order("questions.date_posted DESC") }
+  scope :order_by_difficulty, -> { order("questions.difficulty DESC") }
 
   belongs_to :user
   belongs_to :topic

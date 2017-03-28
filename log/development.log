@@ -23173,3 +23173,27 @@ Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170328-26094-e
   [1m[36mDomainRank Load (0.8ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" IN (1, 2)[0m
   [1m[36mPostulate Load (0.2ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" IN (1, 2)[0m
   [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" IN (101, 102)[0m
+  [1m[36mQuestion Load (2.0ms)[0m  [1m[34mSELECT "questions".* FROM "questions" ORDER BY questions.difficulty DESC[0m
+  [1m[36mPostulate Load (0.2ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."question_id" IN (201, 202, 101, 102)[0m
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (4, 3, 2)[0m
+  [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (2, 1)[0m
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" IN (201, 202, 101, 102)[0m
+  [1m[36mQuestionHasTag Load (0.2ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" IN (201, 202, 101, 102)[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (2, 1)[0m
+  [1m[36mRank Load (0.2ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" IN (1, 2)[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" IN (1, 2)[0m
+  [1m[36mPostulate Load (0.3ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" IN (1, 2)[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" IN (101, 102)[0m
+  [1m[36mQuestion Load (46.9ms)[0m  [1m[34mSELECT "questions".* FROM "questions" ORDER BY questions.difficulty ASC[0m
+  [1m[36mPostulate Load (0.8ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."question_id" IN (101, 102, 201, 202)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (2, 4, 3)[0m
+  [1m[36mTopic Load (0.2ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (1, 2)[0m
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."question_id" IN (101, 102, 201, 202)[0m
+  [1m[36mQuestionHasTag Load (0.2ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" IN (101, 102, 201, 202)[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."id" IN (1, 2)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (1, 2)[0m
+  [1m[36mRank Load (0.2ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" IN (1, 2)[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" IN (1, 2)[0m
+  [1m[36mPostulate Load (0.2ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."user_id" IN (1, 2)[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" IN (101, 102)[0m
