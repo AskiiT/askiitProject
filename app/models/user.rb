@@ -83,7 +83,12 @@ class User < ActiveRecord::Base
     .select( "users.id, users.username, topic_name, level" )
   end
 
-  # Ver quien está posulado a una pregunta específica
+  # Consulta los usuarios que  están postulados a una pregunta específica
+  def self.users_by_question(queid)
+    joins( postulates: :question)
+    .where(["postulates.question_id = ?",queid])
+    .select("users.id,users.username,title")
+  end
 
   # Ver los seguidores de un usuario por su id
   def self.user_followers(userid)

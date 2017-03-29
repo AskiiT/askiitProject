@@ -1,5 +1,5 @@
 class Question < ApplicationRecord
-  
+
   scope :order_by_date_posted, -> { order("questions.date_posted DESC") }
   scope :order_by_difficulty, -> { order("questions.difficulty DESC") }
 
@@ -26,7 +26,7 @@ class Question < ApplicationRecord
   def self.load_questions
     includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
   end
-  
+
   #Retorna una pregunta por id
   def self.question_by_id(id)
     includes(:topic, :question_attachments, question_has_tags:[:tag], user: [:rank, :domain_ranks])
@@ -64,7 +64,5 @@ class Question < ApplicationRecord
   def self.all_attachments(id)
     QuestionAttachment.get_attachments( id )
   end
-
-
-
+  
 end

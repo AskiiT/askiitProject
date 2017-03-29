@@ -24732,3 +24732,4 @@ Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170328-26094-e
   [1m[36mPostulate Load (0.1ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."question_id" IN (201, 202)[0m
   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (4, 3)[0m
   [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT users.id, users.username FROM "users" INNER JOIN "followers" ON "followers"."follower_id" = "users"."id" WHERE (followers.followed_id = 1)[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT users.id,users.username,title FROM "users" INNER JOIN "postulates" ON "postulates"."user_id" = "users"."id" INNER JOIN "questions" ON "questions"."id" = "postulates"."question_id" WHERE (postulates.question_id = 102)[0m
