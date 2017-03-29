@@ -83,6 +83,13 @@ class User < ActiveRecord::Base
     .select( "users.id, users.username, topic_name, level" )
   end
 
+  # Ver los seguidores de un usuario por su id
+  def self.user_followers(userid)
+    joins(:followers)
+    .where(["followers.followed_id = ?",userid])
+    .select("users.id, users.username")
+  end
+
   # Ordena los usuarios basado en su rapidez por su rango
   def self.user_by_quickness
       joins(:rank).order("ranks.quickness DESC").select("users.id,quickness")
