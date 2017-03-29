@@ -83,10 +83,13 @@ class User < ActiveRecord::Base
     .select( "users.id, users.username, topic_name, level" )
   end
 
-  # Ordena los usuarios basado en su claridad por su rango
+  # Ordena los usuarios basado en su rapidez por su rango
   def self.user_by_quickness
       joins(:rank).order("ranks.quickness DESC").select("users.id,quickness")
-
+  end
+  # Ordena los usuarios basado en su claridad por su rango
+  def self.user_by_clarity
+      joins(:rank).order("ranks.clarity DESC").select("users.id,clarity")
   end
 
 
