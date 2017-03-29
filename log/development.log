@@ -23446,3 +23446,25 @@ Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170328-26094-e
   [1m[36mQuestionHasTag Load (0.3ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" IN (101, 102, 201, 202)[0m
   [1m[36mPostulate Load (0.4ms)[0m  [1m[34mSELECT "postulates".* FROM "postulates" WHERE "postulates"."question_id" IN (101, 102, 201, 202)[0m
   [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (2, 4, 3)[0m
+  [1m[36mUser Load (1.1ms)[0m  [1m[34mSELECT "users".* FROM "users"[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "ranks" ON "ranks"."user_id" = "users"."id" ORDER BY rank.quickness DESC[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "ranks" ON "ranks"."user_id" = "users"."id" ORDER BY rank.quickness DESC[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "ranks" ON "ranks"."user_id" = "users"."id" ORDER BY ranks.quickness DESC[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mRank Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "ranks" WHERE "ranks"."user_id" = ? LIMIT ?[0m  [["user_id", 2], ["LIMIT", 1]]
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "ranks" ("clarity", "quickness", "efectiveness", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["clarity", 27], ["quickness", 28], ["efectiveness", 50], ["user_id", 2], ["created_at", 2017-03-29 01:04:50 UTC], ["updated_at", 2017-03-29 01:04:50 UTC]]
+  [1m[35m (70.2ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  [1m[36mRank Exists (0.1ms)[0m  [1m[34mSELECT  1 AS one FROM "ranks" WHERE "ranks"."user_id" = ? LIMIT ?[0m  [["user_id", 3], ["LIMIT", 1]]
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "ranks" ("clarity", "quickness", "efectiveness", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["clarity", 27], ["quickness", 35], ["efectiveness", 50], ["user_id", 3], ["created_at", 2017-03-29 01:04:50 UTC], ["updated_at", 2017-03-29 01:04:50 UTC]]
+  [1m[35m (37.1ms)[0m  [1m[36mcommit transaction[0m
+  [1m[35m (0.2ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mRank Exists (0.3ms)[0m  [1m[34mSELECT  1 AS one FROM "ranks" WHERE "ranks"."user_id" = ? LIMIT ?[0m  [["user_id", 4], ["LIMIT", 1]]
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ranks" ("clarity", "quickness", "efectiveness", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["clarity", 27], ["quickness", 45], ["efectiveness", 50], ["user_id", 4], ["created_at", 2017-03-29 01:04:50 UTC], ["updated_at", 2017-03-29 01:04:50 UTC]]
+  [1m[35m (50.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mUser Load (0.7ms)[0m  [1m[34mSELECT "users".* FROM "users" INNER JOIN "ranks" ON "ranks"."user_id" = "users"."id" ORDER BY ranks.quickness DESC[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT users.id,quickness FROM "users" INNER JOIN "ranks" ON "ranks"."user_id" = "users"."id" ORDER BY ranks.quickness DESC[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT users.id,quickness FROM "users" INNER JOIN "ranks" ON "ranks"."user_id" = "users"."id" ORDER BY ranks.quickness DESC[0m

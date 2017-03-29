@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   scope :order_by_date_created, -> { order("users.date_created DESC") }
   scope :order_by_created_at, -> { order("users.created_at DESC") }
 
+
   has_one :rank
   has_many :domain_ranks
   has_many :questions
@@ -32,12 +33,12 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   def self.load_users
     includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags, :p_users])
-  end 
+  end
 
   #Selecciona segun id
   def self.user_by_id(id)
     includes(:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags])
-    .find_by_id(id)    
+    .find_by_id(id)
   end
 
   #Busca coincidencias con el nombre de usuario
@@ -79,7 +80,13 @@ class User < ActiveRecord::Base
   def self.user_level_by_topic( userid, topicic )
     joins( domain_ranks: :topic )
     .where( [ "domain_ranks.topic_id = ? AND domain_ranks.user_id = ?", topicic, userid ] )
-    .select( "users.id, topic_name, level" )
+    .select( "users.id, users.username, topic_name, level" )
+  end
+
+  # Ordena los usuarios basado en su claridad por su rango
+  def self.user_by_quickness
+      joins(:rank).order("ranks.quickness DESC").select("users.id,quickness")
+
   end
 
 
