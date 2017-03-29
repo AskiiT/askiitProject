@@ -92,5 +92,10 @@ class User < ActiveRecord::Base
       joins(:rank).order("ranks.clarity DESC").select("users.id,clarity")
   end
 
+  # Ordena los usuarios basado en su efectividad por su rango
+  def self.user_by_efectiveness
+      joins(:rank).order("ranks.efectiveness DESC").select("users.id,efectiveness")
+  end
+
 
 end

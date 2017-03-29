@@ -24006,3 +24006,4 @@ Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170328-26094-e
   [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "ranks" ("clarity", "quickness", "efectiveness", "user_id", "created_at", "updated_at") VALUES (?, ?, ?, ?, ?, ?)[0m  [["clarity", 35], ["quickness", 45], ["efectiveness", 50], ["user_id", 4], ["created_at", 2017-03-29 01:17:37 UTC], ["updated_at", 2017-03-29 01:17:37 UTC]]
   [1m[35m (51.7ms)[0m  [1m[36mcommit transaction[0m
   [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT users.id,clarity FROM "users" INNER JOIN "ranks" ON "ranks"."user_id" = "users"."id" ORDER BY ranks.clarity DESC[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT users.id,efectiveness FROM "users" INNER JOIN "ranks" ON "ranks"."user_id" = "users"."id" ORDER BY ranks.efectiveness DESC[0m
