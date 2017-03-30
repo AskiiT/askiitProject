@@ -25,4 +25,8 @@ class Tag < ApplicationRecord
 		g=QuestionHasTag.where('question_id = ?', question).select("tag_id").group("tag_id")
 		load_tags.where('tags.id in (?)', g)
   	end
+
+  	def self.tags_in_topic(topic)
+  		joins(:topic).where("topics.id = (?)", topic)
+  	end
 end
