@@ -6,13 +6,22 @@ class DomainRank < ApplicationRecord
   validates :level, presence: true
 
   validates_uniqueness_of :user, :scope => [:topic]
-  def self.load_domain_ranks
+
+
+  def self.load_domain_ranks(page = 1, per_page = 10)
   	includes(topic: [:tags], user:[:rank, :questions])
+    .paginate(:page => page,:per_page => per_page)
   end
 
   def self.domain_rank_by_id(id)
     includes(topic: [:tags], user:[:rank, :questions])
     .find_by_id(id)
   end
+
+  def self.domain_ranks_by_ids(ids, page = 1, per_page = 10)
+    load_domain_ranks(page, per_page)
+      .where( domain_ranks: {id: ids})
+  end
+
 
 end

@@ -24937,3 +24937,96 @@ Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170328-26094-e
   [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (2, 1, 3)[0m
   [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT  DISTINCT "topics".* FROM "topics" INNER JOIN "questions" ON "questions"."topic_id" = "topics"."id" INNER JOIN "users" ON "users"."id" = "questions"."user_id" WHERE "questions"."user_id" = ? LIMIT ? OFFSET ?[0m  [["user_id", 3], ["LIMIT", 10], ["OFFSET", 0]]
   [1m[36mTopic Load (0.1ms)[0m  [1m[34mSELECT  DISTINCT "topics".* FROM "topics" INNER JOIN "questions" ON "questions"."topic_id" = "topics"."id" INNER JOIN "users" ON "users"."id" = "questions"."user_id" WHERE "questions"."user_id" = ? LIMIT ? OFFSET ?[0m  [["user_id", 4], ["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mQuestionAttachment Load (1.1ms)[0m  [1m[34mSELECT  "question_attachments".* FROM "question_attachments" LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments"[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions"[0m
+Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-d11627.png'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]' -auto-orient -resize "1280x720" '/tmp/89433f758df37ce44743fd69b282ceef20170330-5479-oc6wbu'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]' -auto-orient -resize "800x600" '/tmp/89433f758df37ce44743fd69b282ceef20170330-5479-64vnv4'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1aqltzd.png[0]' -auto-orient -resize "400x200" '/tmp/89433f758df37ce44743fd69b282ceef20170330-5479-109u9h4'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 101], ["LIMIT", 1]]
+Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-fz54pm.png'
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "question_attachments" ("id", "question_id", "created_at", "updated_at", "attachment_file_name", "attachment_content_type", "attachment_file_size", "attachment_updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 1], ["question_id", 101], ["created_at", 2017-03-30 16:19:40 UTC], ["updated_at", 2017-03-30 16:19:40 UTC], ["attachment_file_name", "ER0.7.png"], ["attachment_content_type", "image/png"], ["attachment_file_size", 111368], ["attachment_updated_at", 2017-03-30 16:19:39 UTC]]
+  [1m[35m (102.2ms)[0m  [1m[36mcommit transaction[0m
+Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1bm9f9a.png'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]' -auto-orient -resize "1280x720" '/tmp/ee5cfc86c62e565164195fb5f1cf6d0720170330-5479-d80k5s'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]' -auto-orient -resize "800x600" '/tmp/ee5cfc86c62e565164195fb5f1cf6d0720170330-5479-uj93qi'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-1ml378h.png[0]' -auto-orient -resize "400x200" '/tmp/ee5cfc86c62e565164195fb5f1cf6d0720170330-5479-eeob3d'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Load (0.1ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 101], ["LIMIT", 1]]
+Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-5lj9kj.png'
+  [1m[35mSQL (3.0ms)[0m  [1m[32mINSERT INTO "question_attachments" ("id", "question_id", "created_at", "updated_at", "attachment_file_name", "attachment_content_type", "attachment_file_size", "attachment_updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 2], ["question_id", 101], ["created_at", 2017-03-30 16:19:41 UTC], ["updated_at", 2017-03-30 16:19:41 UTC], ["attachment_file_name", "ER0.7.png"], ["attachment_content_type", "image/png"], ["attachment_file_size", 111368], ["attachment_updated_at", 2017-03-30 16:19:40 UTC]]
+  [1m[35m (83.4ms)[0m  [1m[36mcommit transaction[0m
+Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-f8rgrr.png'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]' -auto-orient -resize "1280x720" '/tmp/8173ba406e1c604816c6cec8462b284f20170330-5479-1nljzgx'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]' -auto-orient -resize "800x600" '/tmp/8173ba406e1c604816c6cec8462b284f20170330-5479-mpb154'
+Command :: identify -format '%wx%h,%[exif:orientation]' '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]' 2>/dev/null
+Command :: identify -format %m '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]'
+Command :: convert '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-wl1eii.png[0]' -auto-orient -resize "400x200" '/tmp/8173ba406e1c604816c6cec8462b284f20170330-5479-eqac6l'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mQuestion Load (0.1ms)[0m  [1m[34mSELECT  "questions".* FROM "questions" WHERE "questions"."id" = ? LIMIT ?[0m  [["id", 201], ["LIMIT", 1]]
+Command :: file -b --mime '/tmp/f165e498a68a6e4fea37f40871de815020170330-5479-11u7nis.png'
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "question_attachments" ("id", "question_id", "created_at", "updated_at", "attachment_file_name", "attachment_content_type", "attachment_file_size", "attachment_updated_at") VALUES (?, ?, ?, ?, ?, ?, ?, ?)[0m  [["id", 3], ["question_id", 201], ["created_at", 2017-03-30 16:19:43 UTC], ["updated_at", 2017-03-30 16:19:43 UTC], ["attachment_file_name", "ER0.7.png"], ["attachment_content_type", "image/png"], ["attachment_file_size", 111368], ["attachment_updated_at", 2017-03-30 16:19:41 UTC]]
+  [1m[35m (80.8ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT "question_attachments".* FROM "question_attachments"[0m
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT  "question_attachments".* FROM "question_attachments" LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mQuestion Load (0.4ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" IN (101, 201)[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (1, 2)[0m
+  [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (1, 2)[0m
+  [1m[36mQuestionHasTag Load (0.3ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" IN (101, 201)[0m
+  [1m[36mQuestionAttachment Load (0.2ms)[0m  [1m[34mSELECT  "question_attachments".* FROM "question_attachments" WHERE "question_attachments"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."id" = 101[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 1[0m
+  [1m[36mTopic Load (0.2ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" = 1[0m
+  [1m[36mQuestionHasTag Load (0.2ms)[0m  [1m[34mSELECT "question_has_tags".* FROM "question_has_tags" WHERE "question_has_tags"."question_id" = 101[0m
+  [1m[36mQuestionAttachment Load (0.3ms)[0m  [1m[34mSELECT  "question_attachments".* FROM "question_attachments" INNER JOIN "questions" ON "questions"."id" = "question_attachments"."question_id" WHERE (question_id = 201) LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mQuestionAttachment Load (0.4ms)[0m  [1m[34mSELECT  "question_attachments".* FROM "question_attachments" INNER JOIN "questions" ON "questions"."id" = "question_attachments"."question_id" WHERE (question_id = 101) LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mDomainRank Load (1.0ms)[0m  [1m[34mSELECT  "domain_ranks".* FROM "domain_ranks" LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mTopic Load (0.2ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (1, 2)[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."topic_id" IN (1, 2)[0m
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (1, 2, 4, 3)[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" IN (1, 2, 3, 4)[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" IN (1, 2, 3, 4)[0m
+  [1m[36mRank Load (1.2ms)[0m  [1m[34mSELECT  "ranks".* FROM "ranks" LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (1, 2, 3, 4)[0m
+  [1m[36mDomainRank Load (0.3ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" IN (1, 2, 3, 4)[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" IN (1, 2, 3, 4)[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT  "ranks".* FROM "ranks" WHERE "ranks"."id" IN (1, 2) LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (1, 2)[0m
+  [1m[36mDomainRank Load (0.2ms)[0m  [1m[34mSELECT "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."user_id" IN (1, 2)[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" IN (1, 2)[0m
+  [1m[36mDomainRank Load (0.8ms)[0m  [1m[34mSELECT  "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."id" IN (2, 3) LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" = 1[0m
+  [1m[36mTag Load (0.2ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."topic_id" = 1[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (2, 4)[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" IN (2, 4)[0m
+  [1m[36mQuestion Load (0.2ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" IN (2, 4)[0m
+  [1m[36mDomainRank Load (0.3ms)[0m  [1m[34mSELECT  "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."id" IN (2, 4) LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mTopic Load (0.2ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" IN (1, 2)[0m
+  [1m[36mTag Load (0.3ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."topic_id" IN (1, 2)[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = 2[0m
+  [1m[36mRank Load (0.2ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" = 2[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" = 2[0m
+  [1m[36mDomainRank Load (0.3ms)[0m  [1m[34mSELECT  "domain_ranks".* FROM "domain_ranks" WHERE "domain_ranks"."id" IN (2, 1) LIMIT ? OFFSET ?[0m  [["LIMIT", 10], ["OFFSET", 0]]
+  [1m[36mTopic Load (0.3ms)[0m  [1m[34mSELECT "topics".* FROM "topics" WHERE "topics"."id" = 1[0m
+  [1m[36mTag Load (0.1ms)[0m  [1m[34mSELECT "tags".* FROM "tags" WHERE "tags"."topic_id" = 1[0m
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" IN (1, 2)[0m
+  [1m[36mRank Load (0.3ms)[0m  [1m[34mSELECT "ranks".* FROM "ranks" WHERE "ranks"."user_id" IN (1, 2)[0m
+  [1m[36mQuestion Load (0.3ms)[0m  [1m[34mSELECT "questions".* FROM "questions" WHERE "questions"."user_id" IN (1, 2)[0m

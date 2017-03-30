@@ -73,8 +73,8 @@ class Question < ApplicationRecord
   end
 
   #Ver los adjuntos que tiene la pregunta
-  def self.all_attachments(id)
-    QuestionAttachment.get_attachments( id )
+  def self.all_attachments(id, page = 1, per_page = 10)
+    QuestionAttachment.get_attachments( id, page, per_page )
   end
   
 end

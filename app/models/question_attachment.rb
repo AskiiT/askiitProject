@@ -5,8 +5,9 @@ class QuestionAttachment < ApplicationRecord
   #Validates ONLY (so far) image's data types.
   validates_attachment_content_type :attachment, content_type: /\Aimage\/.*\Z/
 
-  def self.load_question_attachments
+  def self.load_question_attachments(page = 1, per_page = 10)
     includes(question:[:user, :topic, :question_has_tags])
+      .paginate(:page => page,:per_page => per_page)
   end
 
   def self.que_attachment_by_id(id)
@@ -14,8 +15,9 @@ class QuestionAttachment < ApplicationRecord
     .find_by_id(id)
   end
 
-  def self.get_attachments( id )
+  def self.get_attachments( id , page = 1, per_page = 10)
     joins( :question ).where( "question_id = ?", id )
+    .paginate(:page => page,:per_page => per_page)
   end
 
 
