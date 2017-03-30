@@ -23,8 +23,9 @@ class Question < ApplicationRecord
       end
   end
 
-  def self.load_questions
+  def self.load_questions(page = 1, per_page = 10)
     includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
+    .paginate(:page => page,:per_page => per_page)
   end
 
   #Retorna una pregunta por id
@@ -33,31 +34,42 @@ class Question < ApplicationRecord
     .find_by_id(id)
   end
 
+  #Retorna una pregunta por id
+  def self.questions_by_ids(ids, page = 1, per_page = 10)
+    load_questions(page, per_page)
+      .where( questions:{id: ids} )
+  end
+
   #Busca coincidencias del titulo de una pregunta
-  def self.questions_by_title(title)
-    load_questions.where("questions.title LIKE ?", "%#{title.downcase}%")
+  def self.questions_by_title(title, page = 1, per_page = 10)
+    load_questions(page, per_page)
+      .where("questions.title LIKE ?", "%#{title.downcase}%")
   end
 
   #Consulta las preguntas hechas por un usuario
-  def self.questions_by_user(user)
-    load_questions.where(questions:{user_id: user})
+  def self.questions_by_user(user, page = 1, per_page = 10)
+    load_questions(page, per_page)
+      .where(questions:{user_id: user})
   end
 
   #Consulta que preguntas tienen o han tenido postulaciones
-  def self.postulated_question
+  def self.postulated_question(page = 1, per_page = 10)
     joins(:postulates)
     .select("questions.id").group("questions.id")
+    .paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas NO tienen o NUNCA han tenido postulaciones
-  def self.not_postulated_question
-    load_questions.where.not('id IN (?)', postulated_question)
+  def self.not_postulated_question(page = 1, per_page = 10)
+    load_questions(page, per_page)
+      .where.not('id IN (?)', postulated_question)
   end
 
   #Me retorna los tags que hay en una pregunta
-  def self.questions_by_tags(tag)
+  def self.questions_by_tags(tag, page = 1, per_page = 10)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
-    load_questions.where('questions.id in (?)', g)
+    load_questions(page, per_page)
+      .where('questions.id in (?)', g)
   end
 
   #Ver los adjuntos que tiene la pregunta

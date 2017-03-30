@@ -30,6 +30,9 @@ gem 'rack-cors', :require =>'rack/cors'
 #Facility for attachments
 gem 'paperclip', '~> 5.1'
 
+#Pagination utility
+gem 'will_paginate', '~> 3.1', '>= 3.1.5'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
