@@ -18,4 +18,25 @@ class Rank < ApplicationRecord
   #Lv9: 1973-3368
   #Lv10: 3369-5740
   #MAX > 5741
+
+  def self.load_ranks(page = 1, per_page = 10)
+    includes(user:[:domain_ranks, :questions])
+    .paginate(:page => page,:per_page => per_page)
+  end
+
+  def self.rank_by_id(id)
+    includes(user:[:domain_ranks, :questions])
+    .find_by_id(id)
+  end
+
+  def self.ranks_by_ids(ids, page = 1, per_page = 10)
+    load_ranks(page, per_page)
+      .where( ranks: {id: ids})
+  end
+
+  #Me retorna el rank de un usuario dado
+  def self.rank_of_user(user)
+    load_ranks.joins(:user).where(rank:{user_id: user})
+  end
+
 end

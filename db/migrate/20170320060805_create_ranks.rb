@@ -4,7 +4,7 @@ class CreateRanks < ActiveRecord::Migration[5.0]
       t.integer :clarity, :null=> false, :default => 0
       t.integer :quickness, :null=> false, :default => 0
       t.integer :efectiveness, :null=> false, :default => 0
-      t.references :user, uniqueness: true, foreign_key: true
+      t.references :user, uniqueness: true, foreign_key: true, on_destroy: :cascade
 
       t.timestamps
     end

@@ -5,7 +5,7 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
       t.text :body
       t.datetime :date_posted,                null: false
       t.integer :difficulty,                  null: false
-      t.references :user, foreign_key: true
+      t.references :user, foreign_key: true, on_destroy: :cascade
       t.references :topic, foreign_key: true
 
       t.timestamps
