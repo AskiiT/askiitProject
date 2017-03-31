@@ -45,31 +45,34 @@ class User < ActiveRecord::Base
   #Busca por varios ids
   def self.users_by_ids(ids,page = 1, per_page = 10)
     load_users(page,per_page)
-      .where( users:{id: ids} )
+    .where( users:{id: ids} )
   end
 
   #Busca coincidencias con el nombre de usuario
   def self.users_by_username(username, page = 1, per_page = 10)
-    load_users.(page, per_page)
-      .where("users.username LIKE ?", "#{username.downcase}%")
+    where("users.username LIKE ?", "#{username.downcase}%")
+    .select("users.id, users.username, users.first_name, users.last_name")
+    .paginate(:page => page,:per_page => per_page)
   end
 
   #Busca coincidencias del nombre de un usuario
   def self.users_by_firstname(first_name, page = 1, per_page = 10)
-    load_users(page, per_page)
-      .where("users.first_name LIKE ?", "%#{first_name.downcase}%")
+      where("users.first_name LIKE ?", "%#{first_name.downcase}%")
+      .select("users.id, users.username, users.first_name, users.last_name")
+      .paginate(:page => page,:per_page => per_page)
   end
 
   #Busca coincidencias del apellido de un usuario
   def self.users_by_lastname(last_name, page = 1, per_page = 10)
-    load_users(page, per_page)
-      .where("users.last_name LIKE ?", "%#{last_name.downcase}%")
+      where("users.last_name LIKE ?", "%#{last_name.downcase}%")
+      .select("users.id, users.username, users.first_name, users.last_name")
+      .paginate(:page => page,:per_page => per_page)
   end
 
   #Ordena los usuarios según su rango en el tema dado
   def self.users_by_domain_rank_level(topic, page = 1, per_page = 10)
     joins(domain_ranks: :topic).where("domain_ranks.topic_id = ?",topic)
-    .select("users.*, topic_id, topic_name, level").order("domain_ranks.level DESC")
+    .select("users.id, users.username, topic_id, topic_name, level").order("domain_ranks.level DESC")
     .paginate(:page => page,:per_page => per_page)
   end
 

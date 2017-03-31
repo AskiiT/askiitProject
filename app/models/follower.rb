@@ -13,5 +13,9 @@ class Follower < ApplicationRecord
 	   end
   end
 
+  def self.load_follows(page = 1, per_page = 10)
+      includes(:follower, :followed).select("id, follower_id, followed_id")
+      .paginate(:page => page,:per_page => per_page)
+  end
 
 end

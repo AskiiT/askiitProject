@@ -5,9 +5,10 @@ class Tag < ApplicationRecord
 
  	validates :tag_name, presence: true
 	validates :tag_name, uniqueness: true
-	validates :tag_name, length: { minimum: 2, maximum: 20 }
-	def self.load_tags
+	validates :tag_name, length: { minimum: 2, maximum: 50 }
+	def self.load_tags(page = 1, per_page = 10)
     	includes(:topic, question_has_tags:[question:[:question_attachments, :user, :topic]])
+		.paginate(:page => page,:per_page => per_page)
 	end
 	#Selecciona tag segun id
 	def self.tag_by_id(id)
@@ -17,16 +18,23 @@ class Tag < ApplicationRecord
 
   	#Busca coincidencias del nombre de un tag
  	def self.tags_by_name(tag_name)
-	   load_tags.where("tags.tag_name LIKE ?", "%#{tag_name.downcase}%")
+	   where("tags.tag_name LIKE ?", "%#{tag_name.downcase}%").select("tags.id, tag_name")
 	end
 
 	#Busca que preguntas se han hecho en un tag
 	def self.tags_in_question(question)
 		g=QuestionHasTag.where('question_id = ?', question).select("tag_id").group("tag_id")
-		load_tags.where('tags.id in (?)', g)
+		where('tags.id in (?)', g).select("tags.id, tags.tag_name")
   	end
 
+  	#Me retorna los tags en un tema
   	def self.tags_in_topic(topic)
-  		joins(:topic).where("topics.id = (?)", topic)
+  		joins(:topic).where("topics.id = (?)", topic).select("tags.id, tags.tag_name")
+  	end
+
+  	#Me retorna los tags en los que ha posteado un usuario.
+  	def self.tags_by_user(user)
+  		joins(questions: :user).where("users.id=(?)", user)
+  		.select("tags.id, tags.tag_name, tags.topic_id")
   	end
 end

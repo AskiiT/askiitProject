@@ -37,19 +37,22 @@ class Question < ApplicationRecord
   #Retorna una pregunta por id
   def self.questions_by_ids(ids, page = 1, per_page = 10)
     load_questions(page, per_page)
-      .where( questions:{id: ids} )
+    .where( questions:{id: ids} )
+    .paginate(:page => page,:per_page => per_page)
   end
 
   #Busca coincidencias del titulo de una pregunta
   def self.questions_by_title(title, page = 1, per_page = 10)
-    load_questions(page, per_page)
-      .where("questions.title LIKE ?", "%#{title.downcase}%")
+    where("questions.title LIKE ?", "%#{title.downcase}%")
+    .select("questions.id, questions.title, questions.body")
+    .paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta las preguntas hechas por un usuario
   def self.questions_by_user(user, page = 1, per_page = 10)
     load_questions(page, per_page)
-      .where(questions:{user_id: user})
+    .where(questions:{user_id: user})
+    .paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas tienen o han tenido postulaciones
@@ -62,14 +65,16 @@ class Question < ApplicationRecord
   #Consulta que preguntas NO tienen o NUNCA han tenido postulaciones
   def self.not_postulated_question(page = 1, per_page = 10)
     load_questions(page, per_page)
-      .where.not('id IN (?)', postulated_question)
+    .where.not('id IN (?)', postulated_question)
+    .paginate(:page => page,:per_page => per_page)
   end
 
   #Me retorna los tags que hay en una pregunta
   def self.questions_by_tags(tag, page = 1, per_page = 10)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
     load_questions(page, per_page)
-      .where('questions.id in (?)', g)
+    .where('questions.id in (?)', g)
+    .paginate(:page => page,:per_page => per_page)
   end
 
   #Ver los adjuntos que tiene la pregunta
@@ -77,4 +82,10 @@ class Question < ApplicationRecord
     QuestionAttachment.get_attachments( id, page, per_page )
   end
   
+  #Ordena preguntas por dificultad
+  def self.sort_by_difficulty(topic, page = 1, per_page = 10)
+    joins(:topic).where("topic_id= ?", topic).order("questions.difficulty DESC")
+    .select("questions.id, questions.title, questions.difficulty")
+    .paginate(:page => page,:per_page => per_page)
+  end
 end
