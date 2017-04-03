@@ -69,7 +69,7 @@ class Question < ApplicationRecord
     .paginate(:page => page,:per_page => per_page)
   end
 
-  #Me retorna los tags que hay en una pregunta
+  #Me retorna preguntas en un tag
   def self.questions_by_tags(tag, page = 1, per_page = 10)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
     load_questions(page, per_page)

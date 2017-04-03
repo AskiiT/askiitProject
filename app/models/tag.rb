@@ -21,11 +21,11 @@ class Tag < ApplicationRecord
 	   where("tags.tag_name LIKE ?", "%#{tag_name.downcase}%").select("tags.id, tag_name")
 	end
 
-	#Busca que preguntas se han hecho en un tag
+	#Busca tags hay en una pregunta
 	def self.tags_in_question(question)
 		g=QuestionHasTag.where('question_id = ?', question).select("tag_id").group("tag_id")
 		where('tags.id in (?)', g).select("tags.id, tags.tag_name")
-  	end
+  end
 
   	#Me retorna los tags en un tema
   	def self.tags_in_topic(topic)
