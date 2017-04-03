@@ -1,64 +1,41 @@
 class QuestionAttachmentsController < ApplicationController
-  before_action :set_question_attachment, only: [:show, :edit, :update, :destroy]
+  before_action :set_question_attachment, only: [:show, :update, :destroy]
 
   # GET /question_attachments
-  # GET /question_attachments.json
   def index
     @question_attachments = QuestionAttachment.all
+
+    render json: @question_attachments
   end
 
   # GET /question_attachments/1
-  # GET /question_attachments/1.json
   def show
-  end
-
-  # GET /question_attachments/new
-  def new
-    @question_attachment = QuestionAttachment.new
-  end
-
-  # GET /question_attachments/1/edit
-  def edit
+    render json: @question_attachment
   end
 
   # POST /question_attachments
-  # POST /question_attachments.json
   def create
     @question_attachment = QuestionAttachment.new(question_attachment_params)
 
-    respond_to do |format|
-      if @question_attachment.save
-        format.html { redirect_to @question_attachment, notice: 'Question attachment was successfully created.' }
-        format.json { render :show, status: :created, location: @question_attachment }
-      else
-        format.html { render :new }
-        format.json { render json: @question_attachment.errors, status: :unprocessable_entity }
-      end
+    if @question_attachment.save
+      render json: @question_attachment, status: :created, location: @question_attachment
+    else
+      render json: @question_attachment.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /question_attachments/1
-  # PATCH/PUT /question_attachments/1.json
   def update
-    respond_to do |format|
-      if @question_attachment.update(question_attachment_params)
-        format.html { redirect_to @question_attachment, notice: 'Question attachment was successfully updated.' }
-        format.json { render :show, status: :ok, location: @question_attachment }
-      else
-        format.html { render :edit }
-        format.json { render json: @question_attachment.errors, status: :unprocessable_entity }
-      end
+    if @question_attachment.update(question_attachment_params)
+      render json: @question_attachment
+    else
+      render json: @question_attachment.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /question_attachments/1
-  # DELETE /question_attachments/1.json
   def destroy
     @question_attachment.destroy
-    respond_to do |format|
-      format.html { redirect_to question_attachments_url, notice: 'Question attachment was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private
@@ -67,8 +44,8 @@ class QuestionAttachmentsController < ApplicationController
       @question_attachment = QuestionAttachment.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a trusted parameter "white list" through.
     def question_attachment_params
-      params.require(:question_attachment).permit(:question_id, :attachment)
+      params.fetch(:question_attachment, {})
     end
 end

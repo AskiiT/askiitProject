@@ -1,6 +1,5 @@
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
-  protect_from_forgery with: :exception
 
   def configure_permitted_parameters
       if resource_class == User 

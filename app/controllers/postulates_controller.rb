@@ -1,64 +1,41 @@
 class PostulatesController < ApplicationController
-  before_action :set_postulate, only: [:show, :edit, :update, :destroy]
+  before_action :set_postulate, only: [:show, :update, :destroy]
 
   # GET /postulates
-  # GET /postulates.json
   def index
     @postulates = Postulate.all
+
+    render json: @postulates
   end
 
   # GET /postulates/1
-  # GET /postulates/1.json
   def show
-  end
-
-  # GET /postulates/new
-  def new
-    @postulate = Postulate.new
-  end
-
-  # GET /postulates/1/edit
-  def edit
+    render json: @postulate
   end
 
   # POST /postulates
-  # POST /postulates.json
   def create
     @postulate = Postulate.new(postulate_params)
 
-    respond_to do |format|
-      if @postulate.save
-        format.html { redirect_to @postulate, notice: 'Postulate was successfully created.' }
-        format.json { render :show, status: :created, location: @postulate }
-      else
-        format.html { render :new }
-        format.json { render json: @postulate.errors, status: :unprocessable_entity }
-      end
+    if @postulate.save
+      render json: @postulate, status: :created, location: @postulate
+    else
+      render json: @postulate.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /postulates/1
-  # PATCH/PUT /postulates/1.json
   def update
-    respond_to do |format|
-      if @postulate.update(postulate_params)
-        format.html { redirect_to @postulate, notice: 'Postulate was successfully updated.' }
-        format.json { render :show, status: :ok, location: @postulate }
-      else
-        format.html { render :edit }
-        format.json { render json: @postulate.errors, status: :unprocessable_entity }
-      end
+    if @postulate.update(postulate_params)
+      render json: @postulate
+    else
+      render json: @postulate.errors, status: :unprocessable_entity
     end
   end
 
   # DELETE /postulates/1
-  # DELETE /postulates/1.json
   def destroy
     @postulate.destroy
-    respond_to do |format|
-      format.html { redirect_to postulates_url, notice: 'Postulate was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private
@@ -67,7 +44,58 @@ class PostulatesController < ApplicationController
       @postulate = Postulate.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+    # Only allow a trusted parameter "white list" through.
+    def postulate_params
+      params.require(:postulate).permit(:user_id, :question_id)
+    end
+end
+class PostulatesController < ApplicationController
+  before_action :set_postulate, only: [:show, :update, :destroy]
+
+  # GET /postulates
+  def index
+    @postulates = Postulate.all
+
+    render json: @postulates
+  end
+
+  # GET /postulates/1
+  def show
+    render json: @postulate
+  end
+
+  # POST /postulates
+  def create
+    @postulate = Postulate.new(postulate_params)
+
+    if @postulate.save
+      render json: @postulate, status: :created, location: @postulate
+    else
+      render json: @postulate.errors, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH/PUT /postulates/1
+  def update
+    if @postulate.update(postulate_params)
+      render json: @postulate
+    else
+      render json: @postulate.errors, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /postulates/1
+  def destroy
+    @postulate.destroy
+  end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_postulate
+      @postulate = Postulate.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
     def postulate_params
       params.require(:postulate).permit(:user_id, :question_id)
     end
