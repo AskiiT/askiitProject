@@ -70,7 +70,7 @@ class Question < ApplicationRecord
   end
 
   #Me retorna preguntas en un tag
-  def self.questions_by_tags(tag, page = 1, per_page = 10)
+  def self.questions_by_tag(tag, page = 1, per_page = 10)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
     load_questions(page, per_page)
     .where('questions.id in (?)', g)
@@ -89,7 +89,22 @@ class Question < ApplicationRecord
     .paginate(:page => page,:per_page => per_page)
   end
 
+
+  #Retorna preguntas por tema
+  def self.questions_by_topic(topic, page = 1, per_page = 10)
+    joins(:topic).where("topic_id= ?", topic)
+    .paginate(:page => page,:per_page => per_page)
+  end
+
   def self.sort_by_date( page = 1, per_page = 10)
     load_questions(page, per_page).order("questions.date_posted ASC")
   end
+
+  def self.how_many_post(id)
+    joins(:postulates).where("postulates.question_id=?",id).size
+    #m=g.size
+    #where("questions.id=?", id).select("questions.id, questions.title", g)
+  end
+
+
 end

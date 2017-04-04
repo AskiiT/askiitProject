@@ -1,4 +1,4 @@
-class Api::V1::TopicsController < ApplicationController
+class API::V1::TopicsController < ApplicationController
   before_action :set_topic, only: [:show, :update, :destroy]
 
   # GET /topics
@@ -37,6 +37,7 @@ class Api::V1::TopicsController < ApplicationController
   def destroy
     @topic.destroy
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

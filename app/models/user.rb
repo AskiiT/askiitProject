@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   scope :order_by_date_created, -> { order("users.date_created DESC") }
   scope :order_by_created_at, -> { order("users.created_at DESC") }
 
+
   has_one :rank
   has_many :domain_ranks
   has_many :questions

@@ -1,4 +1,4 @@
-class Api::V1::DomainRanksController < ApplicationController
+class API::V1::DomainRanksController < ApplicationController
   before_action :set_domain_rank, only: [:show, :update, :destroy]
 
   # GET /domain_ranks

@@ -1,10 +1,10 @@
-class Api::V1::QuestionHasTagsController < ApplicationController
+class API::V1::QuestionHasTagsController < ApplicationController
   before_action :set_question_has_tag, only: [:show, :update, :destroy]
 
   # GET /question_has_tags
   def index
     @question_has_tags = QuestionHasTag.all
-
+    
     render json: @question_has_tags
   end
 

@@ -1,10 +1,9 @@
-class Api::V1::TagsController < ApplicationController
+class API::V1::TagsController < ApplicationController
   before_action :set_tag, only: [:show, :update, :destroy]
 
   # GET /tags
   def index
     @tags = Tag.all
-
     render json: @tags
   end
 
@@ -36,6 +35,11 @@ class Api::V1::TagsController < ApplicationController
   # DELETE /tags/1
   def destroy
     @tag.destroy
+  end
+
+  def tags_in_question
+    @tag=Tag.tags_in_question(params[:question])
+    render json: @tag
   end
 
   private

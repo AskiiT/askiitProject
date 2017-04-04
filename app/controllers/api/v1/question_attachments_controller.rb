@@ -1,16 +1,25 @@
-class Api::V1::QuestionAttachmentsController < ApplicationController
-  before_action :set_question_attachment, only: [:show, :update, :destroy]
+class API::V1::QuestionAttachmentsController < ApplicationController
+  before_action :set_question_attachment, only: [:update, :destroy]
 
   # GET /question_attachments
   def index
     @question_attachments = QuestionAttachment.all
+    @question_attachments=QuestionAttachment.get_attachments(params[:question_id])
 
     render json: @question_attachments
   end
 
   # GET /question_attachments/1
   def show
-    render json: @question_attachment
+
+    @question_attachment = QuestionAttachment.find(params[:id])
+    if (@question_attachment.question_id.to_i)==(params[:question_id].to_i)
+     render json: @question_attachment
+    else
+      #render json: @question_attachment.question_id
+      render json: nil
+    end
+      
   end
 
   # POST /question_attachments

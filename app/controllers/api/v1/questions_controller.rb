@@ -1,4 +1,4 @@
-class Api::V1::QuestionsController < ApplicationController
+class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
 
   # GET /questions
@@ -44,6 +44,16 @@ class Api::V1::QuestionsController < ApplicationController
   def questions_by_title
     @question = Question.questions_by_title(params[:title]).page(params[:page])
     render json: @question
+  end
+
+  def by_tag
+    @questions = Question.questions_by_tag(params[:tag]).page(params[:page])
+    render json: @questions
+  end
+
+  def by_topic
+    @questions = Question.questions_by_topic(params[:topic]).page(params[:page])
+    render json: @questions
   end
 
   private

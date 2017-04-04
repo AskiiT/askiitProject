@@ -1,4 +1,4 @@
-class Api::V1::PostulatesController < ApplicationController
+class API::V1::PostulatesController < ApplicationController
   before_action :set_postulate, only: [:show, :update, :destroy]
 
   # GET /postulates
