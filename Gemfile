@@ -30,7 +30,7 @@ gem 'will_paginate', '~> 3.1', '>= 3.1.5'
 
 #Rails-api
 #gem 'rails-api', '~> 0.4.1'
-gem 'paperclip', '~> 4.3', '>= 4.3.6'
+#gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
 #Serializer
 gem 'active_model_serializers', '~> 0.10.5'
