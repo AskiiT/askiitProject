@@ -6,6 +6,7 @@
 	u.email=Faker::Internet.email
 	u.username=u.first_name+i.to_s+u.last_name
 	u.password="12345678"
+	u.description= Faker::Lorem.paragraph
 	u.save
 
 	t= Topic.new

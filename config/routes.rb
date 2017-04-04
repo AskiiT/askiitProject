@@ -29,9 +29,10 @@ Rails.application.routes.draw do
 
       get 'questions/page/:page', to: "questions#index" 
 
-      resources :users, only: [:show] do
+      resources :users, only: [:show, :index] do
           collection do   
             get '/search/:username', to: "users#search_username"    #/user/search/:username
+            get 'page/:page', to: 'users#index'
           end
           resources :followers, only:[:index]
           get '/follows', to: "followers#index_follows"
@@ -48,6 +49,7 @@ Rails.application.routes.draw do
       root to: "questions#index"
     end
   end
+  resources :postulates
 end
 
 #SOLO USEN GETS DE MOMENTO
@@ -65,5 +67,5 @@ end
 #api/v1/users/search/:username                            : Me retorna un resultado de busqueda de username
 #api/v1                                                   : Todas las preguntas
 #api/v1/users/(:username||:id)/followers                  : Followers de un usuario
-#api/v1/users/(:username||:id)/followers                  : Follows de un usuario
+#api/v1/users/(:username||:id)/follows                    : Follows de un usuario
 #api/v1/auth                                              : Authentication for users

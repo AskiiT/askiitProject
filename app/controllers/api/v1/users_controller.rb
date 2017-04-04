@@ -19,4 +19,13 @@ class API::V1::UsersController < ApplicationController
 		
   	end
 
+  	def index
+  		@users = User.all
+  		f= params[:page]
+    	unless f.nil?
+    		@users = User.load_users(page)
+    	end
+    	render json: @users
+  	end
+
 end
