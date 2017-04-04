@@ -28,15 +28,12 @@ gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 #Pagination utility
 gem 'will_paginate', '~> 3.1', '>= 3.1.5'
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 3.0'
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+#Rails-api
+#gem 'rails-api', '~> 0.4.1'
+gem 'paperclip', '~> 4.3', '>= 4.3.6'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+#Serializer
+gem 'active_model_serializers', '~> 0.10.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -52,3 +49,13 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+gem 'jbuilder', '~> 2.5'
+# Use Redis adapter to run Action Cable in production
+# gem 'redis', '~> 3.0'
+# Use ActiveModel has_secure_password
+# gem 'bcrypt', '~> 3.1.7'
+
+# Use Capistrano for deployment
+# gem 'capistrano-rails', group: :development
