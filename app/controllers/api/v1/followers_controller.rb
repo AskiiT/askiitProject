@@ -1,4 +1,4 @@
-class FollowersController < ApplicationController
+class Api::V1::FollowersController < ApplicationController
   before_action :set_follower, only: [:show, :update, :destroy]
 
   # GET /followers

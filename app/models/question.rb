@@ -88,4 +88,8 @@ class Question < ApplicationRecord
     .select("questions.id, questions.title, questions.difficulty")
     .paginate(:page => page,:per_page => per_page)
   end
+
+  def self.sort_by_date( page = 1, per_page = 10)
+    load_questions(page, per_page).order("questions.date_posted ASC")
+  end
 end

@@ -1,10 +1,13 @@
-class QuestionsController < ApplicationController
+class Api::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
 
   # GET /questions
   def index
     @questions = Question.all
-
+    f= params[:page]
+    unless f.nil?
+      @questions = Question.load_questions.page(f)
+    end
     render json: @questions
   end
 
@@ -36,6 +39,11 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   def destroy
     @question.destroy
+  end
+
+  def questions_by_title
+    @question = Question.questions_by_title(params[:title]).page(params[:page])
+    render json: @question
   end
 
   private

@@ -1,4 +1,4 @@
-class QuestionHasTagsController < ApplicationController
+class Api::V1::QuestionHasTagsController < ApplicationController
   before_action :set_question_has_tag, only: [:show, :update, :destroy]
 
   # GET /question_has_tags

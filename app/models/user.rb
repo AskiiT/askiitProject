@@ -55,6 +55,10 @@ class User < ActiveRecord::Base
     .paginate(:page => page,:per_page => per_page)
   end
 
+  def self.user_username(username)
+    where("users.username = ?", username)
+  end
+
   #Busca coincidencias del nombre de un usuario
   def self.users_by_firstname(first_name, page = 1, per_page = 10)
       where("users.first_name LIKE ?", "%#{first_name.downcase}%")

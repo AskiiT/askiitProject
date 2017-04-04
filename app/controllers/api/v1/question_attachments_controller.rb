@@ -1,4 +1,4 @@
-class QuestionAttachmentsController < ApplicationController
+class Api::V1::QuestionAttachmentsController < ApplicationController
   before_action :set_question_attachment, only: [:show, :update, :destroy]
 
   # GET /question_attachments
