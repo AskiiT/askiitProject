@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include DeviseTokenAuth::Concerns::SetUserByToken
+  include ActionController::Serialization
 
   def configure_permitted_parameters
       if resource_class == User 

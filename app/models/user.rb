@@ -3,7 +3,6 @@ class User < ActiveRecord::Base
   scope :order_by_date_created, -> { order("users.date_created DESC") }
   scope :order_by_created_at, -> { order("users.created_at DESC") }
 
-
   has_one :rank
   has_many :domain_ranks
   has_many :questions
@@ -53,6 +52,10 @@ class User < ActiveRecord::Base
     where("users.username LIKE ?", "#{username.downcase}%")
     .select("users.id, users.username, users.first_name, users.last_name")
     .paginate(:page => page,:per_page => per_page)
+  end
+
+  def self.user_username(username)
+    where("users.username = ?", username)
   end
 
   #Busca coincidencias del nombre de un usuario

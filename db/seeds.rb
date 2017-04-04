@@ -2,9 +2,9 @@
 	u= User.new
 	u.first_name= Faker::Name.first_name
 	u.last_name= Faker::Name.last_name
-	u.date_created = Date.today
+	u.date_created = Date.today - Faker::Number.number(3).to_i.days 
 	u.email=Faker::Internet.email
-	u.username=u.first_name+'1'+u.last_name
+	u.username=u.first_name+i.to_s+u.last_name
 	u.password="12345678"
 	u.save
 
@@ -44,7 +44,7 @@ end
  q.title= Faker::Lorem.sentence
  q.body= Faker::Lorem.paragraph
  q.difficulty=rand(1..10)
- q.date_posted= Date.today
+ q.date_posted= Date.today - Faker::Number.number(3).to_i.days 
  q.topic_id=rand(1..150)
  q.user_id=rand(1..150)
  q.save
