@@ -24,7 +24,7 @@ class Tag < ApplicationRecord
 	#Busca tags hay en una pregunta
 	def self.tags_in_question(question)
 		g=QuestionHasTag.where('question_id = ?', question).select("tag_id").group("tag_id")
-		where('tags.id in (?)', g).select("tags.id, tags.tag_name")
+		where('tags.id in (?)', g)
   end
 
   	#Me retorna los tags en un tema
@@ -37,4 +37,8 @@ class Tag < ApplicationRecord
   		joins(questions: :user).where("users.id=(?)", user)
   		.select("tags.id, tags.tag_name, tags.topic_id")
   	end
+
+    def self.tag_id_name(name)
+      find_by(tag_name: name).id
+    end
 end

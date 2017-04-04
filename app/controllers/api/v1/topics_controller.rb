@@ -39,6 +39,12 @@ class API::V1::TopicsController < ApplicationController
   end
 
 
+  def topics_in_question
+    @topic=Topic.topic_in_question(params[:question_id])
+    render json: @topic
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_topic

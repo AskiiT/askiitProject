@@ -43,4 +43,13 @@ class Topic < ApplicationRecord
 		joins(:tags).where("tags.id = ?", tag)
 	end
 
+	#id del topic por name
+	def self.topic_id_name(name)
+		find_by(topic_name: name).id
+	end
+
+	def self.topic_in_question(questions)
+		joins(:questions).where("questions.id=?", questions)
+	end
+
 end

@@ -38,7 +38,7 @@ class API::V1::TagsController < ApplicationController
   end
 
   def tags_in_question
-    @tag=Tag.tags_in_question(params[:question])
+    @tag= Tag.tags_in_question(params[:question_id])
     render json: @tag
   end
 

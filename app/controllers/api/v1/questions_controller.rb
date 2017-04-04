@@ -47,13 +47,31 @@ class API::V1::QuestionsController < ApplicationController
   end
 
   def by_tag
-    @questions = Question.questions_by_tag(params[:tag]).page(params[:page])
-    render json: @questions
+    g=params[:tag]
+    m=g.to_i
+
+    if m.to_s == g.to_s
+      @questions = Question.questions_by_tag(params[:tag])
+      render json: @questions
+    else
+      u=Tag.tag_id_name(params[:tag])
+      @questions=Question.questions_by_tag(u)
+      render json: @questions
+    end
   end
 
   def by_topic
-    @questions = Question.questions_by_topic(params[:topic]).page(params[:page])
-    render json: @questions
+    g=params[:topic]
+    m=g.to_i
+   
+    if m.to_s == g.to_s
+      @questions = Question.questions_by_topic(params[:topic]).page(params[:page])
+      render json: @questions
+    else
+      u=Topic.topic_id_name(params[:topic])
+      @questions = Question.questions_by_topic(u).page(params[:page])
+      render json: @questions
+    end
   end
 
   private

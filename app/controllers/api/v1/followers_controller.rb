@@ -3,8 +3,26 @@ class API::V1::FollowersController < ApplicationController
 
   # GET /followers
   def index
-    @followers = Follower.all
+    g=params[:user_id]
+    m=g.to_i
+    if m.to_s == g.to_s
+      @followers = User.user_followers(g)
+    else
+      f=User.users_id_name(g)
+      @followers = User.user_followers(f.to_i)
+    end
+    render json: @followers
+  end
 
+  def index_follows
+    g=params[:user_id]
+    m=g.to_i
+    if m.to_s == g.to_s
+      @followers = User.user_follows(g)
+    else
+      f=User.users_id_name(g)
+      @followers = User.user_follows(f.to_i)
+    end
     render json: @followers
   end
 

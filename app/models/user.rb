@@ -51,7 +51,6 @@ class User < ActiveRecord::Base
   #Busca coincidencias con el nombre de usuario
   def self.users_by_username(username, page = 1, per_page = 10)
     where("users.username LIKE ?", "#{username.downcase}%")
-    .select("users.id, users.username, users.first_name, users.last_name")
     .paginate(:page => page,:per_page => per_page)
   end
 
@@ -109,18 +108,21 @@ class User < ActiveRecord::Base
     .paginate(:page => page,:per_page => per_page)
   end
 
+  def self.users_id_name(name)
+    find_by(username: name).id
+  end
+
   # Ver los seguidores de un usuario por su id
   def self.user_followers(userid, page = 1, per_page = 10)
     joins(:followers)
     .where(["followers.followed_id = ?",userid])
-    .select("users.id, users.username")
     .paginate(:page => page,:per_page => per_page)
   end
 
   # Ver los seguidos de un usuario por su id
   def self.user_follows(userid, page = 1, per_page = 10)
     u = Follower.where(["follower_id = ?",userid]).select("followed_id").group("followed_id")
-    load_users(page, per_page).where("users.id in  (?)", u).select("users.id, users.username")
+    load_users(page, per_page).where("users.id in  (?)", u)
   end
 
   # Ordena los usuarios basado en su rapidez por su rango
@@ -136,6 +138,5 @@ class User < ActiveRecord::Base
   def self.user_by_efectiveness
       joins(:rank).order("ranks.efectiveness DESC").select("users.id,efectiveness")
   end
-
 
 end
