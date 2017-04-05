@@ -47,11 +47,16 @@ class API::V1::QuestionsController < ApplicationController
   end
 
   def by_tag
-    g=params[:tag]
-    m=g.to_i
+    g = params[:tag]
+    page = params[:page]
+    m = g.to_i
 
     if m.to_s == g.to_s
-      @questions = Question.questions_by_tag(params[:tag])
+      if page.nil?
+        @questions = Question.questions_by_tag(params[:tag])
+      else
+        @questions = Question.questions_by_tag(g).page(page)
+      end
       render json: @questions
     else
       u=Tag.tag_id_name(params[:tag])

@@ -14,7 +14,7 @@ class API::V1::FollowersController < ApplicationController
     render json: @followers
   end
 
-  def index_follows
+  def following
     g=params[:user_id]
     m=g.to_i
     if m.to_s == g.to_s

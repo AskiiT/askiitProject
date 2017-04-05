@@ -3,40 +3,49 @@ Rails.application.routes.draw do
   #mount_devise_token_auth_for 'User', at: 'auth'
   mount_devise_token_auth_for 'User', at: 'api/v1/auth', skip: [:omniauth_callback]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  #do
 
-  #      end
   namespace :api, defaults: {format: :json} do
-    namespace :v1 do
+    namespace :v1 do      
+
+      resources :users do                     #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
+          collection do   
+            get 'search/:username',     to: 'users#search_username'     #api/v1/users/search/:username (get)
+            get 'page/:page',           to: 'users#index'               #api/v1/users/page/:id (get)
+          end
+          
+          get 'my-questions',           to: 'users#my_questions'        #api/v1/users/:id/my-questions (get)
+          get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
+          get 'followers',              to: 'followers#index'           #api/v1/users/:id/followers (get)
+          
+          get 'rank',                   to: 'ranks#by_user'             #api/v1/users/:id/rank (get)
+          get 'domain-rank',            to: 'domain_ranks#by_user'      #api/v1/users/:id/domain-rank (get)
+          get 'domain-rank/page/:page', to: 'domain_ranks#by_user'      #api/v1/users/:id/domain-rank/page/:page (get)
+          get 'domain-rank/:topic_id',  to: 'domain_ranks#by_user_and_topic'  #api/v1/users/:id/domain-rank/:topic_id (get)
+          
+      end
 
       resources :questions do
           collection do
             get 'questions-by-title/:title/', to: "questions#questions_by_title"        
-              get 'questions-by-title/:title/:page', to: "questions#questions_by_title" 
+            get 'questions-by-title/:title/:page', to: "questions#questions_by_title" 
+            
             scope :tagsearch do
               get ':tag', to: "questions#by_tag"
-                get ':tag/:page', to: "questions#by_tag"
+              get ':tag/:page', to: "questions#by_tag"
             end
+
             scope :topicsearch do
               get ':topic', to: "questions#by_topic"
-                get ':topic/:page', to: "questions#by_topic"
+              get ':topic/:page', to: "questions#by_topic"
             end
+
           end
         resources :question_attachments#, only: [:index]
         get 'topic', to: 'topics#topics_in_question'
         get 'tags', to: 'tags#tags_in_question'
       end
 
-      get 'questions/page/:page', to: "questions#index" 
-
-      resources :users, only: [:show, :index] do
-          collection do   
-            get '/search/:username', to: "users#search_username"    #/user/search/:username
-            get 'page/:page', to: 'users#index'
-          end
-          resources :followers, only:[:index]
-          get '/follows', to: "followers#index_follows"
-      end
+      get 'questions/page/:page', to: "questions#index"
 
       #resources :followers
       resources :postulates
@@ -48,8 +57,8 @@ Rails.application.routes.draw do
       resources :ranks
       root to: "questions#index"
     end
-  end
   resources :postulates
+  end
 end
 
 #SOLO USEN GETS DE MOMENTO

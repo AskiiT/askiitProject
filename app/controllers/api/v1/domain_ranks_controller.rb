@@ -8,6 +8,35 @@ class API::V1::DomainRanksController < ApplicationController
     render json: @domain_ranks
   end
 
+  def by_user
+    uid = params[:user_id]
+    page = params[:page]
+    integerUid = uid.to_i
+    if integerUid.to_s == uid.to_s
+      @dranks = DomainRank.domain_ranks_by_user_id(uid)
+    else
+      f = User.users_id_name(uid)
+      @dranks = DomainRank.domain_ranks_by_user_id(f.to_i)
+    end
+    render json: @dranks
+  end
+
+  def by_user_and_topic
+    uid = params[:user_id]
+    tid = params[:topic_id]
+
+    integerUid = uid.to_i
+    if integerUid.to_s == uid.to_s
+      @drank = DomainRank.domain_ranks_by_user_id_and_topic(uid, tid)
+    else
+      f = User.users_id_name(uid)
+      @drank = DomainRank.domain_ranks_by_user_id_and_topic(f.to_i, tid)
+    end
+    render json: @drank
+  end
+
+  
+
   # GET /domain_ranks/1
   def show
     render json: @domain_rank

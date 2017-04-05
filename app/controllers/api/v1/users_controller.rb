@@ -5,6 +5,11 @@ class API::V1::UsersController < ApplicationController
 		render json: @user
 	end
 
+	def my_questions
+		@question_list = Question.questions_by_user( params[:user_id] )
+		render json: @question_list
+	end
+
 	def show
 		g=params[:id]
 		m=g.to_i
@@ -21,9 +26,9 @@ class API::V1::UsersController < ApplicationController
 
   	def index
   		@users = User.all
-  		f= params[:page]
-    	unless f.nil?
-    		@users = User.load_users(page)
+  		page = params[:page]
+    	unless page.nil?
+    		@users = User.load_users( page )
     	end
     	render json: @users
   	end

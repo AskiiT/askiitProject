@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   def self.user_level_by_topic( userid, topicic )
     joins( domain_ranks: :topic )
     .where( [ "domain_ranks.topic_id = ? AND domain_ranks.user_id = ?", topicic, userid ] )
-    .select( "users.id, users.username, topic_name, level" )
+    .select( "topic_name, level" )
   end
 
   # Consulta los usuarios que  están postulados a una pregunta específica

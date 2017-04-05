@@ -38,6 +38,18 @@ class API::V1::RanksController < ApplicationController
     @rank.destroy
   end
 
+  def by_user
+    uid = params[:user_id]
+    integerUid = uid.to_i
+    if integerUid.to_s == uid.to_s
+      @rank = Rank.rank_of_user(uid)
+    else
+      f = User.users_id_name(uid)
+      @rank = Rank.rank_of_user(f.to_i)
+    end
+    render json: @rank
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_rank

@@ -23,5 +23,16 @@ class DomainRank < ApplicationRecord
       .where( domain_ranks: {id: ids})
   end
 
+  def self.domain_ranks_by_user_id( id, page = 1, per_page = 10)
+     where( domain_ranks: {user_id: id})
+     .paginate(:page => page,:per_page => per_page)
+  end
+
+  def self.domain_ranks_by_user_id_and_topic( uid, tid )
+    joins( :topic )
+    .where( domain_ranks: {user_id: uid, topic_id: tid})
+    .select('level, topic_id, topics.topic_name')
+  end
+
 
 end
