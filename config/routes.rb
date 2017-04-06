@@ -12,15 +12,16 @@ Rails.application.routes.draw do
             get 'search/:username',     to: 'users#search_username'     #api/v1/users/search/:username (get)
             get 'page/:page',           to: 'users#index'               #api/v1/users/page/:id (get)
           end
-          
           get 'my-questions',           to: 'users#my_questions'        #api/v1/users/:id/my-questions (get)
-          get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
-          get 'followers',              to: 'followers#index'           #api/v1/users/:id/followers (get)
           
-          get 'rank',                   to: 'ranks#by_user'             #api/v1/users/:id/rank (get)
-          get 'domain-rank',            to: 'domain_ranks#by_user'      #api/v1/users/:id/domain-rank (get)
-          get 'domain-rank/page/:page', to: 'domain_ranks#by_user'      #api/v1/users/:id/domain-rank/page/:page (get)
-          get 'domain-rank/:topic_id',  to: 'domain_ranks#by_user_and_topic'  #api/v1/users/:id/domain-rank/:topic_id (get)
+          resources :followers,         only: [:index]                  #api/v1/users/:id/followers (get)
+          get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
+          
+          resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
+          resources :domain_ranks,      only: [:index, :show]           #api/v1/users/:id/domain-rank (get, show)
+          get 'domain_ranks/page/:page', to: 'domain_ranks#index'      #api/v1/users/:id/domain-rank/page/:page (get)
+
+          resources :postulates
       end
 
       resources :questions do
@@ -84,8 +85,13 @@ end
 #api/v1/users/(:username||:id)                            : Me retorna un usuario
 #api/v1/users/search/:username                            : Me retorna un resultado de busqueda de username
 #api/v1                                                   : Todas las preguntas
-#api/v1/users/(:username||:id)/followers                  : Followers de un usuario
-#api/v1/users/(:username||:id)/follows                    : Follows de un usuario
+#api/v1/users/:user_id/my-questions                       : Las preguntas hechas por un usuario
+#api/v1/users/(:username||:id)/followers                  : Quien sigue al usuario
+#api/v1/users/(:username||:id)/following                  : A quien sigue un usuario
+#api/v1/users/:user_id/ranks                              : Rank específico del usuario          
+#api/v1/users/:user_id/domain_ranks                       : Los niveles en los temas que ha contribuido el usuario
+#api/v1/users/:user_id/domain_ranks/:id                   : EL nivel del usuario en un tema específico
+#api/v1/users/:user_id/domain_ranks/page/:page            : Los niveles en los temas que ha contribuido el usuario en la pagina x
 #api/v1/auth                                              : Authentication for users
 #api/v1/topics(/page/:page)                               : Ve todos los topics
 #api/v1/topics/(:topic_id||:topic_name)                   : Muestra un topic especifico

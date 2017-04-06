@@ -3,12 +3,6 @@ class API::V1::DomainRanksController < ApplicationController
 
   # GET /domain_ranks
   def index
-    @domain_ranks = DomainRank.all
-
-    render json: @domain_ranks
-  end
-
-  def by_user
     inputId = params[:user_id]
     page = params[:page]
 
@@ -17,18 +11,14 @@ class API::V1::DomainRanksController < ApplicationController
 
     integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
 
-    unless page.nil?
-      @dranks = DomainRank.domain_ranks_by_user_id(id).page(page)
-    else
-      @dranks = DomainRank.domain_ranks_by_user_id(id)
-    end
-
+    @dranks = DomainRank.domain_ranks_by_user_id(id).page(page)
     render json: @dranks
   end
 
-  def by_user_and_topic
+  # GET /domain_ranks/1
+  def show
     inputId = params[:user_id]
-    tid = params[:topic_id]
+    tid = params[:id]
 
     integerUid = inputId.to_i
     stringUid = inputId.to_s
@@ -38,13 +28,6 @@ class API::V1::DomainRanksController < ApplicationController
     @drank = DomainRank.domain_ranks_by_user_id_and_topic(id, tid)
 
     render json: @drank
-  end
-
-  
-
-  # GET /domain_ranks/1
-  def show
-    render json: @domain_rank
   end
 
   # POST /domain_ranks

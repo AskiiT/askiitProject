@@ -1,14 +1,20 @@
 class API::V1::RanksController < ApplicationController
   before_action :set_rank, only: [:show, :update, :destroy]
 
-  # GET /ranks
+  # GET .../users/:id/ranks
   def index
-    @ranks = Rank.all
+    inputId = params[:user_id]
+    integerUid = inputId.to_i
+    stringUid = inputId.to_s
 
-    render json: @ranks
+    integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
+
+    @rank = Rank.rank_of_user(id)
+
+    render json: @rank
   end
 
-  # GET /ranks/1
+  # GET ranks/1
   def show
     render json: @rank
   end
@@ -39,15 +45,7 @@ class API::V1::RanksController < ApplicationController
   end
 
   def by_user
-    uid = params[:user_id]
-    integerUid = uid.to_i
-    if integerUid.to_s == uid.to_s
-      @rank = Rank.rank_of_user(uid)
-    else
-      f = User.users_id_name(uid)
-      @rank = Rank.rank_of_user(f.to_i)
-    end
-    render json: @rank
+    
   end
 
   private
