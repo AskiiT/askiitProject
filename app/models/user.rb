@@ -138,8 +138,15 @@ class User < ActiveRecord::Base
       joins(:rank).order("ranks.efectiveness DESC").select("users.id,efectiveness")
   end
 
+  #Qué usuario ha usado el Tag "tag"
   def self.user_made_tag(tag, page = 1, per_page = 10)
     joins(questions: :question_has_tags).where("question_has_tags.tag_id=(?)", tag)
+    .paginate(:page => page,:per_page => per_page)
+  end
+
+  #Qué usuario ha usado el tema "tag"
+  def self.user_made_topic(topic, page = 1, per_page = 10)
+    joins( :questions ).where("questions.topic_id= (?) ", topic)
     .paginate(:page => page,:per_page => per_page)
   end
 end

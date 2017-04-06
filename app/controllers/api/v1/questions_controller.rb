@@ -17,18 +17,29 @@ class API::V1::QuestionsController < ApplicationController
   # GET /questions
   def index
     #@questions = Question.all
-    f= params[:page]
-    s= params[:sort]
+    p = params[:page]
+    s = params[:sort]
     if s.nil?
-      s=1
+      s = 1
     else
-      s=translate(s)
+      s = translate(s)
     end
+
     @questions = Question.sort_by(Question.all, s)
-    unless f.nil? 
-      @questions = Question.load_questions(sort=s, page=f)
+    unless p.nil? 
+      @questions = Question.load_questions( sort = s, page = p )
     end
-    render json: @questions
+
+    if @questions.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    else
+      render json: @questions
+    end
   end
 
   # GET /questions/1

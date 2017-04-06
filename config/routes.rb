@@ -12,7 +12,16 @@ Rails.application.routes.draw do
             get 'search/:username',     to: 'users#search_username'     #api/v1/users/search/:username (get)
 
           end
-          get 'my-questions',           to: 'questions#my_questions'        #api/v1/users/:id/my-questions (get)
+          get 'my-questions',           to: 'questions#my_questions'    #api/v1/users/:id/my-questions (get)
+
+          ###
+          #Falta poder seguir a alguien y dejar de seguir
+          ###
+
+          #api/v1/users/:id_followed/follow   followers#create
+          #api/v1/users/:id_followed/unfollow folowers#destroy
+
+          #api/v1/users/:id_users/follow?=my_id 
 
           resources :followers,         only: [:index]                  #api/v1/users/:id/followers (get)
           get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
@@ -20,8 +29,7 @@ Rails.application.routes.draw do
           resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
           resources :domain_ranks,      only: [:index, :show]
 
-          #resources :postulates
-          get 'postulated', to: 'questions#is_postulated_to'
+          get 'postulated',             to: 'questions#is_postulated_to' #api/v1/users/:id/postulated (get)
       end
 
       resources :questions do
@@ -36,16 +44,20 @@ Rails.application.routes.draw do
             end
           end
 
-        resources :question_attachments
+        resources :question_attachments #De todo
+      
         get 'topic', to: 'topics#topics_in_question'
         get 'tags', to: 'tags#tags_in_question'
 
-        resources :postulates
+        resources :postulates     #Aquí me puedo postular a esta pregunta
+
         get 'postulated', to: 'postulates#postulated_to'
+
       end
 
       resources :topics do
         get 'tags', to: "tags#topic_tags"
+        get 'used-by', to: "topics#used_by"
       end
 
       resources :tags do

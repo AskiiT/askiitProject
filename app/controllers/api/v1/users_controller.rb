@@ -1,11 +1,21 @@
 class API::V1::UsersController < ApplicationController
 	def index
-  		@users = User.all
-  		page = params[:page]
-    	unless page.nil?
-    		@users = User.load_users( page )
-    	end
-    	render json: @users
+			p = params[:page]
+			unless p.nil?
+				@users = User.load_users( p )
+			else
+				@users = User.all
+			end
+    	if @users.empty?
+  			render json: 
+  				{ data:
+  					{
+  						error: "No more users to show."
+  					}
+  				}
+  		else
+    		render json: @users
+  		end
   	end
   	
 	def show

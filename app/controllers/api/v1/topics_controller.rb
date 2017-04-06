@@ -57,6 +57,11 @@ class API::V1::TopicsController < ApplicationController
     render json: @topic
   end
 
+  def used_by
+    @users= User.user_made_topic(params[:topic_id]).page(params[:page])
+    render json: @users
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_topic
