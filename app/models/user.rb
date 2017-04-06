@@ -104,7 +104,6 @@ class User < ActiveRecord::Base
   def self.users_by_question(queid, page = 1, per_page = 10)
     joins( postulates: :question)
     .where(["postulates.question_id = ?",queid])
-    .select("users.id,users.username,title")
     .paginate(:page => page,:per_page => per_page)
   end
 

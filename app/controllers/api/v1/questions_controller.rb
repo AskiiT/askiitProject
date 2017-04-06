@@ -1,6 +1,6 @@
 class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-
+  scope
   # GET /questions
   def index
     @questions = Question.all

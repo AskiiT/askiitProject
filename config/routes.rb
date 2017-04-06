@@ -18,10 +18,14 @@ Rails.application.routes.draw do
           get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
           
           resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
-          resources :domain_ranks,      only: [:index, :show]           #api/v1/users/:id/domain-rank (get, show)
-          get 'domain_ranks/page/:page', to: 'domain_ranks#index'      #api/v1/users/:id/domain-rank/page/:page (get)
+          resources :domain_ranks,      only: [:index, :show] do 
+            collection do 
+              get '/page/:page', to: 'domain_ranks#index'      #api/v1/users/:id/domain-rank/page/:page (get)
+            end
+          end
 
-          resources :postulates
+          #resources :postulates
+          get 'postulated', to: 'postulates#is_postulated_to'
       end
 
       resources :questions do
@@ -46,6 +50,7 @@ Rails.application.routes.draw do
         get 'tags', to: 'tags#tags_in_question'
 
         resources :postulates
+        get 'postulated', to: 'postulates#postulated_to'
       end
 
       resources :topics do
@@ -72,6 +77,7 @@ Rails.application.routes.draw do
 end
 
 #SOLO USEN GETS DE MOMENTO
+#api/v1                                                   : Todas las preguntas
 #api/v1/questions                                         : Todas las preguntas
 #api/v1/questions/page/:page                              : Todas las preguntas en la página x
 #api/v1/questions/questions-by-title/:title               : Todas las preguntas por titulo.
@@ -82,20 +88,22 @@ end
 #api/v1/questions/topicsearch/(:topic_id|:topic_name)     : Busca preguntas por topic
 #api/v1/questions/:question_id/topic                      : Retorna el topic del question
 #api/v1/questions/:question_id/tags                       : Retorna el tags
+
+#api/v1/auth                                              : Authentication for users
 #api/v1/users/(:username||:id)                            : Me retorna un usuario
 #api/v1/users/search/:username                            : Me retorna un resultado de busqueda de username
-#api/v1                                                   : Todas las preguntas
-#api/v1/users/:user_id/my-questions                       : Las preguntas hechas por un usuario
 #api/v1/users/(:username||:id)/followers                  : Quien sigue al usuario
 #api/v1/users/(:username||:id)/following                  : A quien sigue un usuario
 #api/v1/users/:user_id/ranks                              : Rank específico del usuario          
 #api/v1/users/:user_id/domain_ranks                       : Los niveles en los temas que ha contribuido el usuario
 #api/v1/users/:user_id/domain_ranks/:id                   : EL nivel del usuario en un tema específico
 #api/v1/users/:user_id/domain_ranks/page/:page            : Los niveles en los temas que ha contribuido el usuario en la pagina x
-#api/v1/auth                                              : Authentication for users
+#api/v1/users/:user_id/my-questions                       : Las preguntas hechas por un usuario
+
 #api/v1/topics(/page/:page)                               : Ve todos los topics
 #api/v1/topics/(:topic_id||:topic_name)                   : Muestra un topic especifico
 #api/v1/topics/:topic_id/tags                             : Muestra los tags de un topic
+
 #api/v1/tags(/page/:page)                                 : Ve todos los tags
 #api/v1/tags/(:tag_id||:tag_name)                         : Muestra un tag especifico
 #api/v1/tags/used-by                                      : Muestra que usuarios hicieron preguntas en un tag

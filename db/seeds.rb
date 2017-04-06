@@ -11,7 +11,7 @@
 
 	t= Topic.new
 	t.topic_name= Faker::Address.city
-	t.description= Faker::Company.catch_phrase
+	t.topic_description= Faker::Company.catch_phrase
 	t.save
 
 
@@ -34,14 +34,14 @@ end
  ta.save
 end
 
-500.times do |i|
+1000.times do |i|
 	f=Follower.new
 	f.followed_id=rand(1..150)
 	f.follower_id=rand(1..150)
 	f.save
 end
 
-500.times do |i|
+700.times do |i|
  q=Question.new
  q.title= Faker::Lorem.sentence
  q.body= Faker::Lorem.paragraph
@@ -52,27 +52,27 @@ end
  q.save
 end
 
-700.times do |i|
+1200.times do |i|
  t=QuestionHasTag.new
  t.question_id=rand(1..500)
  t.tag_id=rand(1..120)
  t.save
 end
 
-300.times do |i|
+600.times do |i|
  t=Postulate.new
  t.question_id=rand(1..500)
  t.user_id=rand(1..150)
  t.save
 end
 
-200.times do |i|
+400.times do |i|
  at=QuestionAttachment.new
  at.question_id=rand(1..500)
  at.save
 end
 
-300.times do |i|
+500.times do |i|
 	dr=DomainRank.new
 	dr.user_id=rand(1..150)
 	dr.topic_id=rand(1..150)
