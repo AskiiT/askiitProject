@@ -43,10 +43,6 @@ class API::V1::PostulatesController < ApplicationController
     render json: @postulate
   end
 
-  def is_postulated_to
-    @postulate= Question.question_postulated(params[:user_id]).page(params[:page])
-    render json: @postulate
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

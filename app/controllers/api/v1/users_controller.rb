@@ -1,4 +1,5 @@
 class API::V1::UsersController < ApplicationController
+<<<<<<< Updated upstream
 	def index
   		@users = User.all
   		page = params[:page]
@@ -7,6 +8,14 @@ class API::V1::UsersController < ApplicationController
     	end
     	render json: @users
   	end
+=======
+	#Encuentra un usuario por coincidencia
+	def search_username
+		@user=User.users_by_username(params[:username])
+		render json: @user
+	end
+
+>>>>>>> Stashed changes
 
 	def show
 		g=params[:id]

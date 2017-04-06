@@ -1,11 +1,32 @@
 class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
+  
+  def translate(s)
+    s=s.upcase
+    if s=='NEWEST'
+      s=1
+    elsif s=='OLDEST'
+      s=2
+    elsif s=='HARDEST'
+      s=3
+    elsif s=='EASIEST'
+      s=4
+    end
+  end
+
   # GET /questions
   def index
-    @questions = Question.all
+    #@questions = Question.all
     f= params[:page]
-    unless f.nil?
-      @questions = Question.load_questions.page(f)
+    s= params[:sort]
+    if s.nil?
+      s=1
+    else
+      s=translate(s)
+    end
+    @questions = Question.sort_by(Question.all, s)
+    unless f.nil? 
+      @questions = Question.load_questions(sort=s, page=f)
     end
     render json: @questions
   end
@@ -41,7 +62,14 @@ class API::V1::QuestionsController < ApplicationController
   end
 
   def questions_by_title
-    @question = Question.questions_by_title(params[:title]).page(params[:page])
+    s= params[:sort]
+    if s.nil?
+      s=1
+    else
+      s=translate(s)
+    end
+
+    @question = Question.questions_by_title(title=params[:title], sort=s).page(params[:page])
     render json: @question
   end
 
@@ -54,7 +82,15 @@ class API::V1::QuestionsController < ApplicationController
       g=u.to_i
     end
 
-    @questions = Question.questions_by_tag(g).page(page)
+    s= params[:sort]
+    if s.nil?
+      s=1
+    else
+      s=translate(s)
+    end
+
+
+    @questions = Question.questions_by_tag(tag=g, sort=s).page(page)
 
     render json: @questions
   end
@@ -68,8 +104,41 @@ class API::V1::QuestionsController < ApplicationController
       g=u.to_i
     end
 
-    @questions = Question.questions_by_topic(g).page(params[:page])
+    s= params[:sort]
+    if s.nil?
+      s=1
+    else
+      s=translate(s)
+    end
+
+
+    @questions = Question.questions_by_topic(topic=g, sort=s).page(params[:page])
     render json: @questions
+  end
+
+
+  def my_questions
+    s= params[:sort]
+    if s.nil?
+      s=1
+    else
+      s=translate(s)
+    end
+
+    @question_list = Question.questions_by_user(user=params[:user_id], sort=s).page(params[:page])
+    render json: @question_list
+  end
+
+
+  def is_postulated_to
+    s= params[:sort]
+    if s.nil?
+      s=1
+    else
+      s=translate(s)
+    end
+    @postulate= Question.question_postulated(user=params[:user_id], sort=s).page(params[:page])
+    render json: @postulate
   end
 
   private

@@ -10,38 +10,29 @@ Rails.application.routes.draw do
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
             get 'search/:username',     to: 'users#search_username'     #api/v1/users/search/:username (get)
-            get 'page/:page',           to: 'users#index'               #api/v1/users/page/:id (get)
+
           end
-          get 'my-questions',           to: 'users#my_questions'        #api/v1/users/:id/my-questions (get)
-          
+          get 'my-questions',           to: 'questions#my_questions'        #api/v1/users/:id/my-questions (get)
+
           resources :followers,         only: [:index]                  #api/v1/users/:id/followers (get)
           get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
           
           resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
-          resources :domain_ranks,      only: [:index, :show] do        #api/v1/users/:id/domain-ranks (get, show)
-            collection do 
-              get 'page/:page', to: 'domain_ranks#index'                #api/v1/users/:id/domain-ranks/page/:page (get)
-            end
-          end
+          resources :domain_ranks,      only: [:index, :show]
 
           #resources :postulates
-          get 'postulated', to: 'postulates#is_postulated_to'
+          get 'postulated', to: 'questions#is_postulated_to'
       end
 
       resources :questions do
           collection do
-            get 'questions-by-title/:title/', to: "questions#questions_by_title"        
-            get 'questions-by-title/:title/:page', to: "questions#questions_by_title" 
-            get '/page/:page', to: "questions#index"
-
+            get 'questions-by-title/:title/', to: "questions#questions_by_title"
             scope :tagsearch do
               get ':tag', to: "questions#by_tag"
-              get ':tag/:page', to: "questions#by_tag"
             end
 
             scope :topicsearch do
               get ':topic', to: "questions#by_topic"
-              get ':topic/:page', to: "questions#by_topic"
             end
           end
 
@@ -54,16 +45,10 @@ Rails.application.routes.draw do
       end
 
       resources :topics do
-        collection do 
-          get '/page/:page', to: "topics#index"
-        end
         get 'tags', to: "tags#topic_tags"
       end
 
       resources :tags do
-        collection do 
-          get '/page/:page', to: "tags#index"
-        end
         get 'used-by', to: "tags#used_by"
       end
 
@@ -79,7 +64,6 @@ end
 #SOLO USEN GETS DE MOMENTO
 #api/v1                                                   : Todas las preguntas
 #api/v1/questions                                         : Todas las preguntas
-#api/v1/questions/page/:page                              : Todas las preguntas en la página x
 #api/v1/questions/questions-by-title/:title               : Todas las preguntas por titulo.
 #api/v1/questions/:id                                     : Pregunta id
 #api/v1/questions/:question_id/question-attachments       : Los attachments de una pregunta
@@ -88,6 +72,7 @@ end
 #api/v1/questions/topicsearch/(:topic_id|:topic_name)     : Busca preguntas por topic
 #api/v1/questions/:question_id/topic                      : Retorna el topic del question
 #api/v1/questions/:question_id/tags                       : Retorna el tags
+#api/v1/questions/:question_id/postulated                 : Retorna los usuarios postulados a una pregunta
 
 #api/v1/auth                                              : Authentication for users
 #api/v1/users/(:username||:id)                            : Me retorna un usuario
@@ -99,11 +84,10 @@ end
 #api/v1/users/:user_id/domain_ranks/:id                   : EL nivel del usuario en un tema específico
 #api/v1/users/:user_id/domain_ranks/page/:page            : Los niveles en los temas que ha contribuido el usuario en la pagina x
 #api/v1/users/:user_id/my-questions                       : Las preguntas hechas por un usuario
+#api/v1/users/:user_id/postulated                         : Retorna las preguntas que se postularon a una pregunta
 
-#api/v1/topics(/page/:page)                               : Ve todos los topics
 #api/v1/topics/(:topic_id||:topic_name)                   : Muestra un topic especifico
 #api/v1/topics/:topic_id/tags                             : Muestra los tags de un topic
 
-#api/v1/tags(/page/:page)                                 : Ve todos los tags
 #api/v1/tags/(:tag_id||:tag_name)                         : Muestra un tag especifico
 #api/v1/tags/used-by                                      : Muestra que usuarios hicieron preguntas en un tag

@@ -126,6 +126,6 @@ class Question < ApplicationRecord
     g=Question.sort_by(g, sort)
     g.paginate(:page => page,:per_page => per_page)
   end
-
-
+  
+  
 end
