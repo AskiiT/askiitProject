@@ -10,7 +10,6 @@ Rails.application.routes.draw do
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
             get 'search/:username',     to: 'users#search_username'     #api/v1/users/search/:username (get)
-
           end
           get 'my-questions',           to: 'questions#my_questions'    #api/v1/users/:id/my-questions (get)
 
@@ -27,6 +26,7 @@ Rails.application.routes.draw do
           get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
           
           resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
+          get 'rank',                   to: 'ranks#index'
           resources :domain_ranks,      only: [:index, :show]
 
           get 'postulated',             to: 'questions#is_postulated_to' #api/v1/users/:id/postulated (get)
@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       #resources :question_has_tags
       #resources :domain_ranks
       #resources :ranks
+      resources :question_attachments
       root to: "questions#index"
     end
   end

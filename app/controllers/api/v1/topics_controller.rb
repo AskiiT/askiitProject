@@ -7,8 +7,21 @@ class API::V1::TopicsController < ApplicationController
     f= params[:page]
     unless f.nil?
       @topics = Topic.load_topics.page(f)
+    else
+      @topics = Topic.all
     end
-    render json: @topics
+
+    if @topics.empty?
+      render json: 
+        { data:
+          {
+            error: "No more topics to show."
+          }
+        }
+    else
+      render json: @topics
+    end
+
   end
 
   # GET /topics/1
@@ -59,7 +72,16 @@ class API::V1::TopicsController < ApplicationController
 
   def used_by
     @users= User.user_made_topic(params[:topic_id]).page(params[:page])
-    render json: @users
+    if @users.empty?
+      render json: 
+        { data:
+          {
+            error: "No more users to show."
+          }
+        }
+    else
+      render json: @users
+    end
   end
 
   private

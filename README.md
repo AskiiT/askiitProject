@@ -78,12 +78,15 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 * api/v1/users/search/:username                            
 > Me retorna un resultado de busqueda por username 	
+> ?page=x
 
 * api/v1/users/(:username or :id)/followers                
 > Followers de un usuario 							
+> ?page=x
 
 * api/v1/users/(:username or :id)/following                  
 > Follows de un usuario 								
+> ?page=x
 
 * api/v1/users/:user_id/ranks                              
 > Rank específico del usuario          
@@ -141,6 +144,7 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 * api/v1/questions/:question_id/postulated                 
 > Retorna los usuarios postulados a una pregunta
+> ?page=x
 
 
 ## Rutas para Topics

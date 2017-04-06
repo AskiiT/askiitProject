@@ -81,6 +81,7 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     @question = Question.questions_by_title(title=params[:title], sort=s).page(params[:page])
+    
     render json: @question
   end
 
@@ -103,7 +104,16 @@ class API::V1::QuestionsController < ApplicationController
 
     @questions = Question.questions_by_tag(tag=g, sort=s).page(page)
 
-    render json: @questions
+    if @questions.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    else
+      render json: @questions
+    end
   end
 
   def by_topic
@@ -124,7 +134,16 @@ class API::V1::QuestionsController < ApplicationController
 
 
     @questions = Question.questions_by_topic(topic=g, sort=s).page(params[:page])
-    render json: @questions
+    if @questions.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    else
+      render json: @questions
+    end
   end
 
 
@@ -137,7 +156,17 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     @question_list = Question.questions_by_user(user=params[:user_id], sort=s).page(params[:page])
-    render json: @question_list
+
+    if @question_list.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+      else
+        render json: @question_list
+      end
   end
 
 
@@ -149,7 +178,17 @@ class API::V1::QuestionsController < ApplicationController
       s=translate(s)
     end
     @postulate= Question.question_postulated(user=params[:user_id], sort=s).page(params[:page])
-    render json: @postulate
+
+    if @postulate.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    else
+      render json: @postulate
+    end
   end
 
   private

@@ -1,11 +1,12 @@
 class API::V1::UsersController < ApplicationController
+	
 	def index
-			p = params[:page]
-			unless p.nil?
-				@users = User.load_users( p )
-			else
-				@users = User.all
-			end
+		p = params[:page]
+		unless p.nil?
+			@users = User.load_users( p )
+		else
+			@users = User.all
+		end
     	if @users.empty?
   			render json: 
   				{ data:
@@ -34,8 +35,18 @@ class API::V1::UsersController < ApplicationController
 
   	#Encuentra un usuario por coincidencia
 	def search_username
-		@user=User.users_by_username(params[:username])
-		render json: @user
+		@users=User.users_by_username(params[:username]).page(params[:page])
+
+		if @users.empty?
+  			render json: 
+  				{ data:
+  					{
+  						error: "No more users to show."
+  					}
+  				}
+  		else
+    		render json: @users
+  		end
 	end
 
 	def my_questions

@@ -62,7 +62,17 @@ class API::V1::TagsController < ApplicationController
 
     @tags=Tag.tags_in_topic(g).page(params[:page])
 
-    render json: @tags
+    if @tags.empty?
+      render json: 
+        { data:
+          {
+            error: "No more tags to show."
+          }
+        }
+    else
+      render json: @tags
+    end
+
   end
 
 
@@ -73,7 +83,17 @@ class API::V1::TagsController < ApplicationController
 
   def used_by
     @users= User.user_made_tag(params[:tag_id]).page(params[:page])
-    render json: @users
+
+    if @users.empty?
+      render json: 
+        { data:
+          {
+            error: "No more users to show."
+          }
+        }
+    else
+      render json: @users
+    end
   end
 
   private

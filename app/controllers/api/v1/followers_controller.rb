@@ -5,25 +5,47 @@ class API::V1::FollowersController < ApplicationController
   def index
     g=params[:user_id]
     m=g.to_i
-    if m.to_s == g.to_s
-      @followers = User.user_followers(g)
-    else
+
+    unless m.to_s == g.to_s
       f=User.users_id_name(g)
-      @followers = User.user_followers(f.to_i)
+      g=f.to_i
     end
-    render json: @followers
+    @followers = User.user_followers(g).page(params[:page])
+
+    if @followers.empty?
+        render json: 
+          { data:
+            {
+              error: "No more followers to show."
+            }
+          }
+      else
+        render json: @followers
+      end
   end
+
 
   def following
     g=params[:user_id]
     m=g.to_i
-    if m.to_s == g.to_s
-      @followers = User.user_follows(g)
-    else
+
+    unless m.to_s == g.to_s
       f=User.users_id_name(g)
-      @followers = User.user_follows(f.to_i)
+      g=f.to_i
     end
-    render json: @followers
+    @following = User.user_follows(g).page(params[:page])
+
+    if @following.empty?
+      render json: 
+        { data:
+            {
+              error: "No more follows to show."
+            }
+        }
+    else
+        render json: @following
+    end
+
   end
 
   # GET /followers/1

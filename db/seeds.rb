@@ -11,6 +11,7 @@
 
 	t= Topic.new
 	t.topic_name= Faker::Address.city
+	t.topic_name= t.topic_name.upcase
 	t.topic_description= Faker::Company.catch_phrase
 	t.save
 
@@ -29,7 +30,8 @@ end
 
 500.times do |i|
  ta=Tag.new
- ta.tag_name=Faker::Commerce.department
+ ta.tag_name=Faker::Team.name
+ ta.tag_name=ta.tag_name.upcase
  ta.topic_id=rand(1..150)
  ta.save
 end
@@ -61,14 +63,14 @@ end
 
 600.times do |i|
  t=Postulate.new
- t.question_id=rand(1..500)
+ t.question_id=rand(1..700)
  t.user_id=rand(1..150)
  t.save
 end
 
 400.times do |i|
  at=QuestionAttachment.new
- at.question_id=rand(1..500)
+ at.question_id=rand(1..700)
  at.save
 end
 

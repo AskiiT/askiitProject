@@ -39,8 +39,17 @@ class API::V1::PostulatesController < ApplicationController
   end
 
   def postulated_to
-    @postulate=User.users_by_question(params[:question_id])
-    render json: @postulate
+    @postulate=User.users_by_question(params[:question_id]).page(params[:page])
+    if @postulate.empty?
+        render json: 
+          { data:
+            {
+              error: "No more postulates to show."
+            }
+          }
+    else
+        render json: @postulate
+    end
   end
 
 

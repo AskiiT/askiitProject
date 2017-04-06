@@ -3,10 +3,18 @@ class API::V1::QuestionAttachmentsController < ApplicationController
 
   # GET /question_attachments
   def index
-    @question_attachments = QuestionAttachment.all
-    @question_attachments=QuestionAttachment.get_attachments(params[:question_id])
+    @question_attachments=QuestionAttachment.get_attachments(params[:question_id]).page(params[:page])
+    if @question_attachments.empty?
+      render json: 
+        { data:
+          {
+            error: "No more attachments to show."
+          }
+        }
+    else
+      render json: @question_attachments
+    end
 
-    render json: @question_attachments
   end
 
   # GET /question_attachments/1
