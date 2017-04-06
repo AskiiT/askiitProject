@@ -29,7 +29,7 @@ class Tag < ApplicationRecord
 
   	#Me retorna los tags en un tema
   	def self.tags_in_topic(topic)
-  		joins(:topic).where("topics.id = (?)", topic).select("tags.id, tags.tag_name")
+  		joins(:topic).where("topics.id = (?)", topic)
   	end
 
   	#Me retorna los tags en los que ha posteado un usuario.

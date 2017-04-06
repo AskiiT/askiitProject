@@ -11,6 +11,7 @@
 
 	t= Topic.new
 	t.topic_name= Faker::Address.city
+	t.description= Faker::Company.catch_phrase
 	t.save
 
 
@@ -26,7 +27,7 @@
 
 end
 
-200.times do |i|
+500.times do |i|
  ta=Tag.new
  ta.tag_name=Faker::Commerce.department
  ta.topic_id=rand(1..150)

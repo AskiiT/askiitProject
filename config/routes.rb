@@ -21,14 +21,14 @@ Rails.application.routes.draw do
           get 'domain-rank',            to: 'domain_ranks#by_user'      #api/v1/users/:id/domain-rank (get)
           get 'domain-rank/page/:page', to: 'domain_ranks#by_user'      #api/v1/users/:id/domain-rank/page/:page (get)
           get 'domain-rank/:topic_id',  to: 'domain_ranks#by_user_and_topic'  #api/v1/users/:id/domain-rank/:topic_id (get)
-          
       end
 
       resources :questions do
           collection do
             get 'questions-by-title/:title/', to: "questions#questions_by_title"        
             get 'questions-by-title/:title/:page', to: "questions#questions_by_title" 
-            
+            get '/page/:page', to: "questions#index"
+
             scope :tagsearch do
               get ':tag', to: "questions#by_tag"
               get ':tag/:page', to: "questions#by_tag"
@@ -38,26 +38,35 @@ Rails.application.routes.draw do
               get ':topic', to: "questions#by_topic"
               get ':topic/:page', to: "questions#by_topic"
             end
-
           end
-        resources :question_attachments#, only: [:index]
+
+        resources :question_attachments
         get 'topic', to: 'topics#topics_in_question'
         get 'tags', to: 'tags#tags_in_question'
+
+        resources :postulates
       end
 
-      get 'questions/page/:page', to: "questions#index"
+      resources :topics do
+        collection do 
+          get '/page/:page', to: "topics#index"
+        end
+        get 'tags', to: "tags#topic_tags"
+      end
 
-      #resources :followers
-      resources :postulates
-      resources :question_has_tags
-      resources :domain_ranks
-      
-      resources :tags
-      resources :topics
-      resources :ranks
+      resources :tags do
+        collection do 
+          get '/page/:page', to: "tags#index"
+        end
+        get 'used-by', to: "tags#used_by"
+      end
+
+      #resources :postulates
+      #resources :question_has_tags
+      #resources :domain_ranks
+      #resources :ranks
       root to: "questions#index"
     end
-  resources :postulates
   end
 end
 
@@ -78,3 +87,9 @@ end
 #api/v1/users/(:username||:id)/followers                  : Followers de un usuario
 #api/v1/users/(:username||:id)/follows                    : Follows de un usuario
 #api/v1/auth                                              : Authentication for users
+#api/v1/topics(/page/:page)                               : Ve todos los topics
+#api/v1/topics/(:topic_id||:topic_name)                   : Muestra un topic especifico
+#api/v1/topics/:topic_id/tags                             : Muestra los tags de un topic
+#api/v1/tags(/page/:page)                                 : Ve todos los tags
+#api/v1/tags/(:tag_id||:tag_name)                         : Muestra un tag especifico
+#api/v1/tags/used-by                                      : Muestra que usuarios hicieron preguntas en un tag

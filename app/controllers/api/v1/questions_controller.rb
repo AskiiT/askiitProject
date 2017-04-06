@@ -50,33 +50,28 @@ class API::V1::QuestionsController < ApplicationController
     g = params[:tag]
     page = params[:page]
     m = g.to_i
-
-    if m.to_s == g.to_s
-      if page.nil?
-        @questions = Question.questions_by_tag(params[:tag])
-      else
-        @questions = Question.questions_by_tag(g).page(page)
-      end
-      render json: @questions
-    else
+    if m.to_s != g.to_s
       u=Tag.tag_id_name(params[:tag])
-      @questions=Question.questions_by_tag(u)
-      render json: @questions
+      g=u.to_i
     end
+
+
+    @questions = Question.questions_by_tag(g).page(page)
+
+    render json: @questions
   end
 
   def by_topic
     g=params[:topic]
     m=g.to_i
-   
-    if m.to_s == g.to_s
-      @questions = Question.questions_by_topic(params[:topic]).page(params[:page])
-      render json: @questions
-    else
+    
+    if m.to_s != g.to_s
       u=Topic.topic_id_name(params[:topic])
-      @questions = Question.questions_by_topic(u).page(params[:page])
-      render json: @questions
+      g=u.to_i
     end
+
+    @questions = Question.questions_by_topic(g).page(params[:page])
+    render json: @questions
   end
 
   private

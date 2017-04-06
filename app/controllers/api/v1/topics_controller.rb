@@ -1,15 +1,28 @@
 class API::V1::TopicsController < ApplicationController
-  before_action :set_topic, only: [:show, :update, :destroy]
+  before_action :set_topic, only: [:update, :destroy]
 
   # GET /topics
   def index
     @topics = Topic.all
-
+    f= params[:page]
+    unless f.nil?
+      @topics = Topic.load_topics.page(f)
+    end
     render json: @topics
   end
 
   # GET /topics/1
   def show
+    g=params[:id]
+    m=g.to_i
+    
+    if m.to_s != g.to_s
+      u=Topic.topic_id_name(params[:id])
+      g=u.to_i
+    end
+
+    @topic = Topic.find(g)
+
     render json: @topic
   end
 
@@ -43,7 +56,6 @@ class API::V1::TopicsController < ApplicationController
     @topic=Topic.topic_in_question(params[:question_id])
     render json: @topic
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
