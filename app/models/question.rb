@@ -40,7 +40,7 @@ class Question < ApplicationRecord
   def self.load_questions(sort= 1, page = 1, per_page = 10)
     g= Question.includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
     g=Question.sort_by(g, sort)
-    g.select("questions.id", "questions.date_posted", "questions.difficulty").paginate(:page => page,:per_page => per_page)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   #Retorna una pregunta por id

@@ -1,14 +1,12 @@
 class API::V1::UsersController < ApplicationController
-	#Encuentra un usuario por coincidencia
-	def search_username
-		@user=User.users_by_username(params[:username])
-		render json: @user
-	end
-
-	def my_questions
-		@question_list = Question.questions_by_user( params[:user_id] )
-		render json: @question_list
-	end
+	def index
+  		@users = User.all
+  		page = params[:page]
+    	unless page.nil?
+    		@users = User.load_users( page )
+    	end
+    	render json: @users
+  	end
 
 	def show
 		g=params[:id]
@@ -24,13 +22,15 @@ class API::V1::UsersController < ApplicationController
 		
   	end
 
-  	def index
-  		@users = User.all
-  		page = params[:page]
-    	unless page.nil?
-    		@users = User.load_users( page )
-    	end
-    	render json: @users
-  	end
+  	#Encuentra un usuario por coincidencia
+	def search_username
+		@user=User.users_by_username(params[:username])
+		render json: @user
+	end
+
+	def my_questions
+		@question_list = Question.questions_by_user( params[:user_id] )
+		render json: @question_list
+	end
 
 end

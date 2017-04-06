@@ -1,6 +1,5 @@
 class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-  scope
   # GET /questions
   def index
     @questions = Question.all
@@ -21,7 +20,7 @@ class API::V1::QuestionsController < ApplicationController
     @question = Question.new(question_params)
 
     if @question.save
-      render json: @question, status: :created, location: @question
+      render json: @question, status: :created #, location: @question
     else
       render json: @question.errors, status: :unprocessable_entity
     end
@@ -54,7 +53,6 @@ class API::V1::QuestionsController < ApplicationController
       u=Tag.tag_id_name(params[:tag])
       g=u.to_i
     end
-
 
     @questions = Question.questions_by_tag(g).page(page)
 

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do      
 
-      resources :users do                     #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
+      resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
             get 'search/:username',     to: 'users#search_username'     #api/v1/users/search/:username (get)
             get 'page/:page',           to: 'users#index'               #api/v1/users/page/:id (get)
@@ -18,9 +18,9 @@ Rails.application.routes.draw do
           get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
           
           resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
-          resources :domain_ranks,      only: [:index, :show] do 
+          resources :domain_ranks,      only: [:index, :show] do        #api/v1/users/:id/domain-ranks (get, show)
             collection do 
-              get '/page/:page', to: 'domain_ranks#index'      #api/v1/users/:id/domain-rank/page/:page (get)
+              get 'page/:page', to: 'domain_ranks#index'                #api/v1/users/:id/domain-ranks/page/:page (get)
             end
           end
 
