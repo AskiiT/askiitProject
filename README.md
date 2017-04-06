@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Rutas.
 
-Things you may want to cover:
+Por ahora, hay cuatro de las cinco rutas disponibles para que frontend consuma, estas son:
 
-* Ruby version
+ * Información de todas las preguntas:
 
-* System dependencies
+ #api/v1/questions
 
-* Configuration
+ * Información de un usuario dado su id:
 
-* Database creation
+ #api/v1/users/:id
 
-* Database initialization
+ * Información de preguntas filtradas por tag:
 
-* How to run the test suite
+ #api/v1/questions/tagsearch/:tag
 
-* Services (job queues, cache servers, search engines, etc.)
+ * Información de una pregunta dado su id:
 
-* Deployment instructions
-
-* ...
+ #api/v1/questions/:id

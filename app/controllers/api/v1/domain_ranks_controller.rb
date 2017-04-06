@@ -9,29 +9,34 @@ class API::V1::DomainRanksController < ApplicationController
   end
 
   def by_user
-    uid = params[:user_id]
+    inputId = params[:user_id]
     page = params[:page]
-    integerUid = uid.to_i
-    if integerUid.to_s == uid.to_s
-      @dranks = DomainRank.domain_ranks_by_user_id(uid)
+
+    integerUid = inputId.to_i
+    stringUid = inputId.to_s
+
+    integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
+
+    unless page.nil?
+      @dranks = DomainRank.domain_ranks_by_user_id(id).page(page)
     else
-      f = User.users_id_name(uid)
-      @dranks = DomainRank.domain_ranks_by_user_id(f.to_i)
+      @dranks = DomainRank.domain_ranks_by_user_id(id)
     end
+
     render json: @dranks
   end
 
   def by_user_and_topic
-    uid = params[:user_id]
+    inputId = params[:user_id]
     tid = params[:topic_id]
 
-    integerUid = uid.to_i
-    if integerUid.to_s == uid.to_s
-      @drank = DomainRank.domain_ranks_by_user_id_and_topic(uid, tid)
-    else
-      f = User.users_id_name(uid)
-      @drank = DomainRank.domain_ranks_by_user_id_and_topic(f.to_i, tid)
-    end
+    integerUid = inputId.to_i
+    stringUid = inputId.to_s
+
+    integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
+
+    @drank = DomainRank.domain_ranks_by_user_id_and_topic(id, tid)
+
     render json: @drank
   end
 
