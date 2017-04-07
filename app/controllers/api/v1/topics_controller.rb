@@ -1,15 +1,41 @@
 class API::V1::TopicsController < ApplicationController
-  before_action :set_topic, only: [:show, :update, :destroy]
+  before_action :set_topic, only: [:update, :destroy]
 
   # GET /topics
   def index
     @topics = Topic.all
+    f= params[:page]
+    unless f.nil?
+      @topics = Topic.load_topics.page(f)
+    else
+      @topics = Topic.all
+    end
 
-    render json: @topics
+    if @topics.empty?
+      render json: 
+        { data:
+          {
+            error: "No more topics to show."
+          }
+        }
+    else
+      render json: @topics
+    end
+
   end
 
   # GET /topics/1
   def show
+    g=params[:id]
+    m=g.to_i
+    
+    if m.to_s != g.to_s
+      u=Topic.topic_id_name(params[:id])
+      g=u.to_i
+    end
+
+    @topic = Topic.find(g)
+
     render json: @topic
   end
 
@@ -18,7 +44,7 @@ class API::V1::TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
 
     if @topic.save
-      render json: @topic, status: :created, location: @topic
+      render json: @topic, status: :created
     else
       render json: @topic.errors, status: :unprocessable_entity
     end
@@ -38,13 +64,43 @@ class API::V1::TopicsController < ApplicationController
     @topic.destroy
   end
 
+  #####
+  ##Custom Routes
+  ####
 
   def topics_in_question
     @topic=Topic.topic_in_question(params[:question_id])
     render json: @topic
   end
 
+  def used_by
+    @users= User.user_made_topic(params[:topic_id]).page(params[:page])
+    if @users.empty?
+      render json: 
+        { data:
+          {
+            error: "No more users to show."
+          }
+        }
+    else
+      render json: @users
+    end
+  end
 
+  def search
+    @topics=Topic.topics_by_name(params[:topic_name]).page(params[:page])
+    if @topics.empty?
+      render json: 
+        { data:
+          {
+            error: "No more topics to show."
+          }
+        }
+    else
+      render json: @topics
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_topic

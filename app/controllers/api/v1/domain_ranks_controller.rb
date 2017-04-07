@@ -3,22 +3,63 @@ class API::V1::DomainRanksController < ApplicationController
 
   # GET /domain_ranks
   def index
-    @domain_ranks = DomainRank.all
+    inputId = params[:user_id]
+    page = params[:page]
 
-    render json: @domain_ranks
+    integerUid = inputId.to_i
+    stringUid = inputId.to_s
+
+    integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
+
+    @dranks = DomainRank.domain_ranks_by_user_id(id).page(page)
+
+    if @dranks.empty?
+        render json: 
+          { data:
+            {
+              error: "No more ranks to show."
+            }
+          }
+      else
+        render json: @dranks
+      end
   end
 
   # GET /domain_ranks/1
   def show
-    render json: @domain_rank
+    inputId = params[:user_id]
+    tid = params[:id]
+
+    #integerUid = inputId.to_i
+    #stringUid = inputId.to_s
+
+    #integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
+
+    #@drank = DomainRank.domain_ranks_by_user_id_and_topic(id, tid)
+    @drank = DomainRank.find(params[:id])
+    render json: @drank
   end
+
+  def topics
+    inputId = params[:user_id]
+    tid = params[:id]
+
+    integerUid = inputId.to_i
+    stringUid = inputId.to_s
+
+    integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
+
+    @drank = DomainRank.domain_ranks_by_user_id_and_topic(id, tid)
+    render json: @drank
+  end
+
 
   # POST /domain_ranks
   def create
     @domain_rank = DomainRank.new(domain_rank_params)
 
     if @domain_rank.save
-      render json: @domain_rank, status: :created, location: @domain_rank
+      render json: @domain_rank, status: :created
     else
       render json: @domain_rank.errors, status: :unprocessable_entity
     end

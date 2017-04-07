@@ -61,21 +61,19 @@ class User < ActiveRecord::Base
   #Busca coincidencias del nombre de un usuario
   def self.users_by_firstname(first_name, page = 1, per_page = 10)
       where("users.first_name LIKE ?", "%#{first_name.downcase}%")
-      .select("users.id, users.username, users.first_name, users.last_name")
       .paginate(:page => page,:per_page => per_page)
   end
 
   #Busca coincidencias del apellido de un usuario
   def self.users_by_lastname(last_name, page = 1, per_page = 10)
       where("users.last_name LIKE ?", "%#{last_name.downcase}%")
-      .select("users.id, users.username, users.first_name, users.last_name")
       .paginate(:page => page,:per_page => per_page)
   end
 
   #Ordena los usuarios según su rango en el tema dado
   def self.users_by_domain_rank_level(topic, page = 1, per_page = 10)
     joins(domain_ranks: :topic).where("domain_ranks.topic_id = ?",topic)
-    .select("users.id, users.username, topic_id, topic_name, level").order("domain_ranks.level DESC")
+    .order("domain_ranks.level DESC")
     .paginate(:page => page,:per_page => per_page)
   end
 
@@ -84,6 +82,13 @@ class User < ActiveRecord::Base
     g=Question.questions_by_user(id).select("questions.id").group("questions.id")
     m=Postulate.where("question_id in (?)", g).select("user_id").group("user_id")
     load_users(page, per_page).where("users.id in (?)", m)
+  end
+
+  #A que usuarios se postuló este usuario dado.
+  def self.who_it_postulated(id, page = 1, per_page = 10)
+    m=Postulate.where("user_id = (?)", id).select("question_id").group("question_id")
+    g=Question.where("questions.id in (?)", m).select("questions.user_id").group("questions.user_id")
+    load_users(page, per_page).where("users.id in (?)", g)
   end
 
   #A qué preguntas se postuló un usuario dado su id
@@ -97,14 +102,13 @@ class User < ActiveRecord::Base
   def self.user_level_by_topic( userid, topicic )
     joins( domain_ranks: :topic )
     .where( [ "domain_ranks.topic_id = ? AND domain_ranks.user_id = ?", topicic, userid ] )
-    .select( "users.id, users.username, topic_name, level" )
+    .select( "topic_name, level" )
   end
 
   # Consulta los usuarios que  están postulados a una pregunta específica
   def self.users_by_question(queid, page = 1, per_page = 10)
     joins( postulates: :question)
     .where(["postulates.question_id = ?",queid])
-    .select("users.id,users.username,title")
     .paginate(:page => page,:per_page => per_page)
   end
 
@@ -126,17 +130,31 @@ class User < ActiveRecord::Base
   end
 
   # Ordena los usuarios basado en su rapidez por su rango
-  def self.user_by_quickness
-      joins(:rank).order("ranks.quickness DESC").select("users.id,quickness")
+  def self.user_by_quickness(page = 1, per_page = 10)
+      joins(:rank).order("ranks.quickness DESC")
+      .paginate(:page => page,:per_page => per_page)
   end
   # Ordena los usuarios basado en su claridad por su rango
-  def self.user_by_clarity
-      joins(:rank).order("ranks.clarity DESC").select("users.id,clarity")
+  def self.user_by_clarity(page = 1, per_page = 10)
+      joins(:rank).order("ranks.clarity DESC")
+      .paginate(:page => page,:per_page => per_page)
   end
 
   # Ordena los usuarios basado en su efectividad por su rango
-  def self.user_by_efectiveness
-      joins(:rank).order("ranks.efectiveness DESC").select("users.id,efectiveness")
+  def self.user_by_efectiveness(page = 1, per_page = 10)
+      joins(:rank).order("ranks.efectiveness DESC")
+      .paginate(:page => page,:per_page => per_page)
   end
 
+  #Qué usuario ha usado el Tag "tag"
+  def self.user_made_tag(tag, page = 1, per_page = 10)
+    joins(questions: :question_has_tags).where("question_has_tags.tag_id=(?)", tag)
+    .paginate(:page => page,:per_page => per_page)
+  end
+
+  #Qué usuario ha usado el tema "topic"
+  def self.user_made_topic(topic, page = 1, per_page = 10)
+    joins( :questions ).where("questions.topic_id= (?) ", topic)
+    .paginate(:page => page,:per_page => per_page)
+  end
 end

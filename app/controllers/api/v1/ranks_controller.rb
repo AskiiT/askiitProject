@@ -1,14 +1,20 @@
 class API::V1::RanksController < ApplicationController
   before_action :set_rank, only: [:show, :update, :destroy]
 
-  # GET /ranks
+  # GET .../users/:id/ranks
   def index
-    @ranks = Rank.all
+    inputId = params[:user_id]
+    integerUid = inputId.to_i
+    stringUid = inputId.to_s
 
-    render json: @ranks
+    integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
+
+    @rank = Rank.rank_of_user(id)
+
+    render json: @rank
   end
 
-  # GET /ranks/1
+  # GET ranks/1
   def show
     render json: @rank
   end
@@ -18,7 +24,7 @@ class API::V1::RanksController < ApplicationController
     @rank = Rank.new(rank_params)
 
     if @rank.save
-      render json: @rank, status: :created, location: @rank
+      render json: @rank, status: :created
     else
       render json: @rank.errors, status: :unprocessable_entity
     end
@@ -36,6 +42,10 @@ class API::V1::RanksController < ApplicationController
   # DELETE /ranks/1
   def destroy
     @rank.destroy
+  end
+
+  def by_user
+    
   end
 
   private

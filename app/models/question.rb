@@ -1,7 +1,9 @@
 class Question < ApplicationRecord
 
-  scope :order_by_date_posted, -> { order("questions.date_posted DESC") }
-  scope :order_by_difficulty, -> { order("questions.difficulty DESC") }
+  scope :order_newest, -> { order("questions.date_posted DESC") }
+  scope :order_oldest, -> { order("questions.date_posted ASC") }
+  scope :order_harder, -> { order("questions.difficulty DESC") }
+  scope :order_easiest, -> { order("questions.difficulty ASC") }
 
   belongs_to :user
   belongs_to :topic
@@ -23,9 +25,22 @@ class Question < ApplicationRecord
       end
   end
 
-  def self.load_questions(page = 1, per_page = 10)
-    includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
-    .paginate(:page => page,:per_page => per_page)
+  def self.sort_by(query1, sort)
+    if sort==1
+      query1= query1.order_newest
+    elsif sort==2
+      query1= query1.order_oldest
+    elsif sort==3
+      query1= query1.order_harder
+    elsif sort==4
+      query1= query1.order_easiest
+    end
+  end
+
+  def self.load_questions(sort= 1, page = 1, per_page = 10)
+    g= Question.includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
+    g=Question.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   #Retorna una pregunta por id
@@ -35,46 +50,46 @@ class Question < ApplicationRecord
   end
 
   #Retorna una pregunta por id
-  def self.questions_by_ids(ids, page = 1, per_page = 10)
-    load_questions(page, per_page)
-    .where( questions:{id: ids} )
-    .paginate(:page => page,:per_page => per_page)
+  def self.questions_by_ids(ids, sort=1, page = 1, per_page = 10)
+    g=load_questions(sort, page, per_page).where( questions:{id: ids} )
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   #Busca coincidencias del titulo de una pregunta
-  def self.questions_by_title(title, page = 1, per_page = 10)
-    where("questions.title LIKE ?", "%#{title.downcase}%")
-    .select("questions.id, questions.title, questions.body")
-    .paginate(:page => page,:per_page => per_page)
+  def self.questions_by_title(title, sort=1, page = 1, per_page = 10)
+    g=where("questions.title LIKE ?", "%#{title.downcase}%")
+    g=Question.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta las preguntas hechas por un usuario
-  def self.questions_by_user(user, page = 1, per_page = 10)
-    load_questions(page, per_page)
+  def self.questions_by_user(user, sort=1, page = 1, per_page = 10)
+    load_questions(sort, page, per_page)
     .where(questions:{user_id: user})
     .paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas tienen o han tenido postulaciones
-  def self.postulated_question(page = 1, per_page = 10)
-    joins(:postulates)
-    .select("questions.id").group("questions.id")
-    .paginate(:page => page,:per_page => per_page)
+  def self.postulated_question(sort=1, page = 1, per_page = 10)
+      g=joins(:postulates)
+      g=Question.sort_by(g, sort)
+      g.paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas NO tienen o NUNCA han tenido postulaciones
-  def self.not_postulated_question(page = 1, per_page = 10)
-    load_questions(page, per_page)
-    .where.not('id IN (?)', postulated_question)
-    .paginate(:page => page,:per_page => per_page)
+  def self.not_postulated_question(sort=1, page = 1, per_page = 10)
+    r=joins(:postulates)
+    g=where.not('id IN (?)', r.select('id'))
+    g=Question.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   #Me retorna preguntas en un tag
-  def self.questions_by_tag(tag, page = 1, per_page = 10)
+  def self.questions_by_tag(tag, sort=1, page = 1, per_page = 10)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
-    load_questions(page, per_page)
-    .where('questions.id in (?)', g)
-    .paginate(:page => page,:per_page => per_page)
+    m=where('questions.id in (?)', g)
+    g=Question.sort_by(m, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   #Ver los adjuntos que tiene la pregunta
@@ -91,9 +106,10 @@ class Question < ApplicationRecord
 
 
   #Retorna preguntas por tema
-  def self.questions_by_topic(topic, page = 1, per_page = 10)
-    joins(:topic).where("topic_id= ?", topic)
-    .paginate(:page => page,:per_page => per_page)
+  def self.questions_by_topic(topic, sort=1, page = 1, per_page = 10)
+    g=joins(:topic).where("topic_id= ?", topic)
+    g=Question.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   def self.sort_by_date( page = 1, per_page = 10)
@@ -106,5 +122,11 @@ class Question < ApplicationRecord
     #where("questions.id=?", id).select("questions.id, questions.title", g)
   end
 
-
+  def self.question_postulated(user, sort=1, page = 1, per_page = 10)
+    g=joins(:postulates).where("postulates.user_id=?", user)
+    g=Question.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
+  end
+  
+  
 end
