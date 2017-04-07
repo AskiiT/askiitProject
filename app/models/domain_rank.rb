@@ -31,7 +31,6 @@ class DomainRank < ApplicationRecord
   def self.domain_ranks_by_user_id_and_topic( uid, tid )
     joins( :topic )
     .where( domain_ranks: {user_id: uid, topic_id: tid})
-    .select('level, topic_id, topics.topic_name')
   end
 
 

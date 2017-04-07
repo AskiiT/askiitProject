@@ -1,5 +1,5 @@
 class DomainRankSerializer < ActiveModel::Serializer
   type 'data'
-  attributes :level
+  attributes :id, :level
   belongs_to :topic
 end

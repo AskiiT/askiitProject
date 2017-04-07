@@ -38,7 +38,11 @@ Rails.application.routes.draw do
           
           resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
           get 'rank',                   to: 'ranks#index'
-          resources :domain_ranks
+          resources :domain_ranks do
+            collection do
+              get 'topic/:id', to: 'domain_ranks#topics'
+            end
+          end
 
           get 'postulated',             to: 'questions#is_postulated_to' #api/v1/users/:id/postulated (get)
           get 'who-postulated',         to: 'users#who_postulated'  #api/v1/users/:user_id/who-postulated
