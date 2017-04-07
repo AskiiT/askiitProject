@@ -45,6 +45,7 @@ class Topic < ApplicationRecord
 
 	#id del topic por name
 	def self.topic_id_name(name)
+		name=name.upcase
 		find_by(topic_name: name).id
 	end
 

@@ -81,9 +81,18 @@ class API::V1::QuestionsController < ApplicationController
       s=translate(s)
     end
 
-    @question = Question.questions_by_title(title=params[:title], sort=s).page(params[:page])
+    @questions = Question.questions_by_title(title=params[:title], sort=s).page(params[:page])
     
-    render json: @question
+      if @questions.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    else
+      render json: @questions
+    end
   end
 
   def by_tag

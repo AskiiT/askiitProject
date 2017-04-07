@@ -50,7 +50,16 @@ class API::V1::DomainRanksController < ApplicationController
     integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
 
     @drank = DomainRank.domain_ranks_by_user_id_and_topic(id, tid)
+    if @drank.empty?
+    render json: 
+      { data:
+        {
+          error: "No ranks to show."
+        }
+      }
+  else
     render json: @drank
+  end
   end
 
 
