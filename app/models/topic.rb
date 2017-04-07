@@ -26,7 +26,7 @@ class Topic < ApplicationRecord
   	#Me retorna coincidencias con el titulo de un tema
 	def self.topics_by_name(topic_name, page = 1, per_page = 10)
 	   load_topics(page, per_page)
-	   	.where("topics.topic_name LIKE ?", "#{topic_name.downcase}%")
+	   	.where("topics.topic_name LIKE ?", "%#{topic_name.upcase}%")
 	end
 
 	#Retorna a que temas un usuario ha dado una pregunta

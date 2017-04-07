@@ -45,6 +45,7 @@ class API::V1::QuestionsController < ApplicationController
   # GET /questions/1
   def show
     render json: @question
+   
   end
 
   # POST /questions
@@ -190,6 +191,51 @@ class API::V1::QuestionsController < ApplicationController
       render json: @postulate
     end
   end
+
+
+  def has_postulated
+    s= params[:sort]
+    if s.nil?
+      s=1
+    else
+      s=translate(s)
+    end
+    @question=Question.postulated_question(sort=s).page(params[:page])
+    if @question.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    else
+      render json: @question
+    end
+  end
+
+  def has_not_postulated
+    s= params[:sort]
+    if s.nil?
+      s=1
+    else
+      s=translate(s)
+    end
+    @question=Question.not_postulated_question(sort=s).page(params[:page])
+    if @question.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    else
+      render json: @question
+    end
+  end
+
+  ######
+  ##Other functions
+  ######
 
   private
     # Use callbacks to share common setup or constraints between actions.

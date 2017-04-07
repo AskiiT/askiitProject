@@ -71,14 +71,15 @@ class Question < ApplicationRecord
 
   #Consulta que preguntas tienen o han tenido postulaciones
   def self.postulated_question(sort=1, page = 1, per_page = 10)
-      g=joins(:postulates).select("questions.id").group("questions.id")
+      g=joins(:postulates)
       g=Question.sort_by(g, sort)
       g.paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas NO tienen o NUNCA han tenido postulaciones
   def self.not_postulated_question(sort=1, page = 1, per_page = 10)
-    g=where.not('id IN (?)', postulated_question)
+    r=joins(:postulates)
+    g=where.not('id IN (?)', r.select('id'))
     g=Question.sort_by(g, sort)
     g.paginate(:page => page,:per_page => per_page)
   end

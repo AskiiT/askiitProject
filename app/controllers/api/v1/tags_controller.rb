@@ -21,7 +21,6 @@ class API::V1::TagsController < ApplicationController
       g=u.to_i
     end
     @tag = Tag.find(g)
-
     render json: @tag
   end
 
@@ -49,7 +48,9 @@ class API::V1::TagsController < ApplicationController
   def destroy
     @tag.destroy
   end
-
+  ###########
+  ###Custom Routes
+  ###########
 
   def topic_tags
     g=params[:topic_id]
@@ -96,6 +97,19 @@ class API::V1::TagsController < ApplicationController
     end
   end
 
+  def search
+    @tags=Tag.tags_by_name(params[:tag_name]).page(params[:page])
+    if @tags.empty?
+      render json: 
+        { data:
+          {
+            error: "No more tags to show."
+          }
+        }
+    else
+      render json: @tags
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_tag

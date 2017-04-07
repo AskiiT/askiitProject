@@ -25,14 +25,25 @@ class API::V1::UsersController < ApplicationController
 
 		if m.to_s == g.to_s
 			@user = User.find(params[:id])
-			render json: @user
 		else
 			@user=User.user_username(params[:id])
-			render json: @user
 		end
-		
-  	end
+	  
+    if @user.empty?
+      render json: 
+        { data:
+          {
+            error: "User wasn't found"
+          }
+        }
+    else
+      render json: @user
+    end	
+  end
 
+	#####
+	#Custom Routes 
+	#####
   	#Encuentra un usuario por coincidencia
 	def search_username
 		@users=User.users_by_username(params[:username]).page(params[:page])
@@ -49,9 +60,142 @@ class API::V1::UsersController < ApplicationController
   		end
 	end
 
-	def my_questions
-		@question_list = Question.questions_by_user( params[:user_id] )
-		render json: @question_list
+	def search_firstname
+		@users=User.users_by_firstname(params[:username]).page(params[:page])
+
+		if @users.empty?
+  			render json: 
+  				{ data:
+  					{
+  						error: "No more users to show."
+  					}
+  				}
+  		else
+    		render json: @users
+  		end
 	end
+	
+	def search_lastname
+		@users=User.users_by_firstname(params[:username]).page(params[:page])
+
+		if @users.empty?
+  			render json: 
+  				{ data:
+  					{
+  						error: "No more users to show."
+  					}
+  				}
+  		else
+    		render json: @users
+  		end
+	end
+
+	def my_questions
+		@my_questions = Question.questions_by_user( params[:user_id] ).page(params[:page])
+		  if @my_questions.empty?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    else
+      render json: @my_questions
+    end
+	end
+
+
+  #####
+  #Other routes
+  #####
+  def who_postulated
+    @users=User.postulated_to_user(params[:user_id]).page(params[:page])
+    if @users.empty?
+    render json: 
+        { data:
+          {
+            error: "No more users to show."
+          }
+        }
+    else
+      render json: @users
+    end
+  end
+  def who_it_postulated
+    @users=User.who_it_postulated(params[:user_id]).page(params[:page])
+    if @users.empty?
+    render json: 
+        { data:
+          {
+            error: "No more users to show."
+          }
+        }
+    else
+      render json: @users
+    end
+    
+  end
+
+  def sort
+    g=params[:by]
+    
+    if g.nil?
+      g='clarity'
+    else
+      g=g.downcase
+    end
+
+    if g=='clarity'
+      @users=User.user_by_clarity.page(params[:page])
+    elsif g=='quickness'
+      @users=User.user_by_quickness.page(params[:page])
+    elsif g== 'efectiveness'
+      @users=User.user_by_efectiveness.page(params[:page])
+    else
+      @users=nil
+    end
+
+    if @users.empty?
+    render json: 
+        { data:
+          {
+            error: "No users to show."
+          }
+        }
+    else
+      render json: @users
+    end
+  end
+
+  def by_level
+    g=params[:topic]
+    unless g.nil?
+      m=g.to_i
+      
+      if m.to_s != g.to_s
+        u=Topic.topic_id_name(params[:topic])
+        g=u.to_i
+      end
+      @users=User.users_by_domain_rank_level(g).page(params[:page])
+
+      if @users.empty?
+      render json: 
+          { data:
+            {
+              error: "No users to show."
+            }
+          }
+      else
+        render json: @users
+      end
+    else
+        render json: 
+      { data:
+        {
+          error: "Topic missing"
+        }
+      }
+    end
+  end
 
 end

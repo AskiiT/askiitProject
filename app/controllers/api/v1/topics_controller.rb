@@ -64,6 +64,9 @@ class API::V1::TopicsController < ApplicationController
     @topic.destroy
   end
 
+  #####
+  ##Custom Routes
+  ####
 
   def topics_in_question
     @topic=Topic.topic_in_question(params[:question_id])
@@ -84,6 +87,20 @@ class API::V1::TopicsController < ApplicationController
     end
   end
 
+  def search
+    @topics=Topic.topics_by_name(params[:topic_name]).page(params[:page])
+    if @topics.empty?
+      render json: 
+        { data:
+          {
+            error: "No more topics to show."
+          }
+        }
+    else
+      render json: @topics
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_topic

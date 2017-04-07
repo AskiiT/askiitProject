@@ -76,8 +76,16 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * api/v1/users/(:username or :id)                          
 > Me retorna un usuario 								
 
-* api/v1/users/search/:username                            
-> Me retorna un resultado de busqueda por username 	
+* api/v1/users/search/username/:name                       
+> Me retorna un resultado de busqueda de username
+> ?page=x
+
+* api/v1/users/search/first-name/:name                     
+> Me retorna un resultado de busqueda de firstname
+> ?page=x
+
+* api/v1/users/search/last-name/:name                      
+> Me retorna un resultado de busqueda de lastname
 > ?page=x
 
 * api/v1/users/(:username or :id)/followers                
@@ -105,6 +113,13 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * api/v1/users/:user_id/postulated
 > Las preguntas a las que un usuario está postulado
 > ?page=x&sort=y
+
+
+* api/v1/users/:id/who-postulated                          
+> Retorna quien se postuló a este usuario
+
+* api/v1/users/:id/who-it-postulated                       
+> Retorna a que usuarios se postuló este usuario
 
 ## Rutas para Questions
 
@@ -146,6 +161,14 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 > Retorna los usuarios postulados a una pregunta
 > ?page=x
 
+* api/v1/question/has-postulated                           
+> Retorna las preguntas que tienen postulados
+> ?page=x&sort=y
+
+* api/v1/question/has-not-postulated                       
+> Returna las preguntas que no tienen postulados
+> ?page=x&sort=y
+
 
 ## Rutas para Topics
 
@@ -161,6 +184,10 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 > Muestra los tags de un topic 						
 > ?page=x
 
+* api/v1/topics/search/:tag_name
+> Muestra un resultado de búsqueda de tags
+> ?page=x
+
 ## Rutas para Tags
 
 * api/v1/tags                                 
@@ -173,3 +200,15 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * api/v1/tags/used-by                                      
 > Muestra que usuarios hicieron preguntas en un tag
 > ?page=x
+
+* api/v1/topics/search/:tag_name
+> Muestra un resultado de búsqueda de tags
+> ?page=x
+
+
+## Otras rutas
+
+> api/v1/users/sort
+> api/v1/users/by-level
+> api/v1/topic/:topic/questions
+> api/v1/tag/:tag/questions

@@ -9,8 +9,19 @@ Rails.application.routes.draw do
 
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
-            get 'search/:username',     to: 'users#search_username'     #api/v1/users/search/:username (get)
+            scope :search do 
+              get 'username/:username',     to: 'users#search_username'     #api/v1/users/search/username/:name (get)
+              get 'first-name/:username',     to: 'users#search_firstname'     #api/v1/users/search/first-name/:name (get)
+              get 'last-name/:username',     to: 'users#search_lastname'     #api/v1/users/search/last-name/:name (get)
+
+            end
+
+            #///part of others\\\\:
+            get '/sort', to: 'users#sort'
+            get 'by-level', to: 'users#by_level'
           end
+          
+
           get 'my-questions',           to: 'questions#my_questions'    #api/v1/users/:id/my-questions (get)
 
           ###
@@ -30,6 +41,9 @@ Rails.application.routes.draw do
           resources :domain_ranks,      only: [:index, :show]
 
           get 'postulated',             to: 'questions#is_postulated_to' #api/v1/users/:id/postulated (get)
+          get 'who-postulated',         to: 'users#who_postulated'  #api/v1/users/:user_id/who-postulated
+          get 'who-it-postulated',      to: 'users#who_it_postulated'
+
       end
 
       resources :questions do
@@ -42,6 +56,9 @@ Rails.application.routes.draw do
             scope :topicsearch do
               get ':topic', to: "questions#by_topic"
             end
+
+            get 'has-postulated', to: 'questions#has_postulated'
+            get 'has-not-postulated', to: 'questions#has_not_postulated'
           end
 
         resources :question_attachments #De todo
@@ -58,18 +75,40 @@ Rails.application.routes.draw do
       resources :topics do
         get 'tags', to: "tags#topic_tags"
         get 'used-by', to: "topics#used_by"
+        collection do
+          get 'search/:topic_name',  to: 'topics#search'
+          #//otras\\
+          get ':topic/questions', to: "questions#by_topic"
+        end
+
+
       end
 
       resources :tags do
         get 'used-by', to: "tags#used_by"
+        collection do
+         get 'search/:tag_name',  to: 'tags#search'
+          #//otras\\
+         get ':tag/questions', to: "questions#by_tag"
+        end
       end
 
       #resources :postulates
       #resources :question_has_tags
       #resources :domain_ranks
       #resources :ranks
-      resources :question_attachments
-      root to: "questions#index"
+      #resources :question_attachments
+      root to: "questions#index" 
+
+      ###########
+      ###Other Routes
+      ##########
+
+      resources :users do
+        #Quien se postuló alguna vez a mis preguntas:
+      end
+
+
     end
   end
 end
@@ -86,10 +125,14 @@ end
 #api/v1/questions/:question_id/topic                      : Retorna el topic del question
 #api/v1/questions/:question_id/tags                       : Retorna el tags
 #api/v1/questions/:question_id/postulated                 : Retorna los usuarios postulados a una pregunta
+#api/v1/question/has-postulated                           : Retorna las preguntas que tienen postulados
+#api/v1/question/has-not-postulated                       : Returna las preguntas que no tienen postulados
 
 #api/v1/auth                                              : Authentication for users
 #api/v1/users/(:username||:id)                            : Me retorna un usuario
-#api/v1/users/search/:username                            : Me retorna un resultado de busqueda de username
+#api/v1/users/search/username/:name                       : Me retorna un resultado de busqueda de username
+#api/v1/users/search/first-name/:name                     : Me retorna un resultado de busqueda de username
+#api/v1/users/search/last-name/:name                      : Me retorna un resultado de busqueda de username
 #api/v1/users/(:username||:id)/followers                  : Quien sigue al usuario
 #api/v1/users/(:username||:id)/following                  : A quien sigue un usuario
 #api/v1/users/:user_id/ranks                              : Rank específico del usuario          
@@ -98,9 +141,20 @@ end
 #api/v1/users/:user_id/domain_ranks/page/:page            : Los niveles en los temas que ha contribuido el usuario en la pagina x
 #api/v1/users/:user_id/my-questions                       : Las preguntas hechas por un usuario
 #api/v1/users/:user_id/postulated                         : Retorna las preguntas que se postularon a una pregunta
+#api/v1/users/:id/who-postulated                          : Retorna quien se postuló a este usuario
+#api/v1/users/:id/who-it-postulated                       : Retorna a que usuarios se postuló este usuario
 
 #api/v1/topics/(:topic_id||:topic_name)                   : Muestra un topic especifico
 #api/v1/topics/:topic_id/tags                             : Muestra los tags de un topic
+#api/v1/topics/search/:topic_name                         : Muestra un resultado de búsqueda de topics
 
 #api/v1/tags/(:tag_id||:tag_name)                         : Muestra un tag especifico
 #api/v1/tags/used-by                                      : Muestra que usuarios hicieron preguntas en un tag
+#api/v1/tags/search/:tag_name
+
+
+##Others
+#api/v1/users/sort
+#api/v1/users/by-level
+#api/v1/topic/:topic/questions
+#api/v1/tag/:tag/questions

@@ -19,7 +19,7 @@ class Tag < ApplicationRecord
 
   	#Busca coincidencias del nombre de un tag
  	def self.tags_by_name(tag_name)
-	   where("tags.tag_name LIKE ?", "%#{tag_name.downcase}%").select("tags.id, tag_name")
+	   where("tags.tag_name LIKE ?", "%#{tag_name.upcase}%")
 	end
 
 	#Busca tags hay en una pregunta
