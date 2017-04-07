@@ -18,7 +18,7 @@ class API::V1::QuestionHasTagsController < ApplicationController
     @question_has_tag = QuestionHasTag.new(question_has_tag_params)
 
     if @question_has_tag.save
-      render json: @question_has_tag, status: :created, location: @question_has_tag
+      render json: @question_has_tag, status: :created
     else
       render json: @question_has_tag.errors, status: :unprocessable_entity
     end
@@ -46,6 +46,6 @@ class API::V1::QuestionHasTagsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def question_has_tag_params
-      params.require(:question_attachment).permit(:question_id, :attachment)
+      params.require(:question_has_tag).permit(:question_id, :tag_id)
     end
 end

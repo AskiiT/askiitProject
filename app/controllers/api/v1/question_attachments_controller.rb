@@ -35,7 +35,7 @@ class API::V1::QuestionAttachmentsController < ApplicationController
     @question_attachment = QuestionAttachment.new(question_attachment_params)
 
     if @question_attachment.save
-      render json: @question_attachment, status: :created, location: @question_attachment
+      render json: @question_attachment, status: :created
     else
       render json: @question_attachment.errors, status: :unprocessable_entity
     end
@@ -63,6 +63,7 @@ class API::V1::QuestionAttachmentsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def question_attachment_params
-      params.fetch(:question_attachment, {})
+      #params.fetch(:question_attachment, {})
+      params.require(:question_attachment).permit(:question_id, :attachment)
     end
 end

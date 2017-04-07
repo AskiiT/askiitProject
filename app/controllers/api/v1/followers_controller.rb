@@ -58,7 +58,7 @@ class API::V1::FollowersController < ApplicationController
     @follower = Follower.new(follower_params)
 
     if @follower.save
-      render json: @follower, status: :created, location: @follower
+      render json: @follower, status: :created
     else
       render json: @follower.errors, status: :unprocessable_entity
     end

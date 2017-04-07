@@ -10,9 +10,9 @@ Rails.application.routes.draw do
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
             scope :search do 
-              get 'username/:username',     to: 'users#search_username'     #api/v1/users/search/username/:name (get)
+              get 'username/:username',       to: 'users#search_username'     #api/v1/users/search/username/:name (get)
               get 'first-name/:username',     to: 'users#search_firstname'     #api/v1/users/search/first-name/:name (get)
-              get 'last-name/:username',     to: 'users#search_lastname'     #api/v1/users/search/last-name/:name (get)
+              get 'last-name/:username',      to: 'users#search_lastname'     #api/v1/users/search/last-name/:name (get)
 
             end
 
@@ -38,7 +38,7 @@ Rails.application.routes.draw do
           
           resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
           get 'rank',                   to: 'ranks#index'
-          resources :domain_ranks,      only: [:index, :show]
+          resources :domain_ranks
 
           get 'postulated',             to: 'questions#is_postulated_to' #api/v1/users/:id/postulated (get)
           get 'who-postulated',         to: 'users#who_postulated'  #api/v1/users/:user_id/who-postulated
@@ -99,15 +99,6 @@ Rails.application.routes.draw do
       #resources :ranks
       #resources :question_attachments
       root to: "questions#index" 
-
-      ###########
-      ###Other Routes
-      ##########
-
-      resources :users do
-        #Quien se postuló alguna vez a mis preguntas:
-      end
-
 
     end
   end

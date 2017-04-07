@@ -45,7 +45,7 @@ class API::V1::DomainRanksController < ApplicationController
     @domain_rank = DomainRank.new(domain_rank_params)
 
     if @domain_rank.save
-      render json: @domain_rank, status: :created, location: @domain_rank
+      render json: @domain_rank, status: :created
     else
       render json: @domain_rank.errors, status: :unprocessable_entity
     end

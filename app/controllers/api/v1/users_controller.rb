@@ -1,4 +1,5 @@
 class API::V1::UsersController < ApplicationController
+  before_action :set_user, only: [:update, :destroy]
 	
 	def index
 		p = params[:page]
@@ -26,19 +27,43 @@ class API::V1::UsersController < ApplicationController
 		if m.to_s == g.to_s
 			@user = User.find(params[:id])
 		else
-			@user=User.user_username(params[:id])
+			@user = User.user_username(params[:id])
 		end
-	  
-    if @user.empty?
-      render json: 
-        { data:
-          {
-            error: "User wasn't found"
-          }
-        }
+
+    # if @user.empty?
+    #   render json: 
+    #     { data:
+    #       {
+    #         error: "User wasn't found"
+    #       }
+    #     }
+    # else      
+    render json: @user
+    # end
+  end
+
+  def create
+    @user = User.new(user_params)
+
+    if @user.save
+      render json: @user, status: :created
     else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH/PUT /users/1
+  def update
+    if @user.update(user_params)
       render json: @user
-    end	
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /topics/1
+  def destroy
+    @user.destroy
   end
 
 	#####
@@ -197,5 +222,16 @@ class API::V1::UsersController < ApplicationController
       }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_user
+      @user = User.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def user_params
+      params.require(:user).permit(:first_name, :last_name, :email, :username, :date_created, :description, :password)
+    end
 
 end

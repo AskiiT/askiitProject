@@ -18,7 +18,7 @@ class API::V1::PostulatesController < ApplicationController
     @postulate = Postulate.new(postulate_params)
 
     if @postulate.save
-      render json: @postulate, status: :created, location: @postulate
+      render json: @postulate, status: :created
     else
       render json: @postulate.errors, status: :unprocessable_entity
     end

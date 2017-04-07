@@ -24,7 +24,7 @@ class API::V1::RanksController < ApplicationController
     @rank = Rank.new(rank_params)
 
     if @rank.save
-      render json: @rank, status: :created, location: @rank
+      render json: @rank, status: :created
     else
       render json: @rank.errors, status: :unprocessable_entity
     end
