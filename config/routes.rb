@@ -74,7 +74,7 @@ Rails.application.routes.draw do
           end
 
         resources :question_attachments #De todo
-      
+        resources :question_has_tags
         get 'topic', to: 'topics#topics_in_question'
         get 'tags', to: 'tags#tags_in_question'
 
