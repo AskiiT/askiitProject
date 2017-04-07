@@ -33,10 +33,18 @@ Rails.application.routes.draw do
 
           #api/v1/users/:id_users/follow?=my_id 
 
-          resources :followers,         only: [:index]                  #api/v1/users/:id/followers (get)
-          get 'following',              to: 'followers#following'       #api/v1/users/:id/following (get)
-          
-          resources :ranks,             only: [:index]                  #api/v1/users/:id/ranks (get)
+          resources :followers,         only: [:index] 
+              #api/v1/users/:id/followers (get) Me muestra mis seguidores
+          get 'following',              to: 'followers#following'       
+              #api/v1/users/:id/following (get) Me muestra a quién sigo
+          post 'follow',                to: 'followers#create'
+          #api/v1/users/:followed_id/follow (post) Me permite seguir a alquien, 
+          #debo mandar mi id como un parametro en el post llamado "follower_id"
+          delete 'unfollow',            to: 'followers#destroy'
+          #api/v1/users/:folloed_id/unfollow(delete) Me permite dejar de seguir a alquien,
+          #debo mandar mi id como un parametro en el post llamado "follower_id"
+
+          resources :ranks                                              #api/v1/users/:id/ranks (get, post) #api/v1/users/:id/ranks/1(put,patch, delete)
           get 'rank',                   to: 'ranks#index'
           resources :domain_ranks do
             collection do

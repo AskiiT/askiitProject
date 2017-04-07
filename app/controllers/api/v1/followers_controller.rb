@@ -1,5 +1,5 @@
 class API::V1::FollowersController < ApplicationController
-  before_action :set_follower, only: [:show, :update, :destroy]
+  #before_action :set_follower, only: [:show, :update, :destroy]
 
   # GET /followers
   def index
@@ -55,7 +55,10 @@ class API::V1::FollowersController < ApplicationController
 
   # POST /followers
   def create
-    @follower = Follower.new(follower_params)
+    my_id = params[:my_id]
+    followed = params[:user_id]
+
+    @follower = Follower.new(:followed_id => followed, :follower_id => my_id)
 
     if @follower.save
       render json: @follower, status: :created
@@ -64,17 +67,12 @@ class API::V1::FollowersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /followers/1
-  def update
-    if @follower.update(follower_params)
-      render json: @follower
-    else
-      render json: @follower.errors, status: :unprocessable_entity
-    end
-  end
-
   # DELETE /followers/1
   def destroy
+    my_id = params[:my_id]
+    followed = params[:user_id]
+
+    @follower = Follower.find_by(:followed_id => followed, :follower_id => my_id)
     @follower.destroy
   end
 
@@ -85,7 +83,7 @@ class API::V1::FollowersController < ApplicationController
     end
 
     # Only allow a trusted parameter "white list" through.
-    def follower_params
-      params.fetch(:follower, {})
-    end
+    # def follower_params
+    #   params.require(:follower).permit( :user_id, :follower_id )
+    # end
 end
