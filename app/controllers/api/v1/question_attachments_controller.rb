@@ -32,7 +32,12 @@ class API::V1::QuestionAttachmentsController < ApplicationController
 
   # POST /question_attachments
   def create
-    @question_attachment = QuestionAttachment.new(question_attachment_params)
+    question=params[:question_id]
+    attachment=params[:attachment]
+    #@question_attachment = QuestionAttachment.new(question, :attachment)
+
+    @question_attachment = QuestionAttachment.new(:question_id => question, :attachment => attachment)
+
 
     if @question_attachment.save
       render json: @question_attachment, status: :created
