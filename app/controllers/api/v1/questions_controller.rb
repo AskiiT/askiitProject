@@ -25,10 +25,8 @@ class API::V1::QuestionsController < ApplicationController
       s = translate(s)
     end
 
-    @questions = Question.sort_by(Question.all, s)
-    unless p.nil? 
-      @questions = Question.load_questions( sort = s, page = p )
-    end
+    @questions = Question.load_questions( sort = s, page = p )
+
 
     if @questions.empty?
       render json: 

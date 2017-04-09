@@ -40,7 +40,7 @@ class Tag < ApplicationRecord
   	end
 
     def self.tag_id_name(name)
-      name=name.upcase
-      find_by(tag_name: name).id
+      name=name.downcase
+      where("lower(tag_name) = ?", name).first.id
     end
 end

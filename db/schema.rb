@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403020700) do
+ActiveRecord::Schema.define(version: 20170409003334) do
+
+  create_table "avatars", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "avatars"
+    t.string   "shirt"
+  end
 
   create_table "domain_ranks", force: :cascade do |t|
     t.integer  "level",      default: 0, null: false
@@ -94,17 +101,18 @@ ActiveRecord::Schema.define(version: 20170403020700) do
     t.text     "topic_description"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.string   "color"
     t.index ["topic_name"], name: "index_topics_on_topic_name", unique: true
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider",               default: "email", null: false
-    t.string   "uid",                    default: "",      null: false
-    t.string   "encrypted_password",     default: "",      null: false
+    t.string   "provider",               default: "email",  null: false
+    t.string   "uid",                    default: "",       null: false
+    t.string   "encrypted_password",     default: "",       null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,       null: false
+    t.integer  "sign_in_count",          default: 0,        null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -113,18 +121,23 @@ ActiveRecord::Schema.define(version: 20170403020700) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "first_name",                               null: false
-    t.string   "last_name",                                null: false
-    t.string   "email",                                    null: false
-    t.string   "username",                                 null: false
-    t.datetime "date_created",                             null: false
+    t.string   "first_name",                                null: false
+    t.string   "last_name",                                 null: false
+    t.string   "email",                                     null: false
+    t.string   "username",                                  null: false
+    t.datetime "date_created",                              null: false
     t.text     "description"
     t.text     "tokens"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.string   "color",                  default: "ffffff"
+    t.integer  "topic_id"
+    t.integer  "avatar_id"
+    t.index ["avatar_id"], name: "index_users_on_avatar_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["topic_id"], name: "index_users_on_topic_id"
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
