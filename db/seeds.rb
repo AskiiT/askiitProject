@@ -88,9 +88,9 @@ t.save
 	u.username=u.first_name+i.to_s+u.last_name
 	u.password="12345678"
 	u.description= Faker::Lorem.paragraph
+	u.topic_id=rand(1..10)
 	color_index=rand(0..10)
 	u.color=colors[color_index]
-	u.topic_id=rand(1..10)
 	u.avatar_id=1
 	until u.valid? do
 		u.first_name= Faker::Name.first_name
@@ -106,22 +106,17 @@ t.save
 	end
 	u.save
 	
-	r=Rank.new
- 	r.id=u.id
-	r.user_id=u.id
+	r=Rank.last
 	r.clarity=rand(0..5741)
 	r.quickness=rand(0..5741)
 	r.efectiveness=rand(0..5741)
 	r.save
 	user_id=User.all.last.id
 	for j in 1..10 do
-  		 	dr=DomainRank.new
-		 	dr.user_id=user_id
-		 	dr.topic_id=j
+  		 	dr=DomainRank.find_by_id((user_id.to_s+'010'+j.to_s).to_i)
 			dr.level=rand(0..5741)
-			dr.id=(user_id.to_s+'010'+j.to_s).to_i
 		 	dr.save
-  	end
+ 	end
 	# t= Topic.new
 	# t.topic_name= Faker::Address.city
 	# t.topic_name= t.topic_name.upcase
@@ -199,21 +194,6 @@ end
 
 end
 
-## 700.times do |i|
-##  t=QuestionHasTag.new
-##  question_id=rand(1..300)
-##  tag_id=rand(1..300)
-##  t.question_id=question_id
-##  t.tag_id=tag_id
-
-##  until t.valid? do
-## 	question_id=rand(1..300)
-## 	tag_id=rand(1..300)
-## 	t.question_id=question_id
-## 	t.tag_id=tag_id
-##  end
-##  t.save
-## end
 
 500.times do |i|
 	f=Follower.new
@@ -242,11 +222,27 @@ end
  at.save
 end
 
-## 500.times do |i|
-## 	dr=DomainRank.new
-## 	dr.user_id=rand(1..150)
-## 	dr.topic_id=rand(1..150)
-## 	dr.level=rand(0..5741)
-## 	dr.save
-## end
+# 500.times do |i|
+# 	dr=DomainRank.new
+# 	dr.user_id=rand(1..150)
+# 	dr.topic_id=rand(1..150)
+# 	dr.level=rand(0..5741)
+# 	dr.save
+# end
 
+
+## 700.times do |i|
+##  t=QuestionHasTag.new
+##  question_id=rand(1..300)
+##  tag_id=rand(1..300)
+##  t.question_id=question_id
+##  t.tag_id=tag_id
+
+##  until t.valid? do
+## 	question_id=rand(1..300)
+## 	tag_id=rand(1..300)
+## 	t.question_id=question_id
+## 	t.tag_id=tag_id
+##  end
+##  t.save
+## end

@@ -32,20 +32,15 @@ class API::V1::QuestionAttachmentsController < ApplicationController
 
   # POST /question_attachments
   def create
-    question=params[:question_id]
-    attachment=params[:attachment]
-    #@question_attachment = QuestionAttachment.new(question, :attachment)
-
-    @question_attachment = QuestionAttachment.new(:question_id => question, :attachment => attachment)
-
-
+    @question_attachment = QuestionAttachment.new(question_attachment_params)
+    @question_attachment.question_id=params[:question_id]
     if @question_attachment.save
       render json: @question_attachment, status: :created
     else
       render json: @question_attachment.errors, status: :unprocessable_entity
     end
   end
-
+  
   # PATCH/PUT /question_attachments/1
   def update
     if @question_attachment.update(question_attachment_params)

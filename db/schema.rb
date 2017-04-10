@@ -106,13 +106,13 @@ ActiveRecord::Schema.define(version: 20170409003334) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "provider",               default: "email",  null: false
-    t.string   "uid",                    default: "",       null: false
-    t.string   "encrypted_password",     default: "",       null: false
+    t.string   "provider",               default: "email",               null: false
+    t.string   "uid",                    default: "",                    null: false
+    t.string   "encrypted_password",     default: "",                    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,        null: false
+    t.integer  "sign_in_count",          default: 0,                     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -121,18 +121,18 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.string   "first_name",                                null: false
-    t.string   "last_name",                                 null: false
-    t.string   "email",                                     null: false
-    t.string   "username",                                  null: false
-    t.datetime "date_created",                              null: false
-    t.text     "description"
+    t.string   "first_name",                                             null: false
+    t.string   "last_name",                                              null: false
+    t.string   "email",                                                  null: false
+    t.string   "username",                                               null: false
+    t.datetime "date_created",           default: '2017-04-10 00:00:00', null: false
+    t.text     "description",            default: ""
     t.text     "tokens"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
     t.string   "color",                  default: "ffffff"
     t.integer  "topic_id"
-    t.integer  "avatar_id"
+    t.integer  "avatar_id",              default: 1
     t.index ["avatar_id"], name: "index_users_on_avatar_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
