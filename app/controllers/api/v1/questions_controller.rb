@@ -1,6 +1,7 @@
 class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-  
+  before_action :authenticate_user!, only:[:create, :destroy]
+
   def translate(s)
     s=s.upcase
     if s=='NEWEST'
@@ -49,6 +50,7 @@ class API::V1::QuestionsController < ApplicationController
   # POST /questions
   def create
     @question = Question.new(question_params)
+    @question.user_id= current_user.id
 
     if @question.save
       render json: @question, status: :created
@@ -59,16 +61,34 @@ class API::V1::QuestionsController < ApplicationController
 
   # PATCH/PUT /questions/1
   def update
-    if @question.update(question_params)
-      render json: @question
+    if @question.user_id == current_user.id
+      if @question.update(question_params)
+        render json: @question
+      else
+        render json: @question.errors, status: :unprocessable_entity
+      end
     else
-      render json: @question.errors, status: :unprocessable_entity
-    end
+      render json: 
+        { data:
+          {
+            error: "Usted no puede editar esta pregunta."
+          }
+        }
+    end  
   end
 
   # DELETE /questions/1
   def destroy
-    @question.destroy
+    if @question.user_id==current_user.id
+      @question.destroy
+    else
+      render json: 
+        { data:
+          {
+            error: "Usted no puede eliminar esta pregunta."
+          }
+        }
+      end
   end
 
   def questions_by_title

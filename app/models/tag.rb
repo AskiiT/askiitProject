@@ -41,6 +41,12 @@ class Tag < ApplicationRecord
 
     def self.tag_id_name(name)
       name=name.downcase
-      where("lower(tag_name) = ?", name).first.id
+      u=where("lower(tag_name) = ?", name)
+      if u.empty?
+        g=-1
+      else
+        g=u.first.id
+      end
+      g
     end
 end

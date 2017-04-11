@@ -160,7 +160,14 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 > api/v1/questions/:question_id/tags                       
 * Retorna los tags de una pregunta
 
-> api/v1/questions/:question_id/postulated                 
+> api/v1/questions/:question_id/postulate           
+* Me postulo a una pregunta
+
+> api/v1/questions/:question_id/postulate                
+* Dejo de estar postulado a una pregunta
+
+
+> api/v1/questions/:question_id/postulated-to-this                 
 * Retorna los usuarios postulados a una pregunta
 * ?page=x
 

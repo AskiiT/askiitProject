@@ -1,6 +1,6 @@
 class API::V1::FollowersController < ApplicationController
   #before_action :set_follower, only: [:show, :update, :destroy]
-
+  before_action :authenticate_user!, only:[:create, :destroy]
   # GET /followers
   def index
     g=params[:user_id]
@@ -55,7 +55,7 @@ class API::V1::FollowersController < ApplicationController
 
   # POST /followers
   def create
-    my_id = params[:my_id]
+    my_id = current_user.id
     followed = params[:user_id]
 
     @follower = Follower.new(:followed_id => followed, :follower_id => my_id)
@@ -69,7 +69,7 @@ class API::V1::FollowersController < ApplicationController
 
   # DELETE /followers/1
   def destroy
-    my_id = params[:my_id]
+    my_id = current_user.id
     followed = params[:user_id]
 
     @follower = Follower.find_by(:followed_id => followed, :follower_id => my_id)

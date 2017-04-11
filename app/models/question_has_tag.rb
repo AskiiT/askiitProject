@@ -5,6 +5,12 @@ class QuestionHasTag < ApplicationRecord
   validates_uniqueness_of :question, :scope => [:tag]
   validate :TagInTopic
 
+  def self.tag_created(new_name, topic)
+    ta=Tag.new
+    ta.tag_name=new_name.upcase
+    ta.topic_id=topic
+    ta.save
+  end
 
   def self.topic_of_tag(tag)
   	g=Tag.find_by_id(tag).topic_id
@@ -19,6 +25,7 @@ class QuestionHasTag < ApplicationRecord
   def getTopic
   	Topic.topic_in_question(question_id)
   end
+  
   def TagInTopic
 	   if question_id && tag_id
 	   		to_o_tag=QuestionHasTag.topic_of_tag(tag_id)

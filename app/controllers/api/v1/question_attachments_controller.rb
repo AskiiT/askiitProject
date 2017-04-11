@@ -1,5 +1,6 @@
 class API::V1::QuestionAttachmentsController < ApplicationController
   before_action :set_question_attachment, only: [:update, :destroy]
+  before_action :authenticate_user!, only:[:create, :destroy]
 
   # GET /question_attachments
   def index
@@ -33,12 +34,22 @@ class API::V1::QuestionAttachmentsController < ApplicationController
   # POST /question_attachments
   def create
     @question_attachment = QuestionAttachment.new(question_attachment_params)
-    @question_attachment.question_id=params[:question_id]
-    if @question_attachment.save
-      render json: @question_attachment, status: :created
+    question_id=params[:question_id]
+    @question_attachment.question_id=question_id;
+    if Question.find_by_id(question_id).user_id==current_user.id
+      if @question_attachment.save
+        render json: @question_attachment, status: :created
+      else
+        render json: @question_attachment.errors, status: :unprocessable_entity
+      end
     else
-      render json: @question_attachment.errors, status: :unprocessable_entity
-    end
+      render json: 
+        { data:
+          {
+            error: "Usted no puede adjuntar archivos a esta pregunta"
+          }
+        }
+    end  
   end
   
   # PATCH/PUT /question_attachments/1

@@ -47,7 +47,13 @@ class Topic < ApplicationRecord
 	#id del topic por name
 	def self.topic_id_name(name)
 		name=name.downcase
-		where("lower(topic_name) = ?", name).first.id
+		u = where("lower(topic_name) = ?", name)
+	    if u.empty?
+	    	g=-1
+	    else
+    	    g=u.first.id
+	    end
+      	g
 	end
 
 	def self.topic_in_question(questions)
