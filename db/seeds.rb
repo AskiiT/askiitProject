@@ -2,7 +2,7 @@ lvl0=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/lvl0/robot.png")
 				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
 
 lvl0.save
-colors=['F03C15','FF00DC','B200FF','4800FF','0094FF','00FFFF','00FF90','00FF21','FFD800','FF6A00','FF0000']
+colors=['FF0000','E73434','FFAA2A','B0E940','16E978','25C8F1','616FD5','C373BB','33335C','03461D','460337']
 
 
 t=Topic.new

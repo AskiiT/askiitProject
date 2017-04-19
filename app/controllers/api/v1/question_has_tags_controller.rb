@@ -1,5 +1,5 @@
 class API::V1::QuestionHasTagsController < ApplicationController
-  before_action :set_question_has_tag, only: [:show, :update, :destroy]
+  before_action :set_question_has_tag, only: [:show, :update ]
   before_action :authenticate_user!, only:[:create, :destroy]
   # GET /question_has_tags
   def index
@@ -56,7 +56,33 @@ class API::V1::QuestionHasTagsController < ApplicationController
 
   # DELETE /question_has_tags/1
   def destroy
-    @question_has_tag.destroy
+    tag_id = params[:tag_id]
+    question_id = params[:question_id]
+    unless Question.find_by_id(question_id).user_id == current_user.id
+      render json:
+      {
+        data:
+        {
+          error: "No está autorizado para borrar tags a esta pregunta"
+        }
+      }
+    else
+      name = tag_id
+      ta_id = Tag.tag_id_name(name)
+      if ta_id < 0
+        render json:
+        {
+          data:
+          {
+            error: "No puede eliminar el tag, no está asociado a la pregunta"
+          }
+        }
+      else
+        @question = QuestionHasTag.get_from_question_and_tag( question_id, ta_id )
+        @question.destroy_all
+      end
+    end
+
   end
 
   private

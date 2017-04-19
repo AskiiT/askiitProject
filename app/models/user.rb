@@ -14,25 +14,6 @@ class User < ActiveRecord::Base
   has_many :followed, :through => :followers, :source => :followed_id
   belongs_to :topic
   belongs_to :avatar
-  
-  def default_avatar
-     self.avatar ||= Avatar.find_by_id(1)
-  end
-
-  def ranks_and_domains
-    us=self.id
-    r=Rank.new
-    r.user_id=us
-    r.save
-    am=Topic.all.size
-    for j in 1..am do
-       dr=DomainRank.new
-       dr.user_id=us
-       dr.topic_id=j
-       dr.id=(us.to_s+'010'+j.to_s).to_i
-       dr.save
-    end
-  end
 
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
@@ -55,11 +36,32 @@ class User < ActiveRecord::Base
 
   # # Setup accessible (or protected) attributes for your model
   # attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :username, :date_created, :description
+
   include DeviseTokenAuth::Concerns::User
   def self.load_users(page = 1, per_page = 10)
     includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags, :p_users])
     .paginate(:page => page,:per_page => per_page)
   end
+  
+  def default_avatar
+     self.avatar ||= Avatar.find_by_id(1)
+  end
+
+  def ranks_and_domains
+    us=self.id
+    r=Rank.new
+    r.user_id=us
+    r.save
+    am=Topic.all.size
+    for j in 1..am do
+       dr=DomainRank.new
+       dr.user_id=us
+       dr.topic_id=j
+       dr.id=(us.to_s+'010'+j.to_s).to_i
+       dr.save
+    end
+  end
+
 
   #Selecciona segun id
   def self.user_by_id(id)

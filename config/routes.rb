@@ -76,8 +76,8 @@ Rails.application.routes.draw do
 
         resources :question_attachments #De todo
         #resources :question_has_tags
-        post 'add-tags', to: 'question_has_tags#create'
-        delete 'remove-tags', to: 'question_has_tags#destroy'
+        post 'add-tag', to: 'question_has_tags#create'
+        delete 'remove-tag', to: 'question_has_tags#destroy'
 
         get 'topic', to: 'topics#topics_in_question'
         get 'tags', to: 'tags#tags_in_question'

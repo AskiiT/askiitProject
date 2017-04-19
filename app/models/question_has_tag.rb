@@ -36,4 +36,8 @@ class QuestionHasTag < ApplicationRecord
 	   end
   end
 
+  def self.get_from_question_and_tag( question_id, tag_id )
+    where( question_has_tags: {question_id: question_id, tag_id: tag_id} )
+  end
+
 end
