@@ -1,9 +1,62 @@
+require 'securerandom'
 lvl0=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/lvl0/robot.png"),
 				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
 
 lvl0.save
-colors=['FF0000','E73434','FFAA2A','B0E940','16E978','25C8F1','616FD5','C373BB','33335C','03461D','460337']
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/1.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/2.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/3.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/4.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/5.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/6.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/7.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/8.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/9.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/10.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/11.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/12.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/13.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
+gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/14.png"),
+				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
+gen.save
 
+colors=[
+'E73434',
+'FFAA2A',
+'B0E940',
+'16E978',
+'25C8F1',
+'616FD5',
+'C373BB',
+'33335C',
+'03461D',
+'460337']
 
 t=Topic.new
 t.id=1
@@ -85,24 +138,34 @@ t.save
 	u.last_name= Faker::Name.last_name
 	u.date_created = Date.today - Faker::Number.number(3).to_i.days 
 	u.email=Faker::Internet.email
-	u.username=u.first_name+i.to_s+u.last_name
+	us=[u.first_name[0,3]+i.to_s+u.last_name[0,3], u.last_name[0,2].upcase+u.first_name+i.to_s, u.first_name[0,3]+u.last_name[0,3]+i.to_s]
+	userCho=rand(0..2);
+	u.username=us[userCho]
 	u.password="12345678"
 	u.description= Faker::Lorem.paragraph
 	u.topic_id=rand(1..10)
 	color_index=rand(0..10)
-	u.color=colors[color_index]
+	u.color=SecureRandom.hex(3)
+	u.color=u.color.upcase;
+	newb=rand(0.0..10.0)
 	u.avatar_id=1
+	if newb>3.5 
+		u.avatar_id=rand(1..15);
+	end
 	until u.valid? do
 		u.first_name= Faker::Name.first_name
 		u.last_name= Faker::Name.last_name
 		u.date_created = Date.today - Faker::Number.number(3).to_i.days 
 		u.email=Faker::Internet.email
-		u.username=u.first_name+i.to_s+u.last_name
+		us=[u.first_name[0,3]+i.to_s+u.last_name[0,3], u.last_name[0,2].upcase+u.first_name+i.to_s, u.first_name[0,2]+u.last_name[0,3]+i.to_s]
+		userCho=rand(0..2)
+		u.username=us[userCho]
 		u.password="12345678"
 		u.description= Faker::Lorem.paragraph
-		color_index=rand(0..10)
-		u.color=colors[color_index]
 		u.topic_id=rand(1..10)
+		color_index=rand(0..10)
+		u.color=SecureRandom.hex(3)
+		u.color=u.color.upcase;
 	end
 	u.save
 	
