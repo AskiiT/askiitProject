@@ -18,7 +18,11 @@ class Question < ApplicationRecord
   validates_inclusion_of :difficulty, in: 1..10
   validates :body, length: {maximum: 500}, allow_blank: true
   validate  :actual_date
+  after_initialize :default_date
 
+  def default_date
+    self.date_posted=Date.today
+  end
   def actual_date
       if date_posted.present? && date_posted > Date.today
         errors.add(:date_posted, "can't be post in the future" )

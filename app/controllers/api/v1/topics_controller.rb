@@ -109,6 +109,6 @@ class API::V1::TopicsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def topic_params
-      params.require(:topic).permit(:topic_name, :topic_description)
+      params.require(:topic).permit(:topic_name, :topic_description, :color)
     end
 end

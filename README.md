@@ -160,7 +160,14 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 > api/v1/questions/:question_id/tags                       
 * Retorna los tags de una pregunta
 
-> api/v1/questions/:question_id/postulated                 
+> api/v1/questions/:question_id/postulate           
+* Me postulo a una pregunta
+
+> api/v1/questions/:question_id/postulate                
+* Dejo de estar postulado a una pregunta
+
+
+> api/v1/questions/:question_id/postulated-to-this                 
 * Retorna los usuarios postulados a una pregunta
 * ?page=x
 
@@ -215,3 +222,50 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * api/v1/users/by-level
 * api/v1/topic/:topic/questions
 * api/v1/tag/:tag/questions
+
+
+
+# Temas y colores
+
+
+## QUIMICA
+
+- ![#FF00DC](https://placehold.it/15/FF006E/000000?text=+) `#FF00DC`
+
+## COMPUTACION E INFORMATICA
+
+- ![#B200FF](https://placehold.it/15/B200FF/000000?text=+) `#B200FF`
+
+## MATEMÁTICA
+
+- ![#4800FF](https://placehold.it/15/4800FF/000000?text=+) `#4800FF`
+
+## FISICA
+
+- ![#0094FF](https://placehold.it/15/0094FF/000000?text=+) `#0094FF`
+
+## ELECTRICIDAD Y ELECTRONICA
+
+
+- ![#00FFFF](https://placehold.it/15/00FFFF/000000?text=+) `#00FFFF`
+
+## CIENCIAS SOCIALES
+
+- ![#00FF90](https://placehold.it/15/00FF90/000000?text=+) `#00FF90`
+
+## ARTES MUSICALES
+
+- ![#00FF21](https://placehold.it/15/00FF21/000000?text=+) `#00FF21`
+
+## ARTES PLASTICAS
+
+- ![#FFD800](https://placehold.it/15/FFD800/000000?text=+) `#FFD800`
+
+## LENGUAJE Y LITERATURA
+
+- ![#FF6A00](https://placehold.it/15/FF6A00/000000?text=+) `#FF6A00`
+
+## BIOLOGIA
+
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `#f03c15`
+

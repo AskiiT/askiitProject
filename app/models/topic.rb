@@ -2,7 +2,8 @@ class Topic < ApplicationRecord
 	has_many :tags
 	has_many :questions
 	has_many :domain_ranks
-
+	has_many :users
+	
 	validates :topic_name, presence: true
 	validates :topic_name, uniqueness: true
 	validates :topic_name, length: { minimum: 2, maximum: 30 }
@@ -26,7 +27,7 @@ class Topic < ApplicationRecord
   	#Me retorna coincidencias con el titulo de un tema
 	def self.topics_by_name(topic_name, page = 1, per_page = 10)
 	   load_topics(page, per_page)
-	   	.where("topics.topic_name LIKE ?", "%#{topic_name.upcase}%")
+	   	.where("upper(topics.topic_name) LIKE ?", "%#{topic_name.upcase}%")
 	end
 
 	#Retorna a que temas un usuario ha dado una pregunta
@@ -45,8 +46,14 @@ class Topic < ApplicationRecord
 
 	#id del topic por name
 	def self.topic_id_name(name)
-		name=name.upcase
-		find_by(topic_name: name).id
+		name=name.downcase
+		u = where("lower(topic_name) = ?", name)
+	    if u.empty?
+	    	g=-1
+	    else
+    	    g=u.first.id
+	    end
+      	g
 	end
 
 	def self.topic_in_question(questions)

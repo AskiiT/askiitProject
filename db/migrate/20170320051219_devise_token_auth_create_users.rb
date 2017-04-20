@@ -38,8 +38,8 @@ class DeviseTokenAuthCreateUsers < ActiveRecord::Migration[5.0]
       t.string    :last_name,     :null => false      
       t.string    :email,         :null => false
       t.string    :username,      :null => false
-      t.datetime  :date_created,  :null => false
-      t.text      :description
+      t.datetime  :date_created,  :null => false, :default=> Date.today
+      t.text      :description,   :default=> ''
 
       ## Tokens
       t.text :tokens

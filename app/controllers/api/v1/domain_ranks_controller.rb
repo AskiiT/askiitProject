@@ -48,6 +48,13 @@ class API::V1::DomainRanksController < ApplicationController
     stringUid = inputId.to_s
 
     integerUid.to_s == stringUid ? id = integerUid : id = User.users_id_name(stringUid)
+    
+    m=tid.to_i
+    if m.to_s != tid.to_s
+      u=Topic.topic_id_name(tid)
+      tid=u.to_i
+    end
+
 
     @drank = DomainRank.domain_ranks_by_user_id_and_topic(id, tid)
     if @drank.empty?

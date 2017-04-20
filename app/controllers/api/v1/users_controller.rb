@@ -1,6 +1,16 @@
 class API::V1::UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy]
-	
+	before_action :authenticate_user!, only:[:welcum]
+  def welcum
+    @user= current_user
+    render json:          
+    { data:
+            {
+              message: "Welcum "+current_user.username
+            }
+          }
+  end
+  
 	def index
 		p = params[:page]
 		unless p.nil?
@@ -231,7 +241,7 @@ class API::V1::UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :username, :date_created, :description, :password)
+      params.require(:user).permit(:first_name, :last_name, :email, :username, :color, :topic_id, :avatar_id, :date_created, :description, :password)
     end
 
 end

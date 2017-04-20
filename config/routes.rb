@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do      
+      resources :avatars
 
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
@@ -55,8 +56,8 @@ Rails.application.routes.draw do
           get 'postulated',             to: 'questions#is_postulated_to' #api/v1/users/:id/postulated (get)
           get 'who-postulated',         to: 'users#who_postulated'  #api/v1/users/:user_id/who-postulated
           get 'who-it-postulated',      to: 'users#who_it_postulated'
-
       end
+          get 'home', to: 'users#welcum'
 
       resources :questions do
           collection do
@@ -74,13 +75,16 @@ Rails.application.routes.draw do
           end
 
         resources :question_attachments #De todo
-        resources :question_has_tags
+        #resources :question_has_tags
+        post 'add-tag', to: 'question_has_tags#create'
+        delete 'remove-tag', to: 'question_has_tags#destroy'
+
         get 'topic', to: 'topics#topics_in_question'
         get 'tags', to: 'tags#tags_in_question'
 
-        resources :postulates     #Aquí me puedo postular a esta pregunta
-
-        get 'postulated', to: 'postulates#postulated_to'
+        post    'postulate',    to: 'postulates#create'
+        delete  'unpostulate',  to: 'postulates#destroy'
+        get 'postulated-to-this', to: 'postulates#postulated_to'
 
       end
 
