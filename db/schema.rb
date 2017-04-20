@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170409003334) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "avatars", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -25,8 +28,8 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.integer  "topic_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.index ["topic_id"], name: "index_domain_ranks_on_topic_id"
-    t.index ["user_id"], name: "index_domain_ranks_on_user_id"
+    t.index ["topic_id"], name: "index_domain_ranks_on_topic_id", using: :btree
+    t.index ["user_id"], name: "index_domain_ranks_on_user_id", using: :btree
   end
 
   create_table "followers", force: :cascade do |t|
@@ -34,8 +37,8 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.integer  "follower_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["followed_id"], name: "index_followers_on_followed_id"
-    t.index ["follower_id"], name: "index_followers_on_follower_id"
+    t.index ["followed_id"], name: "index_followers_on_followed_id", using: :btree
+    t.index ["follower_id"], name: "index_followers_on_follower_id", using: :btree
   end
 
   create_table "postulates", force: :cascade do |t|
@@ -43,8 +46,8 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.integer  "question_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["question_id"], name: "index_postulates_on_question_id"
-    t.index ["user_id"], name: "index_postulates_on_user_id"
+    t.index ["question_id"], name: "index_postulates_on_question_id", using: :btree
+    t.index ["user_id"], name: "index_postulates_on_user_id", using: :btree
   end
 
   create_table "question_attachments", force: :cascade do |t|
@@ -52,7 +55,7 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.string   "attachment"
-    t.index ["question_id"], name: "index_question_attachments_on_question_id"
+    t.index ["question_id"], name: "index_question_attachments_on_question_id", using: :btree
   end
 
   create_table "question_has_tags", force: :cascade do |t|
@@ -60,8 +63,8 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.integer  "tag_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["question_id"], name: "index_question_has_tags_on_question_id"
-    t.index ["tag_id"], name: "index_question_has_tags_on_tag_id"
+    t.index ["question_id"], name: "index_question_has_tags_on_question_id", using: :btree
+    t.index ["tag_id"], name: "index_question_has_tags_on_tag_id", using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -73,8 +76,8 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.integer  "topic_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.index ["topic_id"], name: "index_questions_on_topic_id"
-    t.index ["user_id"], name: "index_questions_on_user_id"
+    t.index ["topic_id"], name: "index_questions_on_topic_id", using: :btree
+    t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
   end
 
   create_table "ranks", force: :cascade do |t|
@@ -84,7 +87,7 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.integer  "user_id"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.index ["user_id"], name: "index_ranks_on_user_id"
+    t.index ["user_id"], name: "index_ranks_on_user_id", using: :btree
   end
 
   create_table "tags", force: :cascade do |t|
@@ -92,8 +95,8 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.integer  "topic_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tag_name"], name: "index_tags_on_tag_name", unique: true
-    t.index ["topic_id"], name: "index_tags_on_topic_id"
+    t.index ["tag_name"], name: "index_tags_on_tag_name", unique: true, using: :btree
+    t.index ["topic_id"], name: "index_tags_on_topic_id", using: :btree
   end
 
   create_table "topics", force: :cascade do |t|
@@ -102,7 +105,7 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "color"
-    t.index ["topic_name"], name: "index_topics_on_topic_name", unique: true
+    t.index ["topic_name"], name: "index_topics_on_topic_name", unique: true, using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -125,7 +128,7 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-04-19 00:00:00', null: false
+    t.datetime "date_created",           default: '2017-04-20 00:00:00', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false
@@ -133,13 +136,26 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.string   "color",                  default: "ffffff"
     t.integer  "topic_id"
     t.integer  "avatar_id",              default: 1
-    t.index ["avatar_id"], name: "index_users_on_avatar_id"
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["topic_id"], name: "index_users_on_topic_id"
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
-    t.index ["username"], name: "index_users_on_username", unique: true
+    t.index ["avatar_id"], name: "index_users_on_avatar_id", using: :btree
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["topic_id"], name: "index_users_on_topic_id", using: :btree
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
+    t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "domain_ranks", "topics"
+  add_foreign_key "domain_ranks", "users"
+  add_foreign_key "postulates", "questions"
+  add_foreign_key "postulates", "users"
+  add_foreign_key "question_attachments", "questions"
+  add_foreign_key "question_has_tags", "questions"
+  add_foreign_key "question_has_tags", "tags"
+  add_foreign_key "questions", "topics"
+  add_foreign_key "questions", "users"
+  add_foreign_key "ranks", "users"
+  add_foreign_key "tags", "topics"
+  add_foreign_key "users", "avatars"
+  add_foreign_key "users", "topics"
 end

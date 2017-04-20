@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :questions
   has_many :p_questions, through: :postulates, source: :question
   has_many :postulates
-  has_many :followers, :foreign_key => :follower_id
+  has_many :followers, :foreign_key => :follower_id, class_name: "Follower"
   has_many :followed, :through => :followers, :source => :followed_id
   belongs_to :topic
   belongs_to :avatar
