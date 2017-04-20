@@ -63,7 +63,29 @@ class API::V1::QuestionAttachmentsController < ApplicationController
 
   # DELETE /question_attachments/1
   def destroy
-    @question_attachment.destroy
+    question_id = params[:question_id]
+    attachment_id = params[:id]
+    if Question.find_by_id(question_id).user_id == current_user.id
+      @question_attachment = QuestionAttachment.find_by( :question_id => question_id, :id => attachment_id )
+      if @question_attachment.nil?
+        render json:
+        {
+          data:
+          {
+            error: "El archivo adjunto no ha sido encontrado"
+          }
+        }
+      else
+        @question_attachment.destroy
+      end
+    else
+      render json: 
+        { data:
+          {
+            error: "Usted no puede borrar adjuntos de esta pregunta"
+          }
+        }
+    end 
   end
 
   private
@@ -75,6 +97,6 @@ class API::V1::QuestionAttachmentsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def question_attachment_params
       #params.fetch(:question_attachment, {})
-      params.require(:question_attachment).permit(:question_id, :attachment)
+      params.require(:question_attachment).permit(:attachment)
     end
 end
