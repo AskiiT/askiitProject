@@ -1,6 +1,6 @@
 class API::V1::QuestionAttachmentsController < ApplicationController
-  before_action :set_question_attachment, only: [:update, :destroy]
-  before_action :authenticate_user!, only:[:create, :destroy]
+  before_action :set_question_attachment, only: [:update]
+  before_action :authenticate_user!, only:[:create, :destroy, :update]
 
   # GET /question_attachments
   def index

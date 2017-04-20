@@ -74,12 +74,22 @@ class API::V1::QuestionHasTagsController < ApplicationController
         {
           data:
           {
-            error: "No puede eliminar el tag, no está asociado a la pregunta"
+            error: "No puede eliminar el tag no existe."
           }
         }
       else
-        @question = QuestionHasTag.get_from_question_and_tag( question_id, ta_id )
-        @question.destroy_all
+        @question = QuestionHasTag.find_by( :question_id => question_id, :tag_id => ta_id )
+        if @question.nil?
+          render json:
+          {
+            data:
+            {
+              error: "No puede eliminar, el tag no está asociado a la pregunta."
+            }
+          }
+        else
+          @question.destroy
+        end
       end
     end
 
