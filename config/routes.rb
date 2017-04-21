@@ -63,9 +63,9 @@ Rails.application.routes.draw do
           collection do
             get 'questions-by-title/:title/', to: "questions#questions_by_title"
             scope :tagsearch do
-              get ':tag', to: "questions#by_tag"
+              get ':tag(/:second_tag(/:third_tag))', to: "questions#by_tag"
             end
-
+            get 'tagsearch', to: "questions#by_tag"
             scope :topicsearch do
               get ':topic', to: "questions#by_topic"
             end

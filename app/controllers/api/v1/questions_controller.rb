@@ -115,24 +115,51 @@ class API::V1::QuestionsController < ApplicationController
 
   def by_tag
     g = params[:tag]
-    page = params[:page]
+    g1 = params[:second_tag]
+    g2 = params[:third_tag]
+    idds=[]
+    ps = params[:page]
+    if ps.nil?
+      ps=1
+    end
     m = g.to_i
     if m.to_s != g.to_s
       u=Tag.tag_id_name(params[:tag])
       g=u.to_i
     end
 
-    s= params[:sort]
-    if s.nil?
-      s=1
+    
+    if g1.nil?
+      s= params[:sort]
+      if s.nil?
+        s=1
+      else
+        s=translate(s)
+      end
+      @questions = Question.questions_by_tag(tag=g, sort=s).page(ps)
     else
-      s=translate(s)
+      idds.append(g)
+      m = g1.to_i
+      if m.to_s != g1.to_s
+        u=Tag.tag_id_name(g1)
+        g1=u.to_i
+      end
+      idds.append(g1)
+      if g2.nil?
+        g2=-1
+      else
+        m = g2.to_i
+        if m.to_s != g2.to_s
+          u=Tag.tag_id_name(g2)
+          g2=u.to_i
+        end
+      end
+      idds.append(g2)
+      @questions=Question.questions_by_manytags(ids=idds, sort=s, page=ps)
     end
+    
 
-
-    @questions = Question.questions_by_tag(tag=g, sort=s).page(page)
-
-    if @questions.empty?
+    if @questions.nil?
       render json: 
         { data:
           {

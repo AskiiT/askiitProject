@@ -133,4 +133,58 @@ class Question < ApplicationRecord
   end
   
   
+#33
+#165
+    #Busca por varios ids
+  def self.questions_by_manytags(ids, page = 1, per_page = 10)
+    i=ids.length
+
+    print "\naaaaaaaaaaaaaaaaaaaa"
+    print ids
+    print "\naaaaaaaaaaaaaaaaaaaa\n\n\n"
+    m=[];
+    g=[];
+    for j in 0...i do  
+      r=ids[j]
+      r=r.to_i
+      unless r<0
+        m.append(r)
+        g.append(QuestionHasTag.where('tag_id = ?', r))
+      end
+    end
+    
+    Question.questions_by_tags(m, g, page, per_page)
+  end
+
+  def self.questions_by_tags(tags, queries, sort=1, page = 1, per_page = 10)
+    ids=[]
+    i=tags.length
+    for j in 0...i do
+      h=queries[j].size
+      tmpArr=[]
+      for k in 0...h do
+        if j>0
+          id=queries[j].limit(1).offset(k).first.question_id;
+          tmpArr.append(id)
+        else
+          ids.append(queries[j].limit(1).offset(k).first.question_id)
+          tmpArr=ids
+        end
+      end
+      ids=tmpArr & ids
+    end
+
+    siz=ids.length
+    if siz==1
+      Question.where(id: ids[0])
+    elsif siz==0
+      Question.find_by_id(-1)
+    else
+      gu=Question.where( questions:{id: ids} )
+      gu=Question.sort_by(gu, sort)
+      gu.paginate(:page => page,:per_page => per_page)
+    end
+    #Question.find_by_id(80)
+  end
+
 end

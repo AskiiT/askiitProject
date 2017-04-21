@@ -1,5 +1,6 @@
 class Tag < ApplicationRecord
- 	belongs_to :topic
+ 	require 'will_paginate/array'
+  belongs_to :topic
  	has_many :questions, through: :question_has_tags
  	has_many :question_has_tags
 
@@ -49,4 +50,6 @@ class Tag < ApplicationRecord
       end
       g
     end
+
+
 end
