@@ -1,50 +1,34 @@
 require 'securerandom'
-lvl0=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/lvl0/robot.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-
+lvl0=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/robots/lvl1.png"))
 lvl0.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/1.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/2.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/3.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/4.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/5.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/6.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/7.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/8.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/9.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/10.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/11.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/12.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/13.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/14.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
+14.times do |j|
+	i=j+1
+	gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/"+i.to_s+".png"))
+	gen.save
+end
+
+lvl1=Picture.new(:level_picture=> File.new("#{Rails.root}/public/robot/robots/lvl1.png"))
+lvl1.id=1
+lvl1.save
+
+lvl3=Picture.new(:level_picture=> File.new("#{Rails.root}/public/robot/robots/lvl3.png"))
+lvl3.id=3
+lvl3.save
+
+lvl5=Picture.new(:level_picture=> File.new("#{Rails.root}/public/robot/robots/lvl5.png"))
+lvl5.id=5
+lvl5.save
+
+10.times do |j|
+	m=j+1
+	lvl7='70'+m.to_s
+	route="#{Rails.root}/public/robot/robots/lvl7/t"+m.to_s+".png"
+	lvl7=lvl7.to_i
+
+	lvlP=Picture.new(:level_picture=> File.new(route))
+	lvlP.id=lvl7
+	lvlP.save
+end
 
 colors=[
 'E73434',
@@ -177,7 +161,17 @@ t.save
 	user_id=User.all.last.id
 	for j in 1..10 do
   		 	dr=DomainRank.find_by_id((user_id.to_s+'010'+j.to_s).to_i)
-			dr.level=rand(0..5741)
+			#dr.level=rand(0..5741)
+			prob=rand(0..100)
+			if prob > 50
+			 	dr.level=rand(0..1972)
+			else
+				if prob > 30
+			 		dr.level=rand(0..666)
+			 	else
+			 		dr.level=rand(0..213)
+			 	end
+			end
 		 	dr.save
  	end
 	# t= Topic.new

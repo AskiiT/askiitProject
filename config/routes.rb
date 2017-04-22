@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do      
-      resources :avatars
+      #resources :avatars
 
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   

@@ -1,10 +1,10 @@
 # encoding: utf-8
 
-class AttachmentUploader < CarrierWave::Uploader::Base
+class LevelPictureUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  #include CarrierWave::RMagick
-  include CarrierWave::MiniMagick
+  # include CarrierWave::RMagick
+  # include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -18,14 +18,11 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   def extension_whitelist
     /image\//
   end
-  process resize_to_fit: [800, 800]
-  version :thumb do
-    process resize_to_fill: [200, 200]
-  end
 
   def size_range
     1..10.megabytes
   end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:

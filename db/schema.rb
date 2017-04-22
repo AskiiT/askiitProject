@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170409003334) do
+ActiveRecord::Schema.define(version: 20170422005613) do
 
   create_table "avatars", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "avatars"
-    t.string   "shirt"
   end
 
   create_table "domain_ranks", force: :cascade do |t|
@@ -25,6 +24,8 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.integer  "topic_id"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "picture_id"
+    t.index ["picture_id"], name: "index_domain_ranks_on_picture_id"
     t.index ["topic_id"], name: "index_domain_ranks_on_topic_id"
     t.index ["user_id"], name: "index_domain_ranks_on_user_id"
   end
@@ -36,6 +37,12 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.datetime "updated_at",  null: false
     t.index ["followed_id"], name: "index_followers_on_followed_id"
     t.index ["follower_id"], name: "index_followers_on_follower_id"
+  end
+
+  create_table "pictures", force: :cascade do |t|
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "level_picture"
   end
 
   create_table "postulates", force: :cascade do |t|
@@ -125,7 +132,7 @@ ActiveRecord::Schema.define(version: 20170409003334) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-04-19 00:00:00', null: false
+    t.datetime "date_created",           default: '2017-04-21 00:00:00', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false
