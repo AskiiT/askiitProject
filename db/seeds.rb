@@ -30,6 +30,18 @@ lvl5.save
 	lvlP.save
 end
 
+10.times do |j|
+	m=j+1
+	lvl9='90'+m.to_s
+	route="#{Rails.root}/public/robot/robots/lvl9/t"+m.to_s+".png"
+	lvl9=lvl9.to_i
+
+	lvlP=Picture.new(:level_picture=> File.new(route))
+	lvlP.id=lvl9
+	lvlP.save
+end
+
+
 colors=[
 'E73434',
 'FFAA2A',
@@ -160,17 +172,30 @@ t.save
 	r.save
 	user_id=User.all.last.id
 	for j in 1..10 do
+  		 	#Lv1: 0-20
+		    #Lv2: 21-55
+		    #Lv3: 56-114
+		    #Lv4: 115-213
+		    #Lv5: 214-381
+		    #Lv6: 382-666
+		    #Lv7: 667-1150
+		    #Lv8: 1151-1972
+		    #Lv9: 1973-3368
+		    #Lv10: 3369-5740
+		    #MAX > 5741
   		 	dr=DomainRank.find_by_id((user_id.to_s+'010'+j.to_s).to_i)
 			#dr.level=rand(0..5741)
 			prob=rand(0..100)
-			if prob > 50
-			 	dr.level=rand(0..1972)
+			if prob < 30
+				dr.level=rand(0...56)
+			elsif prob < 50
+				dr.level=rand(56...214)
+			elsif prob < 70
+				dr.level=rand(214...667)
+			elsif prob < 90
+				dr.level=rand(667...1973)
 			else
-				if prob > 30
-			 		dr.level=rand(0..666)
-			 	else
-			 		dr.level=rand(0..213)
-			 	end
+				dr.level=rand(1973...3368)
 			end
 		 	dr.save
  	end

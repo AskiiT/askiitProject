@@ -41,7 +41,7 @@ class Question < ApplicationRecord
     end
   end
 
-  def self.load_questions(sort= 1, page = 1, per_page = 10)
+  def self.load_questions(sort= 1, page = 1, per_page = 20)
     g= Question.includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
     g=Question.sort_by(g, sort)
     g.paginate(:page => page,:per_page => per_page)
@@ -54,34 +54,34 @@ class Question < ApplicationRecord
   end
 
   #Retorna una pregunta por id
-  def self.questions_by_ids(ids, sort=1, page = 1, per_page = 10)
+  def self.questions_by_ids(ids, sort=1, page = 1, per_page = 20)
     g=load_questions(sort, page, per_page).where( questions:{id: ids} )
     g.paginate(:page => page,:per_page => per_page)
   end
 
   #Busca coincidencias del titulo de una pregunta
-  def self.questions_by_title(title, sort=1, page = 1, per_page = 10)
+  def self.questions_by_title(title, sort=1, page = 1, per_page = 20)
     g=where("questions.title LIKE ?", "%#{title.downcase}%")
     g=Question.sort_by(g, sort)
     g.paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta las preguntas hechas por un usuario
-  def self.questions_by_user(user, sort=1, page = 1, per_page = 10)
+  def self.questions_by_user(user, sort=1, page = 1, per_page = 20)
     load_questions(sort, page, per_page)
     .where(questions:{user_id: user})
     .paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas tienen o han tenido postulaciones
-  def self.postulated_question(sort=1, page = 1, per_page = 10)
+  def self.postulated_question(sort=1, page = 1, per_page = 20)
       g=joins(:postulates)
       g=Question.sort_by(g, sort)
       g.paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas NO tienen o NUNCA han tenido postulaciones
-  def self.not_postulated_question(sort=1, page = 1, per_page = 10)
+  def self.not_postulated_question(sort=1, page = 1, per_page = 20)
     r=joins(:postulates)
     g=where.not('id IN (?)', r.select('id'))
     g=Question.sort_by(g, sort)
@@ -89,7 +89,7 @@ class Question < ApplicationRecord
   end
 
   #Me retorna preguntas en un tag
-  def self.questions_by_tag(tag, sort=1, page = 1, per_page = 10)
+  def self.questions_by_tag(tag, sort=1, page = 1, per_page = 20)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
     m=where('questions.id in (?)', g)
     g=Question.sort_by(m, sort)
@@ -97,12 +97,12 @@ class Question < ApplicationRecord
   end
 
   #Ver los adjuntos que tiene la pregunta
-  def self.all_attachments(id, page = 1, per_page = 10)
+  def self.all_attachments(id, page = 1, per_page = 20)
     QuestionAttachment.get_attachments( id, page, per_page )
   end
   
   #Ordena preguntas por dificultad
-  def self.sort_by_difficulty(topic, page = 1, per_page = 10)
+  def self.sort_by_difficulty(topic, page = 1, per_page = 20)
     joins(:topic).where("topic_id= ?", topic).order("questions.difficulty DESC")
     .select("questions.id, questions.title, questions.difficulty")
     .paginate(:page => page,:per_page => per_page)
@@ -110,13 +110,13 @@ class Question < ApplicationRecord
 
 
   #Retorna preguntas por tema
-  def self.questions_by_topic(topic, sort=1, page = 1, per_page = 10)
+  def self.questions_by_topic(topic, sort=1, page = 1, per_page = 20)
     g=joins(:topic).where("topic_id= ?", topic)
     g=Question.sort_by(g, sort)
     g.paginate(:page => page,:per_page => per_page)
   end
 
-  def self.sort_by_date( page = 1, per_page = 10)
+  def self.sort_by_date( page = 1, per_page = 20)
     load_questions(page, per_page).order("questions.date_posted ASC")
   end
 
@@ -126,22 +126,15 @@ class Question < ApplicationRecord
     #where("questions.id=?", id).select("questions.id, questions.title", g)
   end
 
-  def self.question_postulated(user, sort=1, page = 1, per_page = 10)
+  def self.question_postulated(user, sort=1, page = 1, per_page = 20)
     g=joins(:postulates).where("postulates.user_id=?", user)
     g=Question.sort_by(g, sort)
     g.paginate(:page => page,:per_page => per_page)
   end
   
-  
-#33
-#165
-    #Busca por varios ids
-  def self.questions_by_manytags(ids, page = 1, per_page = 10)
-    i=ids.length
 
-    print "\naaaaaaaaaaaaaaaaaaaa"
-    print ids
-    print "\naaaaaaaaaaaaaaaaaaaa\n\n\n"
+  def self.questions_by_manytags(ids, page = 1, per_page = 20)
+    i=ids.length
     m=[];
     g=[];
     for j in 0...i do  
@@ -156,7 +149,7 @@ class Question < ApplicationRecord
     Question.questions_by_tags(m, g, page, per_page)
   end
 
-  def self.questions_by_tags(tags, queries, sort=1, page = 1, per_page = 10)
+  def self.questions_by_tags(tags, queries, sort=1, page = 1, per_page = 20)
     ids=[]
     i=tags.length
     for j in 0...i do

@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20170422005613) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-04-21 00:00:00', null: false
+    t.datetime "date_created",           default: '2017-04-22 00:00:00', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false
