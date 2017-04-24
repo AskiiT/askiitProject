@@ -1,6 +1,6 @@
 class API::V1::QuestionHasTagsController < ApplicationController
   before_action :set_question_has_tag, only: [:show, :update ]
-  before_action :authenticate_user!, only:[:create, :destroy]
+  #before_action :authenticate_user!, only:[:create, :destroy]
   # GET /question_has_tags
   def index
     @question_has_tags = QuestionHasTag.all
@@ -14,36 +14,36 @@ class API::V1::QuestionHasTagsController < ApplicationController
   end
 
   # POST /question_has_tags
-  def create
-    @question_has_tag = QuestionHasTag.new
-    tag_id=params[:tag_id]
-    question_id=params[:question_id]
-    unless Question.find_by_id(question_id).user_id==current_user.id
-        render json: 
-        { data:
-          {
-            error: "Usted no puede ponerle tags a esta pregunta"
-          }
-        }
-    else
-      name=tag_id
-      ta_id=Tag.tag_id_name(name)
+  # def create
+  #   @question_has_tag = QuestionHasTag.new
+  #   tag_id=params[:tag_id]
+  #   question_id=params[:question_id]
+  #   unless Question.find_by_id(question_id).user_id==current_user.id
+  #       render json: 
+  #       { data:
+  #         {
+  #           error: "Usted no puede ponerle tags a esta pregunta"
+  #         }
+  #       }
+  #   else
+  #     name=tag_id
+  #     ta_id=Tag.tag_id_name(name)
 
-      if ta_id<0
-        topic=Question.find_by_id(question_id).topic_id
-        QuestionHasTag.tag_created(name, topic)
-        ta_id=Tag.tag_id_name(name)
-      end
-      @question_has_tag.tag_id=ta_id
-      @question_has_tag.question_id=question_id
+  #     if ta_id<0
+  #       topic=Question.find_by_id(question_id).topic_id
+  #       QuestionHasTag.tag_created(name, topic)
+  #       ta_id=Tag.tag_id_name(name)
+  #     end
+  #     @question_has_tag.tag_id=ta_id
+  #     @question_has_tag.question_id=question_id
 
-      if @question_has_tag.save
-        render json: @question_has_tag, status: :created
-      else
-        render json: @question_has_tag.errors, status: :unprocessable_entity
-      end
-    end
-  end
+  #     if @question_has_tag.save
+  #       render json: @question_has_tag, status: :created
+  #     else
+  #       render json: @question_has_tag.errors, status: :unprocessable_entity
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /question_has_tags/1
   def update
@@ -54,46 +54,99 @@ class API::V1::QuestionHasTagsController < ApplicationController
     end
   end
 
-  # DELETE /question_has_tags/1
-  def destroy
+  # # DELETE /question_has_tags/1
+  # def destroy
+  #   tag_id = params[:tag_id]
+  #   question_id = params[:question_id]
+  #   unless Question.find_by_id(question_id).user_id == current_user.id
+  #     render json:
+  #     {
+  #       data:
+  #       {
+  #         error: "No está autorizado para borrar tags a esta pregunta"
+  #       }
+  #     }
+  #   else
+  #     name = tag_id
+  #     ta_id = Tag.tag_id_name(name)
+  #     if ta_id < 0
+  #       render json:
+  #       {
+  #         data:
+  #         {
+  #           error: "No puede eliminar el tag no existe."
+  #         }
+  #       }
+  #     else
+  #       @question = QuestionHasTag.find_by( :question_id => question_id, :tag_id => ta_id )
+  #       if @question.nil?
+  #         render json:
+  #         {
+  #           data:
+  #           {
+  #             error: "No puede eliminar, el tag no está asociado a la pregunta."
+  #           }
+  #         }
+  #       else
+  #         @question.destroy
+  #       end
+  #     end
+  #   end
+
+  # end
+
+
+def create
+    @question_has_tag = QuestionHasTag.new
+    tag_id=params[:tag_id]
+    question_id=params[:question_id]
+    name=tag_id
+    ta_id=Tag.tag_id_name(name)
+
+    if ta_id<0
+      topic=Question.find_by_id(question_id).topic_id
+      QuestionHasTag.tag_created(name, topic)
+      ta_id=Tag.tag_id_name(name)
+    end
+    @question_has_tag.tag_id=ta_id
+    @question_has_tag.question_id=question_id
+
+    if @question_has_tag.save
+      render json: @question_has_tag, status: :created
+    else
+      render json: @question_has_tag.errors, status: :unprocessable_entity
+    end
+end
+
+def destroy
     tag_id = params[:tag_id]
     question_id = params[:question_id]
-    unless Question.find_by_id(question_id).user_id == current_user.id
+    name = tag_id
+    ta_id = Tag.tag_id_name(name)
+    if ta_id < 0
       render json:
       {
         data:
         {
-          error: "No está autorizado para borrar tags a esta pregunta"
+          error: "No puede eliminar el tag no existe."
         }
       }
     else
-      name = tag_id
-      ta_id = Tag.tag_id_name(name)
-      if ta_id < 0
+      @question = QuestionHasTag.find_by( :question_id => question_id, :tag_id => ta_id )
+      if @question.nil?
         render json:
         {
           data:
           {
-            error: "No puede eliminar el tag no existe."
+            error: "No puede eliminar, el tag no está asociado a la pregunta."
           }
         }
       else
-        @question = QuestionHasTag.find_by( :question_id => question_id, :tag_id => ta_id )
-        if @question.nil?
-          render json:
-          {
-            data:
-            {
-              error: "No puede eliminar, el tag no está asociado a la pregunta."
-            }
-          }
-        else
-          @question.destroy
-        end
+        @question.destroy
       end
     end
-
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

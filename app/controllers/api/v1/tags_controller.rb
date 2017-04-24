@@ -27,11 +27,23 @@ class API::V1::TagsController < ApplicationController
   # POST /tags
   def create
     @tag = Tag.new(tag_params)
-
-    if @tag.save
-      render json: @tag, status: :created
+    g=params[:topic]
+    if g.nil?
+      render json: {data: {error: "Topic no puede estar vacio"}}
     else
-      render json: @tag.errors, status: :unprocessable_entity
+      m=g.to_i
+
+      if m.to_s != g.to_s
+        u=Topic.topic_id_name(params[:topic])
+        g=u.to_i
+      end
+      @tag.topic_id=g
+
+      if @tag.save
+        render json: @tag, status: :created
+      else
+        render json: @tag.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -118,6 +130,6 @@ class API::V1::TagsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def tag_params
-      params.require(:tag).permit(:tag_name, :topic_id)
+      params.require(:tag).permit(:tag_name)
     end
 end

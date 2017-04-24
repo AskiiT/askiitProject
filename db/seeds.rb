@@ -43,16 +43,16 @@ end
 
 
 colors=[
-'E73434',
-'FFAA2A',
-'B0E940',
-'16E978',
-'25C8F1',
-'616FD5',
-'C373BB',
-'33335C',
-'03461D',
-'460337']
+'#E73434',
+'#FFAA2A',
+'#B0E940',
+'#16E978',
+'#25C8F1',
+'#616FD5',
+'#C373BB',
+'#33335C',
+'#03461D',
+'#460337']
 
 t=Topic.new
 t.id=1
@@ -139,10 +139,9 @@ t.save
 	u.username=us[userCho]
 	u.password="12345678"
 	u.description= Faker::Lorem.paragraph
-	u.topic_id=rand(1..10)
 	color_index=rand(0..10)
 	u.color=SecureRandom.hex(3)
-	u.color=u.color.upcase;
+	u.color="#"+u.color.upcase;
 	newb=rand(0.0..10.0)
 	u.avatar_id=1
 	if newb>3.5 
@@ -158,10 +157,9 @@ t.save
 		u.username=us[userCho]
 		u.password="12345678"
 		u.description= Faker::Lorem.paragraph
-		u.topic_id=rand(1..10)
 		color_index=rand(0..10)
 		u.color=SecureRandom.hex(3)
-		u.color=u.color.upcase;
+		u.color="#"+u.color.upcase;
 	end
 	u.save
 	
@@ -322,7 +320,7 @@ end
 
 ##  until t.valid? do
 ## 	question_id=rand(1..300)
-## 	tag_id=rand(1..300)
+## 	tapg_id=rand(1..300)
 ## 	t.question_id=question_id
 ## 	t.tag_id=tag_id
 ##  end

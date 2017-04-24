@@ -2,8 +2,7 @@ class Topic < ApplicationRecord
 	has_many :tags
 	has_many :questions
 	has_many :domain_ranks
-	has_many :users
-	
+		
 	validates :topic_name, presence: true
 	validates :topic_name, uniqueness: true
 	validates :topic_name, length: { minimum: 2, maximum: 30 }

@@ -1,0 +1,184 @@
+{
+	"variables": [],
+	"info": {
+		"name": "New Kind Of Post",
+		"_postman_id": "fc5977c9-78a7-8886-f633-88640887397c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign_up",
+			"request": {
+				"url": "localhost:3000/api/v1/auth",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "juasmartinezbel",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "first_name",
+							"value": "Juan Sebastian",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "last_name",
+							"value": "Martinez Beltran",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "email",
+							"value": "juasmartinezbel@unal.edu.co",
+							"type": "text",
+							"enabled": true
+						},
+						{
+							"key": "password",
+							"value": "123456789",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Sign_up with JSON",
+			"request": {
+				"url": "localhost:3000/api/v1/auth",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\n\t\"email\": \"juasmartinezbel@unal.edu.co\",\n    \"first_name\": \"Juan Sebastian\",\n    \"last_name\": \"Martinez Beltran\",\n    \"username\": \"juasmartinezbel\",\n    \"password\": \"123456789\",\n    \"color\": \"#551A8B \"\n\t}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Creating a Question",
+			"request": {
+				"url": "localhost:3000/api/v1/questions",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"¿Qué es la mitocondria?\",\n\t\"body\": \"En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.\",\n\t\"topic\": \"biologia\",\n\t\"user_id\": 1\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Tags",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/301/add-tag",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "tag_id",
+							"value": "Mitocondrias",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Add Tags With Json",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/301/add-tag",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tag_id\": \"Celula\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Question Attachment",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/301/question_attachments",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "question_attachment[attachment]",
+							"type": "file",
+							"enabled": true,
+							"src": "C94SI7GUwAEJGq-.jpg"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Tags [Con topic name]",
+			"request": {
+				"url": "localhost:3000/api/v1/tags",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tag_name\": \"Defensas\",\n\t\"topic\":\t\"memes\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

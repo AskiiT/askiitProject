@@ -72,14 +72,14 @@ ActiveRecord::Schema.define(version: 20170422005613) do
   end
 
   create_table "questions", force: :cascade do |t|
-    t.string   "title",       null: false
+    t.string   "title",                   null: false
     t.text     "body"
-    t.datetime "date_posted", null: false
-    t.integer  "difficulty",  null: false
+    t.datetime "date_posted",             null: false
+    t.integer  "difficulty",  default: 1, null: false
     t.integer  "user_id"
     t.integer  "topic_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["topic_id"], name: "index_questions_on_topic_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
@@ -132,19 +132,17 @@ ActiveRecord::Schema.define(version: 20170422005613) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-04-22 00:00:00', null: false
+    t.datetime "date_created",           default: '2017-04-24 00:00:00', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
     t.string   "color",                  default: "ffffff"
-    t.integer  "topic_id"
     t.integer  "avatar_id",              default: 1
     t.index ["avatar_id"], name: "index_users_on_avatar_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["topic_id"], name: "index_users_on_topic_id"
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end

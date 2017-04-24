@@ -1,6 +1,6 @@
 class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
-  before_action :authenticate_user!, only:[:create, :destroy]
+  #before_action :authenticate_user!, only:[:create, :destroy, :update]
 
   def translate(s)
     s=s.upcase
@@ -50,46 +50,73 @@ class API::V1::QuestionsController < ApplicationController
   # POST /questions
   def create
     @question = Question.new(question_params)
-    @question.user_id= current_user.id
-
-    if @question.save
-      render json: @question, status: :created
+    #@question.user_id= current_user.id
+    g=params[:topic]
+    if g.nil?
+      render json: {data: {error: "Topic no puede estar vacio"}}
     else
-      render json: @question.errors, status: :unprocessable_entity
+      m=g.to_i
+      
+      if m.to_s != g.to_s
+        u=Topic.topic_id_name(params[:topic])
+        g=u.to_i
+      end
+      @question.topic_id=g
+
+      if @question.save
+        render json: @question, status: :created
+      else
+        render json: @question.errors, status: :unprocessable_entity
+      end
     end
   end
 
   # PATCH/PUT /questions/1
-  def update
-    if @question.user_id == current_user.id
-      if @question.update(question_params)
-        render json: @question
-      else
-        render json: @question.errors, status: :unprocessable_entity
-      end
-    else
-      render json: 
-        { data:
-          {
-            error: "Usted no puede editar esta pregunta."
-          }
-        }
-    end  
-  end
+  # def update
+  #   if @question.user_id == current_user.id
+  #     if @question.update(question_params)
+  #       render json: @question
+  #     else
+  #       render json: @question.errors, status: :unprocessable_entity
+  #     end
+  #   else
+  #     render json: 
+  #       { data:
+  #         {
+  #           error: "Usted no puede editar esta pregunta."
+  #         }
+  #       }
+  #   end  
+  # end
 
   # DELETE /questions/1
+  # def destroy
+  #   if @question.user_id==current_user.id
+  #     @question.destroy
+  #   else
+  #     render json: 
+  #       { data:
+  #         {
+  #           error: "Usted no puede eliminar esta pregunta."
+  #         }
+  #       }
+  #     end
+  # end
+
   def destroy
-    if @question.user_id==current_user.id
-      @question.destroy
-    else
-      render json: 
-        { data:
-          {
-            error: "Usted no puede eliminar esta pregunta."
-          }
-        }
-      end
+    @question.destroy
   end
+  
+  def update
+    if @question.update(question_params)
+      render json: @question
+    else
+      render json: @question.errors, status: :unprocessable_entity
+    end 
+  end
+  ###############################
+  ###Custom methods
+  ###############################
 
   def questions_by_title
     s= params[:sort]
@@ -299,6 +326,6 @@ class API::V1::QuestionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def question_params
-      params.require(:question).permit(:title, :body, :date_posted, :difficulty, :user_id, :topic_id)
+      params.require(:question).permit(:title, :body, :date_posted, :difficulty, :user_id)
     end
 end

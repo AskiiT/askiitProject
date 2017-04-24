@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
   has_many :postulates
   has_many :followers, :foreign_key => :follower_id
   has_many :followed, :through => :followers, :source => :followed_id
-  belongs_to :topic
   belongs_to :avatar
 
   # Include default devise modules.

@@ -8,7 +8,7 @@ Cinco rutas pedidas para que el Front End Consuma:
 
  >  api/v1/questions
  *  Información de todas las preguntas
- * 	?page=x&sort=y
+ *  ?page=x&sort=y
 
  >  api/v1/users/:id
  *  Información de un usuario dado su id:
@@ -16,7 +16,7 @@ Cinco rutas pedidas para que el Front End Consuma:
  
  >  api/v1/questions/tagsearch/:tag
  *  Información de preguntas filtradas por tag:
- *	page=x&sort=y
+ *  page=x&sort=y
  
 
  >  api/v1/questions/:id
@@ -24,7 +24,7 @@ Cinco rutas pedidas para que el Front End Consuma:
 
  >  api/v1/tags(/page/:page) 
  *  Retornar todos los tags
- * 	?page=x
+ *  ?page=x
 
 
 
@@ -74,7 +74,7 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * ?page=x
 
 > api/v1/users/(:username or :id)                          
-* Me retorna un usuario 								
+* Me retorna un usuario                 
 
 > api/v1/users/search/username/:name                       
 * Me retorna un resultado de busqueda de username
@@ -89,11 +89,11 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * ?page=x
 
 > api/v1/users/(:username or :id)/followers                
-* Followers de un usuario 							
+* Followers de un usuario               
 * ?page=x
 
 > api/v1/users/(:username or :id)/following                  
-* Follows de un usuario 								
+* Follows de un usuario                 
 * ?page=x
 
 > api/v1/users/:user_id/ranks                              
@@ -184,14 +184,14 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 
 > api/v1/topics                               
-* Ve todos los topics 								
+* Ve todos los topics                 
 * ?page=x
 
 > api/v1/topics/(:topic_id or :topic_name)                 
-* Muestra un topic especifico 						
+* Muestra un topic especifico             
 
 > api/v1/topics/:topic_id/tags                             
-* Muestra los tags de un topic 						
+* Muestra los tags de un topic            
 * ?page=x
 
 > api/v1/topics/search/:tag_name
@@ -201,11 +201,11 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 ## Rutas para Tags
 
 > api/v1/tags                                 
-* Ve todos los tags 									
+* Ve todos los tags                   
 * ?page=x
 
 > api/v1/tags/(:tag_id or :tag_name)                       
-* Muestra un tag especifico							
+* Muestra un tag especifico             
 
 > api/v1/tags/used-by                                      
 * Muestra que usuarios hicieron preguntas en un tag
@@ -225,47 +225,235 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 
 
-# Temas y colores
+# POST
+##### Disclaimer: A continuación la forma en que POSTMAN permite
+##### postear los siguientes métodos:
 
+## 1. Para poder registrar un usuario:
+> POST: localhost:3000/api/v1/auth
 
-## QUIMICA
+#### Json:
+```javascript
+/********************Json******************************/
+{
+  "email": "juasmartinezbel@unal.edu.co",
+    "first_name": "Juan Sebastian",
+    "last_name": "Martinez Beltran",
+    "username": "juasmartinezbel",
+    "password": "123456789",
+    "color": "#551A8B"
+}
+/********************Codigo***********************/
+var data = JSON.stringify({
+      "email": "juasmartinezbel@unal.edu.co",
+      "first_name": "Juan Sebastian",
+      "last_name": "Martinez Beltran",
+      "username": "juasmartinezbel",
+      "password": "123456789",
+      "color": "#551A8B"
+});
 
-- ![#FF00DC](https://placehold.it/15/FF006E/000000?text=+) `#FF00DC`
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-## COMPUTACION E INFORMATICA
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
 
-- ![#B200FF](https://placehold.it/15/B200FF/000000?text=+) `#B200FF`
+xhr.open("POST", "http://localhost:3000/api/v1/auth");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "9a8f1eac-9337-6a62-c77c-9cd127e83450");
 
-## MATEMÁTICA
+xhr.send(data);
+  
+```
 
-- ![#4800FF](https://placehold.it/15/4800FF/000000?text=+) `#4800FF`
+#### JS sin JSON. Form Data
+```javascript
+var data = new FormData();
+data.append("username", "juasmartinezbel");
+data.append("first_name", "Juan Sebastian");
+data.append("last_name", "Martinez Beltran");
+data.append("email", "juasmartinezbel@unal.edu.co");
+data.append("color", "#551A8B");
+data.append("password", "123456789");
 
-## FISICA
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-- ![#0094FF](https://placehold.it/15/0094FF/000000?text=+) `#0094FF`
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
 
-## ELECTRICIDAD Y ELECTRONICA
+xhr.open("POST", "http://localhost:3000/api/v1/auth");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "48eb8d0d-b47a-7765-2cda-92e2cc9384cd");
 
+xhr.send(data);
+```
+## 2 Para poder postear una pregunta:
+> POST: localhost:3000/api/v1/questions
 
-- ![#00FFFF](https://placehold.it/15/00FFFF/000000?text=+) `#00FFFF`
+#### JSON [No es posible sin json]
+```javascript
+/********************Json******************************/
+{
+  "title": "¿Qué es la mitocondria?",
+  "body": "En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.",
+  "topic": "biologia",
+  "user_id": 1,
+  //"difficulty": 5 < Este es opcional, defaut es 1. Quitar coma arriba
+}
+/********************Codigo******************************/
+var data = JSON.stringify({
+  "title": "¿Qué es la mitocondria?",
+  "body": "En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.",
+  "topic": "biologia",
+  "user_id": 1,
+  "difficulty": 5
+});
 
-## CIENCIAS SOCIALES
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-- ![#00FF90](https://placehold.it/15/00FF90/000000?text=+) `#00FF90`
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
 
-## ARTES MUSICALES
+xhr.open("POST", "http://localhost:3000/api/v1/questions");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "1c4b78a6-01c1-19a3-e827-ac4a75da9b85");
 
-- ![#00FF21](https://placehold.it/15/00FF21/000000?text=+) `#00FF21`
+xhr.send(data);
+```
 
-## ARTES PLASTICAS
+### 2.1. Para poder agregar tags a una pregunta:
+> POST: localhost:3000/api/v1/questions/:question_id/add-tag
 
-- ![#FFD800](https://placehold.it/15/FFD800/000000?text=+) `#FFD800`
+```diff
+- El Tag DEBE pertenecer al TOPIC de la pregunta.
+- La pregunta DEBE crearse primero.
+- Si el tag no fue creado, lo creará automaticamente.
+- Recordar que el nombre de tag es ÚNICO. Independiente del Topic.
+- Solo un Tag por request.
+- En el ejemplo, :question_id es 301, se asocia automaticamente
+```
 
-## LENGUAJE Y LITERATURA
+#### JS sin JSON. Form Data
+```javascript
+var data = new FormData();
+data.append("tag_id", "Mitocondrias");
 
-- ![#FF6A00](https://placehold.it/15/FF6A00/000000?text=+) `#FF6A00`
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-## BIOLOGIA
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+xhr.open("POST", "http://localhost:3000/api/v1/questions/301/add-tag");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "672b4c7f-1e43-834b-6e9e-fb1f183f7071");
 
-- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `#f03c15`
+xhr.send(data);
+```
+#### JSON
+```javascript
+/********************Json******************************/
+{
+  "tag_id": "Celula"
+}
+/********************Codigo******************************/
+var data = JSON.stringify({
+  "tag_id": "Celula"
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:3000/api/v1/questions/301/add-tag");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "bd2635cb-7fbb-28f3-c346-3aedfaf23ff1");
+
+xhr.send(data);
+```
+### 2.2. Para poder agregar Archivos a una pregunta:
+
+> POST: localhost:3000/api/v1/questions/:question_id/question_attachments
+
+```diff
+- No sé como puedan hacer este, por favor revisar la colección de Postman
+- El caso con :question_id es el mismo que con el anterior
+```
+#### JS sin JSON. Form Data, NO se puede con JSON, necesita archivos.
+```javascript
+var data = new FormData();
+data.append("question_attachment[attachment]", "C94SI7GUwAEJGq-.jpg");
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:3000/api/v1/questions/301/question_attachments");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "b066b169-f2c5-ee1c-4550-ceb36cb08bcd");
+
+xhr.send(data);
+```
+
+## 3. Para poder crear Tags aparte:
+> POST: localhost:3000/api/v1/questions/:question_id/question_attachments
+
+#### JSON [No permite con Form]
+```javascript
+/*********************JSON******************/
+{
+  "tag_name": "Defensas",
+  "topic":  "Biologia"
+}
+
+/*****************Codigo*****************/
+
+var data = JSON.stringify({
+  "tag_name": "Defensas",
+  "topic": "Biologia"
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:3000/api/v1/tags");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "34e1ae74-0cfb-9f4e-cf5e-674728554d0d");
+
+xhr.send(data);
+```
 

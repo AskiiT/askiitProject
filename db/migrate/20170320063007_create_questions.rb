@@ -4,7 +4,7 @@ class CreateQuestions < ActiveRecord::Migration[5.0]
       t.string :title,                        null: false
       t.text :body
       t.datetime :date_posted,                null: false
-      t.integer :difficulty,                  null: false
+      t.integer :difficulty,                  null: false, :default => 1
       t.references :user, foreign_key: true, on_destroy: :cascade
       t.references :topic, foreign_key: true
 

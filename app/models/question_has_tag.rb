@@ -31,7 +31,7 @@ class QuestionHasTag < ApplicationRecord
 	   		to_o_tag=QuestionHasTag.topic_of_tag(tag_id)
 	   		to_o_qu=QuestionHasTag.topic_of_question(question_id)
 	    	if  to_o_tag != to_o_qu
-			        errors.add(:tag_id, "This tag doesn't belongs to topic")
+			        errors.add(:tag_id, "This tag doesn't belongs to the topic")
 		    end
 	   end
   end
