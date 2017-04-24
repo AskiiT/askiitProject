@@ -226,8 +226,7 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 
 # POST
-##### Disclaimer: A continuación la forma en que POSTMAN permite
-##### postear los siguientes métodos:
+##### Disclaimer: A continuación la forma en que POSTMAN permite postear los siguientes métodos en una función tipo Javascript:
 
 ## 1. Para poder registrar un usuario:
 > POST: localhost:3000/api/v1/auth
@@ -339,33 +338,13 @@ xhr.send(data);
 > POST: localhost:3000/api/v1/questions/:question_id/add-tag
 
 ```diff
-- El Tag DEBE pertenecer al TOPIC de la pregunta.
 - La pregunta DEBE crearse primero.
-- Si el tag no fue creado, lo creará automaticamente.
-- Recordar que el nombre de tag es ÚNICO. Independiente del Topic.
+- Si el tag no fue creado, lo creará automaticamente al topic de la pregunta.
+- Recordar que el nombre de tag es ÚNICO.
 - Solo un Tag por request.
 - En el ejemplo, :question_id es 301, se asocia automaticamente
 ```
 
-#### JS sin JSON. Form Data
-```javascript
-var data = new FormData();
-data.append("tag_id", "Mitocondrias");
-
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-
-xhr.addEventListener("readystatechange", function () {
-  if (this.readyState === 4) {
-    console.log(this.responseText);
-  }
-});
-xhr.open("POST", "http://localhost:3000/api/v1/questions/301/add-tag");
-xhr.setRequestHeader("cache-control", "no-cache");
-xhr.setRequestHeader("postman-token", "672b4c7f-1e43-834b-6e9e-fb1f183f7071");
-
-xhr.send(data);
-```
 #### JSON
 ```javascript
 /********************Json******************************/

@@ -3,7 +3,6 @@ class QuestionHasTag < ApplicationRecord
   belongs_to :tag
 
   validates_uniqueness_of :question, :scope => [:tag]
-  validate :TagInTopic
 
   def self.tag_created(new_name, topic)
     ta=Tag.new
@@ -26,16 +25,6 @@ class QuestionHasTag < ApplicationRecord
   	Topic.topic_in_question(question_id)
   end
   
-  def TagInTopic
-	   if question_id && tag_id
-	   		to_o_tag=QuestionHasTag.topic_of_tag(tag_id)
-	   		to_o_qu=QuestionHasTag.topic_of_question(question_id)
-	    	if  to_o_tag != to_o_qu
-			        errors.add(:tag_id, "This tag doesn't belongs to the topic")
-		    end
-	   end
-  end
-
   def self.get_from_question_and_tag( question_id, tag_id )
     where( question_has_tags: {question_id: question_id, tag_id: tag_id} )
   end

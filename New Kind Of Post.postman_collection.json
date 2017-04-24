@@ -45,6 +45,12 @@
 							"value": "123456789",
 							"type": "text",
 							"enabled": true
+						},
+						{
+							"key": "color",
+							"value": "#551A88",
+							"type": "text",
+							"enabled": true
 						}
 					]
 				},
@@ -66,7 +72,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\t{\n\t\"email\": \"juasmartinezbel@unal.edu.co\",\n    \"first_name\": \"Juan Sebastian\",\n    \"last_name\": \"Martinez Beltran\",\n    \"username\": \"juasmartinezbel\",\n    \"password\": \"123456789\",\n    \"color\": \"#551A8B \"\n\t}\n"
+					"raw": "\t{\n\t\"email\": \"juasmartinezbel2@unal.edu.co\",\n    \"first_name\": \"Juan Sebastian\",\n    \"last_name\": \"Martinez Beltran\",\n    \"username\": \"juasmartinezbel2\",\n    \"password\": \"123456789\",\n    \"color\": \"#551A88\"\n\t}\n"
 				},
 				"description": ""
 			},
@@ -93,33 +99,6 @@
 			"response": []
 		},
 		{
-			"name": "Add Tags",
-			"request": {
-				"url": "localhost:3000/api/v1/questions/301/add-tag",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "tag_id",
-							"value": "Mitocondrias",
-							"type": "text",
-							"enabled": true
-						}
-					]
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
 			"name": "Add Tags With Json",
 			"request": {
 				"url": "localhost:3000/api/v1/questions/301/add-tag",
@@ -133,7 +112,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"tag_id\": \"Celula\"\n}"
+					"raw": "{\n\t\"tag_id\": \"Mitocondrias\"\n}"
 				},
 				"description": ""
 			},
@@ -174,7 +153,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"tag_name\": \"Defensas\",\n\t\"topic\":\t\"memes\"\n}"
+					"raw": "{\n\t\"tag_name\": \"Mezclas de ELementos\",\n\t\"topic\":\t\"Quimica\"\n}"
 				},
 				"description": ""
 			},
