@@ -25,15 +25,6 @@ Rails.application.routes.draw do
 
           get 'my-questions',           to: 'questions#my_questions'    #api/v1/users/:id/my-questions (get)
 
-          ###
-          #Falta poder seguir a alguien y dejar de seguir
-          ###
-
-          #api/v1/users/:id_followed/follow   followers#create
-          #api/v1/users/:id_followed/unfollow folowers#destroy
-
-          #api/v1/users/:id_users/follow?=my_id 
-
           resources :followers,         only: [:index] 
               #api/v1/users/:id/followers (get) Me muestra mis seguidores
           get 'following',              to: 'followers#following'       

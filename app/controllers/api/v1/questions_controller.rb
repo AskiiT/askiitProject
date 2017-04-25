@@ -2,6 +2,38 @@ class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:show, :update, :destroy]
   #before_action :authenticate_user!, only:[:create, :destroy, :update]
 
+  def getCols(arr, query)
+    parameters=['id', 'title', 'body', 'user_id', 'topic_id', 'difficulty','date_posted']
+    por=arr & parameters
+    cols=[]
+    endjson=query
+    unless por.empty?
+      if por.include?('id')
+        cols.push(:id)
+      end
+      if por.include?('title')
+        cols.push(:title)
+      end
+      if por.include?('body')
+        cols.push(:body)
+      end
+      if por.include?('user_id')
+        cols.push(:user_id)
+      end
+      if por.include?('topic_id')
+        cols.push(:topic_id)
+      end
+      if por.include?('difficulty')
+        cols.push(:difficulty)
+      end
+      if por.include?('date_posted')
+        cols.push(:date_posted)
+      end
+      endjson=endjson.to_json(:only => cols)
+    end
+    endjson
+  end
+
   def translate(s)
     s=s.upcase
     case s
@@ -55,6 +87,12 @@ class API::V1::QuestionsController < ApplicationController
       @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
     end
 
+    el=params[:select_questions]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @questions=getCols(el, @questions)
+    end
     if @questions.empty?
       render json: 
         { data:
@@ -69,6 +107,12 @@ class API::V1::QuestionsController < ApplicationController
 
   # GET /questions/1
   def show
+    el=params[:select_questions]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @question=getCols(el, @question)
+    end
     render json: @question
    
   end
@@ -154,7 +198,7 @@ class API::V1::QuestionsController < ApplicationController
 
     @questions = Question.questions_by_title(title=params[:title], sort=s).page(params[:page])
     
-      if @questions.empty?
+    if @questions.empty?
       render json: 
         { data:
           {
@@ -216,6 +260,13 @@ class API::V1::QuestionsController < ApplicationController
       @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
     end
 
+    el=params[:select_questions]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @questions=getCols(el, @questions)
+    end
+
     if @questions.nil?
       render json: 
         { data:
@@ -259,6 +310,12 @@ class API::V1::QuestionsController < ApplicationController
       @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
     end
 
+    el=params[:select_questions]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @questions=getCols(el, @questions)
+    end
     if @questions.empty?
       render json: 
         { data:
@@ -287,6 +344,12 @@ class API::V1::QuestionsController < ApplicationController
       @question_list=@question_list.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
     end
 
+    el=params[:select_questions]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @question_list=getCols(el, @question_list)
+    end
     if @question_list.empty?
       render json: 
         { data:
@@ -312,6 +375,14 @@ class API::V1::QuestionsController < ApplicationController
     unless q.nil?
       @postulate=@postulate.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
     end
+
+    el=params[:select_questions]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @postulate=getCols(el, @postulate)
+    end
+
     if @postulate.empty?
       render json: 
         { data:
@@ -337,6 +408,14 @@ class API::V1::QuestionsController < ApplicationController
     unless q.nil?
       @question=@question.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
     end
+
+    el=params[:select_questions]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @question=getCols(el, @question)
+    end
+
     if @question.empty?
       render json: 
         { data:
@@ -362,6 +441,12 @@ class API::V1::QuestionsController < ApplicationController
       @question=@question.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
     end
     
+    el=params[:select_questions]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @question=getCols(el, @question)
+    end
     if @question.empty?
       render json: 
         { data:

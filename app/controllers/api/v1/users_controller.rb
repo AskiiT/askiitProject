@@ -11,7 +11,38 @@ class API::V1::UsersController < ApplicationController
           }
   end
   
-
+  def getCols(arr, query)
+    parameters=['first_name', 'last_name', 'username', 'email', 'color', 'date_created', 'id']
+    por=arr & parameters
+    cols=[]
+    endjson=query
+    unless por.empty?
+      if por.include?('id')
+        cols.push(:id)
+      end
+      if por.include?('username')
+        cols.push(:username)
+      end
+      if por.include?('email')
+        cols.push(:email)
+      end
+      if por.include?('first_name')
+        cols.push(:first_name)
+      end
+      if por.include?('last_name')
+        cols.push(:last_name)
+      end
+      if por.include?('color')
+        cols.push(:color)
+      end
+      if por.include?('date_created')
+        cols.push(:date_created)
+      end
+      cols.push(:rank)
+      endjson=endjson.to_json(:only => cols)
+    end
+    endjson
+  end
   def translate(s)
     s=s.upcase
     case s
@@ -48,7 +79,7 @@ class API::V1::UsersController < ApplicationController
     when 'COLOR'
       s=16
     else
-      s=1
+      s=14
     end
   end
 
@@ -57,7 +88,7 @@ class API::V1::UsersController < ApplicationController
 
     s = params[:sort]
     if s.nil?
-      s = 13
+      s = 14
     else
       s = translate(s)
     end
@@ -71,21 +102,29 @@ class API::V1::UsersController < ApplicationController
     unless q.nil?
       @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
     end
-    	if @users.empty?
-  			render json: 
-  				{ data:
-  					{
-  						error: "No more users to show."
-  					}
-  				}
-  		else
-    		render json: @users
-  		end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @users=getCols(el, @users)
+    end
+  	if @users.empty?
+			render json: 
+				{ data:
+					{
+						error: "No more users to show."
+					}
+				}
+		else
+  		render json: @users
+		end
   	end
   	
 	def show
 		g=params[:id]
 		m=g.to_i
+
 
 		if m.to_s == g.to_s
 			@user = User.find(params[:id])
@@ -93,16 +132,24 @@ class API::V1::UsersController < ApplicationController
 			@user = User.user_username(params[:id])
 		end
 
-    # if @user.empty?
-    #   render json: 
-    #     { data:
-    #       {
-    #         error: "User wasn't found"
-    #       }
-    #     }
-    # else      
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
+
+
+    if @user.nil?
+       render json: 
+         { data:
+           {
+             error: "User wasn't found"
+           }
+         }
+     else      
     render json: @user
-    # end
+     end
   end
 
   def create
@@ -136,7 +183,7 @@ class API::V1::UsersController < ApplicationController
 	def search_username
 		s = params[:sort]
     if s.nil?
-      s = 13
+      s = 14
     else
       s = translate(s)
     end
@@ -148,6 +195,12 @@ class API::V1::UsersController < ApplicationController
       @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
     end
 
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
 		if @users.empty?
   			render json: 
   				{ data:
@@ -163,12 +216,20 @@ class API::V1::UsersController < ApplicationController
 	def search_firstname
     s = params[:sort]
     if s.nil?
-      s = 13
+      s = 14
     else
       s = translate(s)
     end
 		@users=User.users_by_firstname(params[:username], sort=s).page(params[:page])
 
+
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
 		if @users.empty?
   			render json: 
   				{ data:
@@ -184,12 +245,18 @@ class API::V1::UsersController < ApplicationController
 	def search_lastname
     s = params[:sort]
     if s.nil?
-      s = 13
+      s = 14
     else
       s = translate(s)
     end
 		@users=User.users_by_firstname(params[:username], sort=s).page(params[:page])
 
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
 		if @users.empty?
   			render json: 
   				{ data:
@@ -202,26 +269,26 @@ class API::V1::UsersController < ApplicationController
   		end
 	end
 
-	def my_questions
-		@my_questions = Question.questions_by_user( params[:user_id] ).page(params[:page])
-		  if @my_questions.empty?
-      render json: 
-        { data:
-          {
-            error: "No more questions to show."
-          }
-        }
-    else
-      render json: @my_questions
-    end
-	end
-
 
   #####
   #Other routes
   #####
   def who_postulated
     @users=User.postulated_to_user(params[:user_id]).page(params[:page])
+    
+
+    q=params[:q]
+    unless q.nil?
+      @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @users=getCols(el, @users)
+    end
+
     if @users.empty?
     render json: 
         { data:
@@ -235,6 +302,19 @@ class API::V1::UsersController < ApplicationController
   end
   def who_it_postulated
     @users=User.who_it_postulated(params[:user_id]).page(params[:page])
+    
+    q=params[:q]
+    unless q.nil?
+      @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @users=getCols(el, @users)
+    end
+
     if @users.empty?
     render json: 
         { data:
@@ -313,7 +393,7 @@ class API::V1::UsersController < ApplicationController
   def postulated_to
     s = params[:sort]
     if s.nil?
-      s = 13
+      s = 14
     else
       s = translate(s)
     end
@@ -324,6 +404,13 @@ class API::V1::UsersController < ApplicationController
       @postulate=@postulate.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
     end
 
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @postulate=getCols(el, @postulate)
+    end
+    
     if @postulate.empty?
         render json: 
           { data:

@@ -43,6 +43,39 @@ class API::V1::FollowersController < ApplicationController
     end
   end
 
+  def getCols(arr, query)
+    parameters=['first_name', 'last_name', 'username', 'email', 'color', 'date_created', 'id']
+    por=arr & parameters
+    cols=[]
+    endjson=query
+    unless por.empty?
+      if por.include?('id')
+        cols.push(:id)
+      end
+      if por.include?('username')
+        cols.push(:username)
+      end
+      if por.include?('email')
+        cols.push(:email)
+      end
+      if por.include?('first_name')
+        cols.push(:first_name)
+      end
+      if por.include?('last_name')
+        cols.push(:last_name)
+      end
+      if por.include?('color')
+        cols.push(:color)
+      end
+      if por.include?('date_created')
+        cols.push(:date_created)
+      end
+      cols.push(:rank)
+      endjson=endjson.to_json(:only => cols)
+    end
+    endjson
+  end
+
   def index
     g=params[:user_id]
     m=g.to_i
@@ -63,6 +96,13 @@ class API::V1::FollowersController < ApplicationController
     q=params[:q]
     unless q.nil?
       @followers=@followers.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @followers=getCols(el, @followers)
     end
     if @followers.empty?
         render json: 
@@ -98,6 +138,13 @@ class API::V1::FollowersController < ApplicationController
     unless q.nil?
       @following=@following.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
     end
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @following=getCols(el, @following)
+    end
+    
     if @following.empty?
       render json: 
         { data:
