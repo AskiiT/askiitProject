@@ -223,12 +223,10 @@ end
 
  ta.tag_name=Faker::Company.catch_phrase
  ta.tag_name=ta.tag_name.upcase
- ta.topic_id=rand(1..10)
  
 	until ta.valid? do	
 	 ta.tag_name=Faker::Company.catch_phrase
 	 ta.tag_name=ta.tag_name.upcase
-	 ta.topic_id=rand(1..10)
 	end
  ta.save
 

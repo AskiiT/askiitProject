@@ -4,10 +4,9 @@ class QuestionHasTag < ApplicationRecord
 
   validates_uniqueness_of :question, :scope => [:tag]
 
-  def self.tag_created(new_name, topic)
+  def self.tag_created(new_name)
     ta=Tag.new
     ta.tag_name=new_name.upcase
-    ta.topic_id=topic
     ta.save
   end
 

@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20170422005613) do
   create_table "questions", force: :cascade do |t|
     t.string   "title",                                       null: false
     t.text     "body"
-    t.datetime "date_posted", default: '2017-04-25 15:25:46', null: false
+    t.datetime "date_posted", default: '2017-04-25 20:34:23', null: false
     t.integer  "difficulty",  default: 1,                     null: false
     t.integer  "user_id"
     t.integer  "topic_id"
@@ -96,11 +96,9 @@ ActiveRecord::Schema.define(version: 20170422005613) do
 
   create_table "tags", force: :cascade do |t|
     t.string   "tag_name",   null: false
-    t.integer  "topic_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tag_name"], name: "index_tags_on_tag_name", unique: true
-    t.index ["topic_id"], name: "index_tags_on_topic_id"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -132,7 +130,7 @@ ActiveRecord::Schema.define(version: 20170422005613) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-04-25 15:25:45', null: false
+    t.datetime "date_created",           default: '2017-04-25 20:34:22', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false

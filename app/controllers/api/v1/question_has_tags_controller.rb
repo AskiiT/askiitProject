@@ -104,8 +104,7 @@ def create
     ta_id=Tag.tag_id_name(name)
 
     if ta_id<0
-      topic=Question.find_by_id(question_id).topic_id
-      QuestionHasTag.tag_created(name, topic)
+      QuestionHasTag.tag_created(name)
       ta_id=Tag.tag_id_name(name)
     end
     @question_has_tag.tag_id=ta_id

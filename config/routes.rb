@@ -89,7 +89,6 @@ Rails.application.routes.draw do
       end
 
       resources :topics do
-        get 'tags', to: "tags#topic_tags"
         get 'used-by', to: "topics#used_by"
         collection do
           get 'search/:topic_name',  to: 'topics#search'

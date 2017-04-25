@@ -64,30 +64,6 @@ class API::V1::TagsController < ApplicationController
   ###Custom Routes
   ###########
 
-  def topic_tags
-    g=params[:topic_id]
-    m=g.to_i
-    
-    if m.to_s != g.to_s
-      u=Topic.topic_id_name(params[:topic_id])
-      g=u.to_i
-    end
-
-    @tags=Tag.tags_in_topic(g).page(params[:page])
-
-    if @tags.empty?
-      render json: 
-        { data:
-          {
-            error: "No more tags to show."
-          }
-        }
-    else
-      render json: @tags
-    end
-
-  end
-
 
   def tags_in_question
     @tag= Tag.tags_in_question(params[:question_id]).page(params[:page])
