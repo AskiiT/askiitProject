@@ -4,6 +4,16 @@ class Question < ApplicationRecord
   scope :order_oldest, -> { order("questions.date_posted ASC") }
   scope :order_harder, -> { order("questions.difficulty DESC") }
   scope :order_easiest, -> { order("questions.difficulty ASC") }
+  scope :first_topics, -> { order("questions.topic_id DESC") }
+  scope :last_topics, -> { order("questions.topic_id ASC") }
+  scope :firsts_users, -> { order("questions.user_id DESC") }
+  scope :last_users, -> { order("questions.user_id ASC") }
+  scope :order_body, -> { order("questions.body DESC") }
+  scope :order_asc_body, -> { order("questions.body ASC") }
+  scope :order_title, -> { order("questions.title DESC") }
+  scope :order_asc_title, -> { order("questions.title ASC") }
+  scope :order_id, -> { order("questions.id DESC") }
+  scope :order_asc_id, -> { order("questions.id ASC") }
 
   belongs_to :user
   belongs_to :topic
@@ -18,26 +28,43 @@ class Question < ApplicationRecord
   validates_inclusion_of :difficulty, in: 1..10
   validates :body, length: {maximum: 500}, allow_blank: true
   validate  :actual_date
-  after_initialize :default_date
 
-  def default_date
-    self.date_posted=Date.today
-  end
   def actual_date
-      if date_posted.present? && date_posted > Date.today
+      if date_posted.present? && date_posted > DateTime.now
         errors.add(:date_posted, "can't be post in the future" )
       end
   end
 
   def self.sort_by(query1, sort)
-    if sort==1
+    case sort
+    when 1
       query1= query1.order_newest
-    elsif sort==2
+    when 2
       query1= query1.order_oldest
-    elsif sort==3
+    when 3
       query1= query1.order_harder
-    elsif sort==4
+    when 4
       query1= query1.order_easiest
+    when 5
+      query1= query1.first_topics
+    when 6
+      query1= query1.last_topics
+    when 7
+      query1= query1.firsts_users
+    when 8
+      query1= query1.last_users
+    when 9
+      query1= query1.order_body
+    when 10
+      query1= query1.order_asc_body
+    when 11
+      query1= query1.order_title
+    when 12
+      query1= query1.order_asc_title
+    when 13
+      query1= query1.order_id
+    when 14
+      query1= query1.order_asc_id
     end
   end
 

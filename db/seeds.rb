@@ -22,7 +22,7 @@ lvl5.save
 10.times do |j|
 	m=j+1
 	lvl7='70'+m.to_s
-	route="#{Rails.root}/public/robot/robots/lvl7/t"+m.to_s+".png"
+	route="#{Rails.root}/public/robot/robots/lvl7/r"+m.to_s+".png"
 	lvl7=lvl7.to_i
 
 	lvlP=Picture.new(:level_picture=> File.new(route))
@@ -33,7 +33,7 @@ end
 10.times do |j|
 	m=j+1
 	lvl9='90'+m.to_s
-	route="#{Rails.root}/public/robot/robots/lvl9/t"+m.to_s+".png"
+	route="#{Rails.root}/public/robot/robots/lvl9/r"+m.to_s+".png"
 	lvl9=lvl9.to_i
 
 	lvlP=Picture.new(:level_picture=> File.new(route))
@@ -54,77 +54,76 @@ colors=[
 '#03461D',
 '#460337']
 
+
 t=Topic.new
 t.id=1
-t.topic_name="Quimica"
-t.topic_description="Pregunta sobre quimica"
-t.color=colors[1]
-t.save
-
-t=Topic.new
-t.id=2
-t.topic_name="Computacion e Informatica"
-t.topic_description="Pregunta sobre Computacion e Informatica"
-t.color=colors[2]
-t.save
-
-t=Topic.new
-t.id=3
-t.topic_name="Matematica"
-t.topic_description="Pregunta sobre Matematica"
-t.color=colors[3]
-t.save
-
-
-t=Topic.new
-t.id=4
-t.topic_name="Fisica"
-t.topic_description="Pregunta sobre Fisica"
-t.color=colors[4]
-t.save
-
-t=Topic.new
-t.id=5
-t.topic_name="Electricidad y Electronica"
-t.topic_description="Pregunta sobre Electricidad y Electronica"
-t.color=colors[5]
-t.save
-
-t=Topic.new
-t.id=6
-t.topic_name="Ciencias Sociales"
-t.topic_description="Pregunta sobre Ciencias Sociales"
-t.color=colors[6]
-t.save
-
-t=Topic.new
-t.id=7
 t.topic_name="Artes Musicales"
 t.topic_description="Pregunta sobre Artes Musicales"
 t.color=colors[7]
 t.save
 
 t=Topic.new
-t.id=8
+t.id=2
 t.topic_name="Artes Plasticas"
 t.topic_description="Pregunta sobre Artes Plasticas"
 t.color=colors[8]
 t.save
 
 t=Topic.new
-t.id=9
+t.id=3
+t.topic_name="Biologia"
+t.topic_description="Pregunta sobre Biologia"
+t.color=colors[0]
+t.save
+
+t=Topic.new
+t.id=4
+t.topic_name="Ciencias Sociales"
+t.topic_description="Pregunta sobre Ciencias Sociales"
+t.color=colors[6]
+t.save
+
+t=Topic.new
+t.id=5
+t.topic_name="Computacion e Informatica"
+t.topic_description="Pregunta sobre Computacion e Informatica"
+t.color=colors[2]
+t.save
+
+t=Topic.new
+t.id=6
+t.topic_name="Electricidad y Electronica"
+t.topic_description="Pregunta sobre Electricidad y Electronica"
+t.color=colors[5]
+t.save
+
+t=Topic.new
+t.id=7
+t.topic_name="Fisica"
+t.topic_description="Pregunta sobre Fisica"
+t.color=colors[4]
+t.save
+
+t=Topic.new
+t.id=8
 t.topic_name="Lenguaje y Literatura"
 t.topic_description="Pregunta sobre Lenguaje y Literatura"
 t.color=colors[9]
 t.save
 
 t=Topic.new
-t.id=10
-t.topic_name="Biologia"
-t.topic_description="Pregunta sobre Biologia"
-t.color=colors[0]
+t.id=9
+t.topic_name="Matematica"
+t.topic_description="Pregunta sobre Matematica"
+t.color=colors[3]
 t.save
 
+t=Topic.new
+t.id=10
+t.topic_name="Quimica"
+t.topic_description="Pregunta sobre quimica"
+t.color=colors[1]
+t.save
 
 
 
@@ -162,7 +161,9 @@ t.save
 		u.color="#"+u.color.upcase;
 	end
 	u.save
-	
+	u=User.all.last
+	u.date_created = DateTime.now - Faker::Number.number(3).to_i.days - Faker::Number.number(3).to_i.hours
+	u.save
 	r=Rank.last
 	r.clarity=rand(0..5741)
 	r.quickness=rand(0..5741)
@@ -242,21 +243,28 @@ end
  q.title= Faker::Lorem.sentence
  q.body= Faker::Lorem.paragraph
  q.difficulty=rand(1..10)
- q.date_posted= Date.today - Faker::Number.number(3).to_i.days 
  q.topic_id=rand(1..10)
  q.user_id=rand(1..100)
+ date=DateTime.now - Faker::Number.number(3).to_i.days - Faker::Number.number(3).to_i.hours
+ q.date_posted=date
+ q.date_posted=date
+ q.date_posted=date
  until q.valid? do	
 	 q.title= Faker::Lorem.sentence
 	 q.body= Faker::Lorem.paragraph
+	 q.date_posted= 
 	 q.difficulty=rand(1..10)
-	 q.date_posted= Date.today - Faker::Number.number(3).to_i.days 
 	 q.topic_id=rand(1..10)
 	 q.user_id=rand(1..100)
+	 date=DateTime.now - Faker::Number.number(3).to_i.days - Faker::Number.number(3).to_i.hours
+	 q.date_posted=date
+	 q.date_posted=date
+	 q.date_posted=date
  end
  q.save
+ tags_amount=rand(0..3)
+ question_id=Question.all.last.id
 
- 	tags_amount=rand(0..3)
-	question_id=Question.all.last.id
 	if tags_amount !=0
 		for j in 1..tags_amount do
 			t=QuestionHasTag.new
@@ -273,7 +281,6 @@ end
 	end
 
 end
-
 
 500.times do |i|
 	f=Follower.new

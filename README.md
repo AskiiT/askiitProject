@@ -52,6 +52,7 @@ Cinco rutas pedidas para que el Front End Consuma:
 > Retorna los más dificiles primero
 
 
+
 #   Todas las rutas GET
 
 Acá un listado de todas las rutas hechas hasta ahora para GET.
@@ -71,30 +72,30 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 > api/v1/users
 * Retorna todos los usuarios
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/(:username or :id)                          
 * Me retorna un usuario                 
 
 > api/v1/users/search/username/:name                       
 * Me retorna un resultado de busqueda de username
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/search/first-name/:name                     
 * Me retorna un resultado de busqueda de firstname
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/search/last-name/:name                      
 * Me retorna un resultado de busqueda de lastname
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/(:username or :id)/followers                
 * Followers de un usuario               
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/(:username or :id)/following                  
 * Follows de un usuario                 
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/:user_id/ranks                              
 > Rank específico del usuario          
@@ -117,12 +118,13 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * Las preguntas a las que un usuario está postulado
 * ?page=x&sort=y
 
-
 > api/v1/users/:id/who-postulated                          
 * Retorna quien se postuló a este usuario
 
 > api/v1/users/:id/who-it-postulated                       
 * Retorna a que usuarios se postuló este usuario
+
+
 
 ## Rutas para Questions
 
@@ -160,16 +162,9 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 > api/v1/questions/:question_id/tags                       
 * Retorna los tags de una pregunta
 
-> api/v1/questions/:question_id/postulate           
-* Me postulo a una pregunta
-
-> api/v1/questions/:question_id/postulate                
-* Dejo de estar postulado a una pregunta
-
-
 > api/v1/questions/:question_id/postulated-to-this                 
 * Retorna los usuarios postulados a una pregunta
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/question/has-postulated                           
 * Retorna las preguntas que tienen postulados
@@ -223,6 +218,27 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * api/v1/topic/:topic/questions
 * api/v1/tag/:tag/questions
 
+## SORTS:
+
+#### Sorts para Questions
+
+```
+localhost:3000/api/v1/questions?sort=y [O cualquier otro que tenga sort como es indicado arriba]
+y=>-date:             Los más nuevos a los más viejos
+y=>date:              Los más viejos a los más nuevos
+y=>-difficulty:       Los más dificiles a los más faciles
+y=>difficulty:        Los más faciles
+y=>-topic:            De Quimica a Artes Musicales
+y=>topic:             De Artes Musicales a Quimica
+y=>-user:             Del usuario 100 al usuario 1
+y=>user:              Del usuario 1 al usuario 100
+y=>-title:            Titulos de la Z a la A
+y=>title:             Titulos de la A a la Z
+y=>-body:             Cuerpos de la Z a la A
+y=>body:              Cuerpos de la A a la Z
+y=>-id:               ids del mayor al menor
+y=>id:                ids del menor al mayor
+```
 
 
 # POST

@@ -4,14 +4,37 @@ class API::V1::QuestionsController < ApplicationController
 
   def translate(s)
     s=s.upcase
-    if s=='NEWEST'
+    case s
+    when '-DATE'
       s=1
-    elsif s=='OLDEST'
+    when 'DATE'
       s=2
-    elsif s=='HARDEST'
+    when'-DIFFICULTY'
       s=3
-    elsif s=='EASIEST'
+    when 'DIFFICULTY'
       s=4
+    when '-TOPIC'
+      s=5
+    when 'TOPIC'
+      s=6
+    when '-USER'
+      s=7
+    when 'USER'
+      s=8
+    when '-BODY'
+      s=9
+    when 'BODY'
+      s=10
+    when '-TITLE'
+      s=11
+    when 'TITLE'
+      s=12
+    when '-ID'
+      s=13
+    when 'ID'
+      s=14
+    else
+      s=1
     end
   end
 
@@ -27,7 +50,10 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     @questions = Question.load_questions( sort = s, page = p )
-
+    q=params[:q]
+    unless q.nil?
+      @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+    end
 
     if @questions.empty?
       render json: 
@@ -185,8 +211,19 @@ class API::V1::QuestionsController < ApplicationController
       @questions=Question.questions_by_manytags(ids=idds, sort=s, page=ps)
     end
     
+    q=params[:q]
+    unless q.nil?
+      @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+    end
 
     if @questions.nil?
+      render json: 
+        { data:
+          {
+            error: "No more questions to show."
+          }
+        }
+    elsif @questions.empty?
       render json: 
         { data:
           {
@@ -216,6 +253,12 @@ class API::V1::QuestionsController < ApplicationController
 
 
     @questions = Question.questions_by_topic(topic=g, sort=s).page(params[:page])
+    
+    q=params[:q]
+    unless q.nil?
+      @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+    end
+
     if @questions.empty?
       render json: 
         { data:
@@ -238,6 +281,11 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     @question_list = Question.questions_by_user(user=params[:user_id], sort=s).page(params[:page])
+    
+    q=params[:q]
+    unless q.nil?
+      @question_list=@question_list.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+    end
 
     if @question_list.empty?
       render json: 
@@ -260,7 +308,10 @@ class API::V1::QuestionsController < ApplicationController
       s=translate(s)
     end
     @postulate= Question.question_postulated(user=params[:user_id], sort=s).page(params[:page])
-
+    q=params[:q]
+    unless q.nil?
+      @postulate=@postulate.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+    end
     if @postulate.empty?
       render json: 
         { data:
@@ -282,6 +333,10 @@ class API::V1::QuestionsController < ApplicationController
       s=translate(s)
     end
     @question=Question.postulated_question(sort=s).page(params[:page])
+    q=params[:q]
+    unless q.nil?
+      @question=@question.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+    end
     if @question.empty?
       render json: 
         { data:
@@ -302,6 +357,11 @@ class API::V1::QuestionsController < ApplicationController
       s=translate(s)
     end
     @question=Question.not_postulated_question(sort=s).page(params[:page])
+    q=params[:q]
+    unless q.nil?
+      @question=@question.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+    end
+    
     if @question.empty?
       render json: 
         { data:
