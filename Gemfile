@@ -23,13 +23,16 @@ gem 'puma', '~> 3.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-gem 'rack-cors'
+# Used to rate-limiting incoming HTTP requests
+gem 'rack', '~> 2.0', '>= 2.0.1'
+gem 'rack-throttle', '~> 0.5.0'
+gem 'memcached', '~> 1.8'
 
 #gems used for users authentication
 gem 'devise_token_auth'
 gem 'devise'
 gem 'omniauth'
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', :require =>'rack/cors'
 
 #Seed file generated using this

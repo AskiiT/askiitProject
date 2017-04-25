@@ -82,6 +82,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
+    memcached (1.8.0)
     method_source (0.8.2)
     mime-types (3.1)
       mime-types-data (~> 3.2015)
@@ -102,6 +103,9 @@ GEM
     rack-cors (0.4.1)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack-throttle (0.5.0)
+      bundler (>= 1.0.0)
+      rack (>= 1.0.0)
     rails (5.0.2)
       actioncable (= 5.0.2)
       actionmailer (= 5.0.2)
@@ -166,10 +170,13 @@ DEPENDENCIES
   devise_token_auth
   faker
   listen (~> 3.0.5)
+  memcached (~> 1.8)
   mini_magick (~> 4.5, >= 4.5.1)
   omniauth
   puma (~> 3.0)
+  rack (~> 2.0, >= 2.0.1)
   rack-cors
+  rack-throttle (~> 0.5.0)
   rails (~> 5.0.2)
   spring
   spring-watcher-listen (~> 2.0.0)
