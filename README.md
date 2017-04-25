@@ -401,22 +401,27 @@ xhr.setRequestHeader("postman-token", "b066b169-f2c5-ee1c-4550-ceb36cb08bcd");
 xhr.send(data);
 ```
 
-## 3. Para poder crear Tags aparte:
-> POST: localhost:3000/api/v1/questions/:question_id/question_attachments
+## 3. Para poder crear Postulaciones:
+> POST: localhost:3000/api/v1/questions/:question_id/postulate
 
-#### JSON [No permite con Form]
+
+```diff
+- El parametro :question_id es de nuevo 301, tomado de la url
+- El usuario no puede ser el mismo que planteó la pregunta, en este caso, 1
+- Solo acepta el id del usuario, ningún otro parametro es necesario
+```
+
+#### JSON
 ```javascript
 /*********************JSON******************/
 {
-  "tag_name": "Defensas",
-  "topic":  "Biologia"
+  "user_id": 2
 }
 
 /*****************Codigo*****************/
 
 var data = JSON.stringify({
-  "tag_name": "Defensas",
-  "topic": "Biologia"
+  "user_id": 2
 });
 
 var xhr = new XMLHttpRequest();
@@ -428,11 +433,10 @@ xhr.addEventListener("readystatechange", function () {
   }
 });
 
-xhr.open("POST", "http://localhost:3000/api/v1/tags");
+xhr.open("POST", "http://localhost:3000/api/v1/questions/301/postulate");
 xhr.setRequestHeader("content-type", "application/json");
 xhr.setRequestHeader("cache-control", "no-cache");
-xhr.setRequestHeader("postman-token", "34e1ae74-0cfb-9f4e-cf5e-674728554d0d");
+xhr.setRequestHeader("postman-token", "e67e01cb-727c-ec5f-4eee-dc05a37e2ccf");
 
 xhr.send(data);
 ```
-

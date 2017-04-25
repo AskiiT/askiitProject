@@ -1,6 +1,6 @@
 class API::V1::PostulatesController < ApplicationController
   before_action :set_postulate, only: [:show, :update]
-  before_action :authenticate_user!, only:[:create, :destroy]
+  #before_action :authenticate_user!, only:[:create, :destroy]
 
   # GET /postulates
   def index
@@ -16,7 +16,8 @@ class API::V1::PostulatesController < ApplicationController
 
   # POST /postulates
   def create
-    user_id= current_user.id
+    #user_id= current_user.id
+    user_id=params[:user_id]
     question_id=params[:question_id]
     @postulate = Postulate.new(:user_id => user_id, :question_id => question_id)
     if @postulate.save
@@ -37,7 +38,8 @@ class API::V1::PostulatesController < ApplicationController
 
   # DELETE /postulates/1
   def destroy
-    user_id= current_user.id
+    #user_id= current_user.id
+    user_id=params[:user_id]
     question_id=params[:question_id]
     @postulate = Postulate.find_by(:user_id => user_id, :question_id => question_id)
     @postulate.destroy

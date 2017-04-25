@@ -158,6 +158,26 @@
 				"description": ""
 			},
 			"response": []
+		},
+		{
+			"name": "Postulate to a Question",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/301/postulate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"user_id\": 2\n}"
+				},
+				"description": ""
+			},
+			"response": []
 		}
 	]
 }
