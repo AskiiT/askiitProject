@@ -133,9 +133,10 @@ class User < ActiveRecord::Base
   end
 
   #Busca coincidencias con el nombre de usuario
-  def self.users_by_username(username, page = 1, per_page = 10)
-    where("users.username LIKE ?", "#{username.downcase}%")
-    .paginate(:page => page,:per_page => per_page)
+  def self.users_by_username(username, sort=13, page = 1, per_page = 10)
+    g=where("users.username LIKE ?", "#{username.downcase}%")
+    g=User.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   def self.user_username(username)
@@ -143,14 +144,16 @@ class User < ActiveRecord::Base
   end
 
   #Busca coincidencias del nombre de un usuario
-  def self.users_by_firstname(first_name, page = 1, per_page = 10)
-      where("users.first_name LIKE ?", "%#{first_name.downcase}%")
-      .paginate(:page => page,:per_page => per_page)
+  def self.users_by_firstname(first_name, sort=13, page = 1, per_page = 10)
+      g=where("users.first_name LIKE ?", "%#{first_name.downcase}%")
+      g=User.sort_by(g, sort)
+      g.paginate(:page => page,:per_page => per_page)
   end
 
   #Busca coincidencias del apellido de un usuario
-  def self.users_by_lastname(last_name, page = 1, per_page = 10)
-      where("users.last_name LIKE ?", "%#{last_name.downcase}%")
+  def self.users_by_lastname(last_name, sort=13, page = 1, per_page = 10)
+      g=where("users.last_name LIKE ?", "%#{last_name.downcase}%")
+      g=User.sort_by(g, sort)
       .paginate(:page => page,:per_page => per_page)
   end
 
@@ -190,10 +193,10 @@ class User < ActiveRecord::Base
   end
 
   # Consulta los usuarios que  están postulados a una pregunta específica
-  def self.users_by_question(queid, page = 1, per_page = 10)
-    joins( postulates: :question)
-    .where(["postulates.question_id = ?",queid])
-    .paginate(:page => page,:per_page => per_page)
+  def self.users_by_question(queid, sort=13, page = 1, per_page = 10)
+    g=joins( postulates: :question).where(["postulates.question_id = ?",queid])
+    g=User.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   def self.users_id_name(name)
@@ -201,10 +204,10 @@ class User < ActiveRecord::Base
   end
 
   # Ver los seguidores de un usuario por su id
-  def self.user_followers(userid, page = 1, per_page = 10)
-    joins(:followers)
-    .where(["followers.followed_id = ?",userid])
-    .paginate(:page => page,:per_page => per_page)
+  def self.user_followers(userid, sort=13, page = 1, per_page = 10)
+    g=joins(:followers).where(["followers.followed_id = ?",userid])
+    g=User.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   # Ver los seguidos de un usuario por su id

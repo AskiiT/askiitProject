@@ -84,7 +84,7 @@ Rails.application.routes.draw do
 
         post    'postulate',    to: 'postulates#create'
         delete  'unpostulate',  to: 'postulates#destroy'
-        get 'postulated-to-this', to: 'postulates#postulated_to'
+        get 'postulated-to-this', to: 'users#postulated_to'
 
       end
 
@@ -131,7 +131,7 @@ end
 #api/v1/questions/topicsearch/(:topic_id|:topic_name)     : Busca preguntas por topic
 #api/v1/questions/:question_id/topic                      : Retorna el topic del question
 #api/v1/questions/:question_id/tags                       : Retorna el tags
-#api/v1/questions/:question_id/postulated                 : Retorna los usuarios postulados a una pregunta
+#api/v1/questions/:question_id/postulated-to-this         : Retorna los usuarios postulados a una pregunta
 #api/v1/question/has-postulated                           : Retorna las preguntas que tienen postulados
 #api/v1/question/has-not-postulated                       : Returna las preguntas que no tienen postulados
 

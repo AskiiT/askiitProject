@@ -72,30 +72,30 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 > api/v1/users
 * Retorna todos los usuarios
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/(:username or :id)                          
 * Me retorna un usuario                 
 
 > api/v1/users/search/username/:name                       
 * Me retorna un resultado de busqueda de username
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/search/first-name/:name                     
 * Me retorna un resultado de busqueda de firstname
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/search/last-name/:name                      
 * Me retorna un resultado de busqueda de lastname
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/(:username or :id)/followers                
 * Followers de un usuario               
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/(:username or :id)/following                  
 * Follows de un usuario                 
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/users/:user_id/ranks                              
 > Rank específico del usuario          
@@ -117,7 +117,6 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 > api/v1/users/:user_id/postulated
 * Las preguntas a las que un usuario está postulado
 * ?page=x&sort=y
-
 
 > api/v1/users/:id/who-postulated                          
 * Retorna quien se postuló a este usuario
@@ -163,16 +162,9 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 > api/v1/questions/:question_id/tags                       
 * Retorna los tags de una pregunta
 
-> api/v1/questions/:question_id/postulate           
-* Me postulo a una pregunta
-
-> api/v1/questions/:question_id/postulate                
-* Dejo de estar postulado a una pregunta
-
-
 > api/v1/questions/:question_id/postulated-to-this                 
 * Retorna los usuarios postulados a una pregunta
-* ?page=x
+* ?page=x&sort=z [Son Sort de usuario]
 
 > api/v1/question/has-postulated                           
 * Retorna las preguntas que tienen postulados

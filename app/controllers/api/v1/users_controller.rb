@@ -132,9 +132,21 @@ class API::V1::UsersController < ApplicationController
 	#####
 	#Custom Routes 
 	#####
-  	#Encuentra un usuario por coincidencia
+  #Encuentra un usuario por coincidencia
 	def search_username
-		@users=User.users_by_username(params[:username]).page(params[:page])
+		s = params[:sort]
+    if s.nil?
+      s = 13
+    else
+      s = translate(s)
+    end
+
+    @users=User.users_by_username(params[:username], sort=s).page(params[:page])
+    
+    q=params[:q]
+    unless q.nil?
+      @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
 
 		if @users.empty?
   			render json: 
@@ -149,7 +161,13 @@ class API::V1::UsersController < ApplicationController
 	end
 
 	def search_firstname
-		@users=User.users_by_firstname(params[:username]).page(params[:page])
+    s = params[:sort]
+    if s.nil?
+      s = 13
+    else
+      s = translate(s)
+    end
+		@users=User.users_by_firstname(params[:username], sort=s).page(params[:page])
 
 		if @users.empty?
   			render json: 
@@ -164,7 +182,13 @@ class API::V1::UsersController < ApplicationController
 	end
 	
 	def search_lastname
-		@users=User.users_by_firstname(params[:username]).page(params[:page])
+    s = params[:sort]
+    if s.nil?
+      s = 13
+    else
+      s = translate(s)
+    end
+		@users=User.users_by_firstname(params[:username], sort=s).page(params[:page])
 
 		if @users.empty?
   			render json: 
@@ -286,6 +310,31 @@ class API::V1::UsersController < ApplicationController
     end
   end
 
+  def postulated_to
+    s = params[:sort]
+    if s.nil?
+      s = 13
+    else
+      s = translate(s)
+    end
+    @postulate=User.users_by_question(params[:question_id], sort=s).page(params[:page])
+    
+    q=params[:q]
+    unless q.nil?
+      @postulate=@postulate.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    if @postulate.empty?
+        render json: 
+          { data:
+            {
+              error: "No more postulates to show."
+            }
+          }
+    else
+        render json: @postulate
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

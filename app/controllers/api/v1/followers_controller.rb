@@ -2,6 +2,47 @@ class API::V1::FollowersController < ApplicationController
   #before_action :set_follower, only: [:show, :update, :destroy]
   before_action :authenticate_user!, only:[:create, :destroy]
   # GET /followers
+
+  def translate(s)
+    s=s.upcase
+    case s
+    when '-DATE'
+      s=1
+    when 'DATE'
+      s=2
+    when'-USERNAME'
+      s=3
+    when 'USERNAME'
+      s=4
+    when '-FIRST_NAME'
+      s=5
+    when 'FIRST_NAME'
+      s=6
+    when '-LAST_NAME'
+      s=7
+    when 'LAST_NAME'
+      s=8
+    when '-DESCRIPTION'
+      s=9
+    when 'DESCRIPTION'
+      s=10
+    when '-EMAIL'
+      s=11
+    when 'EMAIL'
+      s=12
+    when '-ID'
+      s=13
+    when 'ID'
+      s=14
+    when '-COLOR'
+      s=15
+    when 'COLOR'
+      s=16
+    else
+      s=1
+    end
+  end
+
   def index
     g=params[:user_id]
     m=g.to_i
@@ -10,8 +51,19 @@ class API::V1::FollowersController < ApplicationController
       f=User.users_id_name(g)
       g=f.to_i
     end
-    @followers = User.user_followers(g).page(params[:page])
 
+    s = params[:sort]
+    if s.nil?
+      s = 13
+    else
+      s = translate(s)
+    end
+
+    @followers = User.user_followers(g, sort=s).page(params[:page])
+    q=params[:q]
+    unless q.nil?
+      @followers=@followers.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
     if @followers.empty?
         render json: 
           { data:
@@ -33,8 +85,19 @@ class API::V1::FollowersController < ApplicationController
       f=User.users_id_name(g)
       g=f.to_i
     end
-    @following = User.user_follows(g).page(params[:page])
 
+    s = params[:sort]
+    if s.nil?
+      s = 13
+    else
+      s = translate(s)
+    end
+
+    @following = User.user_follows(g, sort=s).page(params[:page])
+    q=params[:q]
+    unless q.nil?
+      @following=@following.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
     if @following.empty?
       render json: 
         { data:
