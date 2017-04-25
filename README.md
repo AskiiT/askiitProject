@@ -52,6 +52,7 @@ Cinco rutas pedidas para que el Front End Consuma:
 > Retorna los más dificiles primero
 
 
+
 #   Todas las rutas GET
 
 Acá un listado de todas las rutas hechas hasta ahora para GET.
@@ -123,6 +124,8 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 > api/v1/users/:id/who-it-postulated                       
 * Retorna a que usuarios se postuló este usuario
+
+
 
 ## Rutas para Questions
 
@@ -223,6 +226,27 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * api/v1/topic/:topic/questions
 * api/v1/tag/:tag/questions
 
+## SORTS:
+
+#### Sorts para Questions
+
+```
+localhost:3000/api/v1/questions?sort=y [O cualquier otro que tenga sort como es indicado arriba]
+y=>-date:             Los más nuevos a los más viejos
+y=>date:              Los más viejos a los más nuevos
+y=>-difficulty:       Los más dificiles a los más faciles
+y=>difficulty:        Los más faciles
+y=>-topic:            De Quimica a Artes Musicales
+y=>topic:             De Artes Musicales a Quimica
+y=>-user:             Del usuario 100 al usuario 1
+y=>user:              Del usuario 1 al usuario 100
+y=>-title:            Titulos de la Z a la A
+y=>title:             Titulos de la A a la Z
+y=>-body:             Cuerpos de la Z a la A
+y=>body:              Cuerpos de la A a la Z
+y=>-id:               ids del mayor al menor
+y=>id:                ids del menor al mayor
+```
 
 
 # POST

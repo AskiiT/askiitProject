@@ -1,7 +1,4 @@
 class User < ActiveRecord::Base
-
-  scope :order_by_date_created, -> { order("users.date_created DESC") }
-  scope :order_by_created_at, -> { order("users.created_at DESC") }
   after_initialize :default_avatar
   after_create :ranks_and_domains
 
@@ -37,11 +34,72 @@ class User < ActiveRecord::Base
   # attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :username, :date_created, :description
 
   include DeviseTokenAuth::Concerns::User
-  def self.load_users(page = 1, per_page = 10)
-    includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags, :p_users])
-    .paginate(:page => page,:per_page => per_page)
+  scope :order_newest, -> { order("users.date_created DESC") }
+  scope :order_oldest, -> { order("users.date_created ASC") }
+  scope :order_usn, -> { order("users.username DESC") }
+  scope :order_asc_usn, -> { order("users.username ASC") }
+  scope :order_fst, -> { order("users.first_name DESC") }
+  scope :order_asc_fst, -> { order("users.first_name ASC") }
+  scope :order_lst, -> { order("users.last_name DESC") }
+  scope :order_asc_lst, -> { order("users.last_name ASC") }
+  scope :order_desc, -> { order("users.description DESC") }
+  scope :order_asc_desc, -> { order("users.description ASC") }
+  scope :order_email, -> { order("users.email DESC") }
+  scope :order_asc_email, -> { order("users.email ASC") }
+  scope :order_id, -> { order("users.id DESC") }
+  scope :order_asc_id, -> { order("users.id ASC") }
+  scope :order_color, -> { order("users.color DESC") }
+  scope :order_asc_color, -> { order("users.color ASC") }
+
+  def self.sort_by(query1, sort)
+    case sort
+    when 1
+      query1= query1.order_newest
+    when 2
+      query1= query1.order_oldest
+    when 3
+      query1= query1.order_usn
+    when 4
+      query1= query1.order_asc_usn
+    when 5
+      query1= query1.order_fst
+    when 6
+      query1= query1.order_asc_fst
+    when 7
+      query1= query1.order_lst
+    when 8
+      query1= query1.order_asc_lst
+    when 9
+      query1= query1.order_desc
+    when 10
+      query1= query1.order_asc_desc
+    when 11
+      query1= query1.order_email
+    when 12
+      query1= query1.order_asc_email
+    when 13
+      query1= query1.order_id
+    when 14
+      query1= query1.order_asc_id
+    when 15
+      query1= query1.order_color
+    when 16
+      query1= query1.order_asc_color
+    end
   end
-  
+
+
+  def self.load_users(sort=13, page = 1, per_page = 10)
+    g=includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags, :p_users])
+    g=User.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
+  end
+
+  def self.whole (sort=13)
+    g=all
+    g=User.sort_by(g, sort)
+  end
+
   def default_avatar
      self.avatar ||= Avatar.find_by_id(1)
   end

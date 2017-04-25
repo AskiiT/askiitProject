@@ -11,13 +11,66 @@ class API::V1::UsersController < ApplicationController
           }
   end
   
+
+  def translate(s)
+    s=s.upcase
+    case s
+    when '-DATE'
+      s=1
+    when 'DATE'
+      s=2
+    when'-USERNAME'
+      s=3
+    when 'USERNAME'
+      s=4
+    when '-FIRST_NAME'
+      s=5
+    when 'FIRST_NAME'
+      s=6
+    when '-LAST_NAME'
+      s=7
+    when 'LAST_NAME'
+      s=8
+    when '-DESCRIPTION'
+      s=9
+    when 'DESCRIPTION'
+      s=10
+    when '-EMAIL'
+      s=11
+    when 'EMAIL'
+      s=12
+    when '-ID'
+      s=13
+    when 'ID'
+      s=14
+    when '-COLOR'
+      s=15
+    when 'COLOR'
+      s=16
+    else
+      s=1
+    end
+  end
+
 	def index
 		p = params[:page]
+
+    s = params[:sort]
+    if s.nil?
+      s = 13
+    else
+      s = translate(s)
+    end
+
 		unless p.nil?
-			@users = User.load_users( p )
+			@users = User.load_users(sort=s).page(p)
 		else
-			@users = User.all
+			@users = User.whole(sort=s)
 		end
+    q=params[:q]
+    unless q.nil?
+      @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
     	if @users.empty?
   			render json: 
   				{ data:
