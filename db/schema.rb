@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20170422005613) do
   create_table "questions", force: :cascade do |t|
     t.string   "title",                                       null: false
     t.text     "body"
-    t.datetime "date_posted", default: '2017-04-25 20:34:23', null: false
+    t.datetime "date_posted", default: '2017-04-25 23:58:05', null: false
     t.integer  "difficulty",  default: 1,                     null: false
     t.integer  "user_id"
     t.integer  "topic_id"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 20170422005613) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-04-25 20:34:22', null: false
+    t.datetime "date_created",           default: '2017-04-25 23:58:04', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false

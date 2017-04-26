@@ -134,7 +134,33 @@ class API::V1::QuestionsController < ApplicationController
       @question.topic_id=g
 
       if @question.save
-        render json: @question, status: :created
+        question_id=@question.id
+        tags=params[:tags]
+        valid=true
+        unless tags.nil?
+          siz=tags.size
+          if siz>3
+            siz=3
+          end
+          for j in 0...siz do
+            @question_has_tag = QuestionHasTag.new
+            tag_id=tags[j]
+            name=tag_id
+            ta_id=Tag.tag_id_name(name)
+
+            if ta_id<0
+              QuestionHasTag.tag_created(name)
+              ta_id=Tag.tag_id_name(name)
+            end
+            @question_has_tag.tag_id=ta_id
+            @question_has_tag.question_id=question_id
+            @question_has_tag.save
+          end
+        end
+
+        render json: @question, status: :created 
+
+
       else
         render json: @question.errors, status: :unprocessable_entity
       end

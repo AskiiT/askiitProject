@@ -322,7 +322,8 @@ xhr.send(data);
   "body": "En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.",
   "topic": "biologia",
   "user_id": 1,
-  //"difficulty": 5 < Este es opcional, defaut es 1. Quitar coma arriba
+  //"difficulty": 5, <- Este es opcional, default es 1
+  "tags": ["Celula", "mitocondria", "Nucleo"]
 }
 /********************Codigo******************************/
 var data = JSON.stringify({
@@ -330,7 +331,12 @@ var data = JSON.stringify({
   "body": "En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.",
   "topic": "biologia",
   "user_id": 1,
-  "difficulty": 5
+  "difficulty": 5,
+  "tags": [
+    "Celula",
+    "mitocondria",
+    "Nucleo"
+  ]
 });
 
 var xhr = new XMLHttpRequest();
@@ -345,50 +351,12 @@ xhr.addEventListener("readystatechange", function () {
 xhr.open("POST", "http://localhost:3000/api/v1/questions");
 xhr.setRequestHeader("content-type", "application/json");
 xhr.setRequestHeader("cache-control", "no-cache");
-xhr.setRequestHeader("postman-token", "1c4b78a6-01c1-19a3-e827-ac4a75da9b85");
+xhr.setRequestHeader("postman-token", "0606c44d-c71b-22a1-05c4-0a2571741e04");
 
 xhr.send(data);
 ```
 
-### 2.1. Para poder agregar tags a una pregunta:
-> POST: localhost:3000/api/v1/questions/:question_id/add-tag
-
-```diff
-- La pregunta DEBE crearse primero.
-- Si el tag no fue creado, lo creará automaticamente al topic de la pregunta.
-- Recordar que el nombre de tag es ÚNICO.
-- Solo un Tag por request.
-- En el ejemplo, :question_id es 301, se asocia automaticamente
-```
-
-#### JSON
-```javascript
-/********************Json******************************/
-{
-  "tag_id": "Celula"
-}
-/********************Codigo******************************/
-var data = JSON.stringify({
-  "tag_id": "Celula"
-});
-
-var xhr = new XMLHttpRequest();
-xhr.withCredentials = true;
-
-xhr.addEventListener("readystatechange", function () {
-  if (this.readyState === 4) {
-    console.log(this.responseText);
-  }
-});
-
-xhr.open("POST", "http://localhost:3000/api/v1/questions/301/add-tag");
-xhr.setRequestHeader("content-type", "application/json");
-xhr.setRequestHeader("cache-control", "no-cache");
-xhr.setRequestHeader("postman-token", "bd2635cb-7fbb-28f3-c346-3aedfaf23ff1");
-
-xhr.send(data);
-```
-### 2.2. Para poder agregar Archivos a una pregunta:
+### 2.1. Para poder agregar Archivos a una pregunta:
 
 > POST: localhost:3000/api/v1/questions/:question_id/question_attachments
 

@@ -1,8 +1,8 @@
 {
 	"variables": [],
 	"info": {
-		"name": "New Kind Of Post",
-		"_postman_id": "fc5977c9-78a7-8886-f633-88640887397c",
+		"name": "New Kind Of Post copy",
+		"_postman_id": "68bab5f9-d6c8-6c50-3ee2-6b6a2d410b6b",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
@@ -92,27 +92,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"¿Qué es la mitocondria?\",\n\t\"body\": \"En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.\",\n\t\"topic\": \"biologia\",\n\t\"user_id\": 1\n}"
-				},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "Add Tags With Json",
-			"request": {
-				"url": "localhost:3000/api/v1/questions/301/add-tag",
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"tag_id\": \"Mitocondrias\"\n}"
+					"raw": "{\n\t\"title\": \"¿Qué es la mitocondria?\",\n\t\"body\": \"En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.\",\n\t\"topic\": \"biologia\",\n\t\"user_id\": 1,\n\t\"difficulty\": 5,\n\t\"tags\": [\"Celula\", \"mitocondria\", \"Nucleo\"]\n}"
 				},
 				"description": ""
 			},
@@ -131,7 +111,8 @@
 							"key": "question_attachment[attachment]",
 							"type": "file",
 							"enabled": true,
-							"src": "C94SI7GUwAEJGq-.jpg"
+							"src": "C94SI7GUwAEJGq-.jpg",
+							"value": ""
 						}
 					]
 				},
