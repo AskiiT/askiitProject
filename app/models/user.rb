@@ -134,7 +134,7 @@ class User < ActiveRecord::Base
 
   #Busca coincidencias con el nombre de usuario
   def self.users_by_username(username, sort=13, page = 1, per_page = 10)
-    g=where("users.username LIKE ?", "#{username.downcase}%")
+    g=where("users.username LIKE ?", "%#{username.downcase}%")
     g=User.sort_by(g, sort)
     g.paginate(:page => page,:per_page => per_page)
   end
