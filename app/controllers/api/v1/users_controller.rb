@@ -43,6 +43,7 @@ class API::V1::UsersController < ApplicationController
     end
     endjson
   end
+  
   def translate(s)
     s=s.upcase
     case s

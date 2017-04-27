@@ -1,15 +1,32 @@
 class API::V1::TagsController < ApplicationController
   before_action :set_tag, only: [:update, :destroy]
 
+
+  
   # GET /tags
   def index
-
     @tags = Tag.all
     f= params[:page]
     unless f.nil?
       @tags = Tag.load_tags.page(f)
     end
-    render json: @tags
+
+    q=params[:q]
+    unless q.nil?
+      @tags=@tags.where("lower(tags.tag_name) LIKE ?", "%#{q.downcase}%")
+    end
+
+    if @tags.empty?
+      render json: 
+        { data:
+          {
+            error: "No more tags to show."
+          }
+        }
+    else
+      render json: @tags
+    end
+
   end
 
   # GET /tags/1
