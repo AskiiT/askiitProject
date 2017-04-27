@@ -206,7 +206,7 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * Muestra que usuarios hicieron preguntas en un tag
 * ?page=x
 
-> api/v1/topics/search/:tag_name
+> api/v1/tags/search/:tag_name
 * Muestra un resultado de búsqueda de tags
 * ?page=x
 

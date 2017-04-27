@@ -9,12 +9,12 @@ class Topic < ApplicationRecord
 	validates :topic_description, length: { maximum: 200 }
 
 	def self.load_topics(page = 1, per_page = 10)
-    	includes(:tags, questions: [:question_attachments, :user, :question_has_tags], domain_ranks:[:user])
+    	includes( questions: [:question_attachments, :user, :question_has_tags], domain_ranks:[:user])
     	.paginate(:page => page,:per_page => per_page)
   	end
 
   	def self.topic_by_id(id)
-    	includes(:tags, questions: [:question_attachments, :user, :question_has_tags], domain_ranks:[:user])
+    	includes( questions: [:question_attachments, :user, :question_has_tags], domain_ranks:[:user])
     	.find_by_id(id)
   	end
 
