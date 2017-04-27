@@ -23,6 +23,6 @@ module AskiitProject
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.api_only = true
-    config.middleware.use Rack::Throttle::Second, :max => 3, cache: Memcached.new, key_prefix: :throttle
+    config.middleware.use Rack::Throttle::Minute, :max => 50
   end
 end

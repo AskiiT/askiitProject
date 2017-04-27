@@ -270,6 +270,35 @@ class API::V1::UsersController < ApplicationController
   		end
 	end
 
+  def search_email
+    s = params[:sort]
+    if s.nil?
+      s = 14
+    else
+      s = translate(s)
+    end
+    email = params[:email]
+    @users=User.user_by_email(email.gsub('*', '.'), sort=s)
+
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
+    if @users.empty?
+        render json: 
+          { data:
+            {
+              error: "There is no user with this email."
+            }
+          }
+      else
+        render json: @users
+      end
+  end
+
 
   #####
   #Other routes

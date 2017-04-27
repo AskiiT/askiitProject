@@ -11,9 +11,10 @@ Rails.application.routes.draw do
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
             scope :search do 
-              get 'username/:username',       to: 'users#search_username'     #api/v1/users/search/username/:name (get)
+              get 'username/:username',       to: 'users#search_username'      #api/v1/users/search/username/:name (get)
               get 'first-name/:username',     to: 'users#search_firstname'     #api/v1/users/search/first-name/:name (get)
-              get 'last-name/:username',      to: 'users#search_lastname'     #api/v1/users/search/last-name/:name (get)
+              get 'last-name/:username',      to: 'users#search_lastname'      #api/v1/users/search/last-name/:name (get)
+              get 'email/:email',             to: 'users#search_email'         #api/v1/users/search/email/:email (get)
 
             end
 

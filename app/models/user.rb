@@ -157,6 +157,11 @@ class User < ActiveRecord::Base
       .paginate(:page => page,:per_page => per_page)
   end
 
+  #Busca coincidencias exactas de correo electrónico
+  def self.user_by_email(email, sort=13)
+      g=where("users.email LIKE ?", "#{email}")
+  end
+
   #Ordena los usuarios según su rango en el tema dado
   def self.users_by_domain_rank_level(topic, page = 1, per_page = 10)
     joins(domain_ranks: :topic).where("domain_ranks.topic_id = ?",topic)
