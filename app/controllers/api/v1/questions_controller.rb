@@ -238,21 +238,22 @@ class API::V1::QuestionsController < ApplicationController
 
   def by_tag
     g = params[:tag]
-    g1 = params[:second_tag]
-    g2 = params[:third_tag]
     idds=[]
+    g=g.split(",")
+
     ps = params[:page]
     if ps.nil?
       ps=1
     end
-    m = g.to_i
-    if m.to_s != g.to_s
-      u=Tag.tag_id_name(params[:tag])
-      g=u.to_i
-    end
+    size=g.size;
+    if size==1
+      k= g[0]
+      m = k.to_i
+      if m.to_s != g.to_s
+        u=Tag.tag_id_name(params[:tag])
+        k=u.to_i
+      end
 
-    
-    if g1.nil?
       s= params[:sort]
       if s.nil?
         s=1
@@ -261,24 +262,29 @@ class API::V1::QuestionsController < ApplicationController
       end
       @questions = Question.questions_by_tag(tag=g, sort=s).page(ps)
     else
-      idds.append(g)
-      m = g1.to_i
-      if m.to_s != g1.to_s
-        u=Tag.tag_id_name(g1)
-        g1=u.to_i
-      end
-      idds.append(g1)
-      if g2.nil?
-        g2=-1
-      else
-        m = g2.to_i
-        if m.to_s != g2.to_s
-          u=Tag.tag_id_name(g2)
-          g2=u.to_i
+      idds=[]
+      top=[]
+      for j in 0...size
+        k=g[j].to_i
+        m = k.to_i
+        titl=g[j].to_s
+        if titl.size>3
+          tre=titl[0,3]
+          if tre=="to_"
+            m=Topic.topic_id_name(titl[3,titl.size])
+            unless m<1
+              top.push(m)
+            end
+          end
+        elsif m.to_s != k.to_s
+          u=Tag.tag_id_name(k)
+          k=u.to_i
+        end
+        if k>0
+          idds.push(k)
         end
       end
-      idds.append(g2)
-      @questions=Question.questions_by_manytags(ids=idds, sort=s, page=ps)
+      @questions=Question.questions_by_manytags(ids=idds, topics=top, sort=s, page=ps)
     end
     
     q=params[:q]

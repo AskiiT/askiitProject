@@ -160,10 +160,11 @@ class Question < ApplicationRecord
   end
   
 
-  def self.questions_by_manytags(ids, page = 1, per_page = 20)
+  def self.questions_by_manytags(ids, topics, page = 1, per_page = 20)
     i=ids.length
     m=[];
     g=[];
+
     for j in 0...i do  
       r=ids[j]
       r=r.to_i
@@ -173,10 +174,10 @@ class Question < ApplicationRecord
       end
     end
     
-    Question.questions_by_tags(m, g, page, per_page)
+    Question.questions_by_tags(m, topics, g, page, per_page)
   end
 
-  def self.questions_by_tags(tags, queries, sort=1, page = 1, per_page = 20)
+  def self.questions_by_tags(tags, topics, queries, sort=1, page = 1, per_page = 20)
     ids=[]
     i=tags.length
     for j in 0...i do
@@ -195,14 +196,30 @@ class Question < ApplicationRecord
     end
 
     siz=ids.length
+    
     if siz==1
-      Question.where(id: ids[0])
+      gu=Question.where(id: ids[0])
+      if topics.length>0
+        gu.where(questions: {topic_id: topics})
+      else
+        gu
+      end
     elsif siz==0
       Question.find_by_id(-1)
     else
-      gu=Question.where( questions:{id: ids} )
-      gu=Question.sort_by(gu, sort)
-      gu.paginate(:page => page,:per_page => per_page)
+      samba=Question.where( questions: {id: ids})
+      if topics.length>0
+
+        samba=samba.where(questions: {topic_id: topics})
+      end
+      if samba.empty?
+        samba
+      elsif samba.size == 1
+        samba
+      else
+        samba=Question.sort_by(samba, sort)
+        samba.paginate(:page => page,:per_page => per_page)
+      end
     end
     #Question.find_by_id(80)
   end
