@@ -86,6 +86,7 @@ class User < ActiveRecord::Base
     when 16
       query1= query1.order_asc_color
     end
+    query1
   end
 
 

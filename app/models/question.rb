@@ -66,6 +66,7 @@ class Question < ApplicationRecord
     when 14
       query1= query1.order_asc_id
     end
+    query1
   end
 
   def self.load_questions(sort= 1, page = 1, per_page = 20)
@@ -208,16 +209,24 @@ class Question < ApplicationRecord
       Question.find_by_id(-1)
     else
       samba=Question.where( questions: {id: ids})
+      puts "aaaaaaaaaaaaaaaaaaaa"
+      puts topics
+      puts "ids"
+      puts ids
       if topics.length>0
-
         samba=samba.where(questions: {topic_id: topics})
       end
+
       if samba.empty?
+        samba
+      elsif samba.nil?
         samba
       elsif samba.size == 1
         samba
       else
+
         samba=Question.sort_by(samba, sort)
+        puts samba.size
         samba.paginate(:page => page,:per_page => per_page)
       end
     end
