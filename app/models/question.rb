@@ -73,12 +73,12 @@ class Question < ApplicationRecord
     parameters
   end
 
-  def self.load_questions(args=[], sort= [1], page = 1, per_page = 20)
+  def self.load_questions(args=[], q="", sort= [1], page = 1, per_page = 20)
     #por=args & Question.parameters
     if args.size>0 
-      g= Question.all.select(args)
+      g= Question.all.where("questions.title LIKE ?", "%#{q.downcase}%").select(args)
     else
-      g= Question.all
+      g= Question.all.where("questions.title LIKE ?", "%#{q.downcase}%")
     end
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])
@@ -111,11 +111,11 @@ class Question < ApplicationRecord
   end
 
   #Consulta las preguntas hechas por un usuario
-  def self.questions_by_user(user, args=[], sort=[1], page = 1, per_page = 20)
+  def self.questions_by_user(user, q="", args=[], sort=[1], page = 1, per_page = 20)
     if (args.size>0)
-      g=Question.where(questions:{user_id: user}).select(args)
+      g=Question.where(questions:{user_id: user}).where("questions.title LIKE ?", "%#{q.downcase}%").select(args)
     else
-      g=Question.where(questions:{user_id: user})
+      g=Question.where(questions:{user_id: user}).where("questions.title LIKE ?", "%#{q.downcase}%")
     end
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])
@@ -124,11 +124,11 @@ class Question < ApplicationRecord
   end
 
   #Consulta que preguntas tienen o han tenido postulaciones
-  def self.postulated_question( args=[], sort=[1], page = 1, per_page = 20)
+  def self.postulated_question(q="", args=[], sort=[1], page = 1, per_page = 20)
       if (args.size>0)
-        g=joins(:postulates).select(args).distinct
+        g=joins(:postulates).where("questions.title LIKE ?", "%#{q.downcase}%").select(args).distinct
       else
-        g=joins(:postulates).distinct
+        g=joins(:postulates).where("questions.title LIKE ?", "%#{q.downcase}%").distinct
       end
       for i in 0...sort.size do
         g=Question.sort_by(g, sort[i])
@@ -137,12 +137,12 @@ class Question < ApplicationRecord
   end
 
   #Consulta que preguntas NO tienen o NUNCA han tenido postulaciones
-  def self.not_postulated_question(args=[], sort=[1], page = 1, per_page = 20)
+  def self.not_postulated_question(q="", args=[], sort=[1], page = 1, per_page = 20)
     r=joins(:postulates)
     if(args.size>0)
-      g=where.not('id IN (?)', r.select('id')).select(args)
+      g=where.not('id IN (?)', r.select('id')).where("questions.title LIKE ?", "%#{q.downcase}%").select(args)
     else
-      g=where.not('id IN (?)', r.select('id'))
+      g=where.not('id IN (?)', r.select('id')).where("questions.title LIKE ?", "%#{q.downcase}%")
     end
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])
@@ -151,12 +151,12 @@ class Question < ApplicationRecord
   end
 
   #Me retorna preguntas en un tag
-  def self.questions_by_tag(tag, args=[], sort=[1], page = 1, per_page = 20)
+  def self.questions_by_tag(tag, q="", args=[], sort=[1], page = 1, per_page = 20)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
     if (args.size>0)
-      g=where('questions.id in (?)', g).select(args)
+      g=where('questions.id in (?)', g).where("questions.title LIKE ?", "%#{q.downcase}%").select(args)
     else
-      g=where('questions.id in (?)', g)
+      g=where('questions.id in (?)', g).where("questions.title LIKE ?", "%#{q.downcase}%")
     end
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])
@@ -178,11 +178,11 @@ class Question < ApplicationRecord
 
 
   #Retorna preguntas por tema
-  def self.questions_by_topic(topic, args=[], sort=[1], page = 1, per_page = 20)
+  def self.questions_by_topic(topic, q, args=[], sort=[1], page = 1, per_page = 20)
     if args.size>0
-      g=where("topic_id= ?", topic).select(args)
+      g=where("topic_id= ?", topic).where("questions.title LIKE ?", "%#{q.downcase}%").select(args)
     else
-      g=where("topic_id= ?", topic)
+      g=where("topic_id= ?", topic).where("questions.title LIKE ?", "%#{q.downcase}%")
     end
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])
@@ -200,11 +200,11 @@ class Question < ApplicationRecord
     #where("questions.id=?", id).select("questions.id, questions.title", g)
   end
 
-  def self.question_postulated(user, args=[], sort=[1], page = 1, per_page = 20)
+  def self.question_postulated(user, q="", args=[], sort=[1], page = 1, per_page = 20)
     if args.size>0
-      g=joins(:postulates).where("postulates.user_id=?", user).select(args)
+      g=joins(:postulates).where("postulates.user_id=?", user).where("questions.title LIKE ?", "%#{q.downcase}%").select(args)
     else
-      g=joins(:postulates).where("postulates.user_id=?", user)
+      g=joins(:postulates).where("postulates.user_id=?", user).where("questions.title LIKE ?", "%#{q.downcase}%")
     end
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])

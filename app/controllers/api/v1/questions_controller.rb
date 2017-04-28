@@ -56,6 +56,10 @@ class API::V1::QuestionsController < ApplicationController
       arr=el.map(&:downcase)
       arr=getCols(arr)
     end
+    q=params[:q]
+    if q.nil?
+      q=""
+    end
 
     if s.nil?
       s = [1]
@@ -69,12 +73,9 @@ class API::V1::QuestionsController < ApplicationController
     end
  
 
-    @questions = Question.load_questions( arr, sort = s, page = p )
+    @questions = Question.load_questions( arr, q, sort = s, page = p )
 
-    q=params[:q]
-    unless q.nil?
-      @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
-    end
+    
 
     if @questions.empty?
       render json: 
@@ -234,7 +235,10 @@ class API::V1::QuestionsController < ApplicationController
     g = params[:tag]
     idds=[]
     g=g.split(",")
-
+    q=params[:q]
+    if q.nil?
+      q=""
+    end
     ps = params[:page]
     if ps.nil?
       ps=1
@@ -267,10 +271,10 @@ class API::V1::QuestionsController < ApplicationController
         arr=getCols(arr)
       end
       if arr.size>0
-        @questions = Question.questions_by_tag(tag=g, arg=arr, sort=s).page(ps)
+        @questions = Question.questions_by_tag(tag=g, q, arg=arr, sort=s).page(ps)
         @questions = @questions.to_json
       else
-        @questions = Question.questions_by_tag(tag=g, arg=[], sort=s).page(ps)
+        @questions = Question.questions_by_tag(tag=g, q, arg=[], sort=s).page(ps)
       end
 
     else
@@ -298,11 +302,6 @@ class API::V1::QuestionsController < ApplicationController
       end
       @questions=Question.questions_by_manytags(ids=idds, topics=top, sort=s, page=ps)
     end
-    
-    q=params[:q]
-    unless q.nil?
-      @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
-    end
 
     if @questions.nil?
       render json: 
@@ -327,6 +326,11 @@ class API::V1::QuestionsController < ApplicationController
     g=params[:topic]
     m=g.to_i
     
+    q=params[:q]
+    if q.nil?
+      q=""
+    end
+
     if m.to_s != g.to_s
       u=Topic.topic_id_name(params[:topic])
       g=u.to_i
@@ -352,15 +356,12 @@ class API::V1::QuestionsController < ApplicationController
       arr=getCols(arr)
     end
     if arr.size>0
-      @questions = Question.questions_by_topic(topic=g, arg=arr, sort=s).page(params[:page])
+      @questions = Question.questions_by_topic(topic=g, q, arg=arr, sort=s).page(params[:page])
       @questions = @questions.to_json
     else
-      @questions = Question.questions_by_topic(topic=g, arg=[], sort=s).page(params[:page])
+      @questions = Question.questions_by_topic(topic=g, q, arg=[], sort=s).page(params[:page])
     end
-    q=params[:q]
-    unless q.nil?
-      @questions=@questions.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
-    end
+    
 
     if @questions.empty?
       render json: 
@@ -376,6 +377,11 @@ class API::V1::QuestionsController < ApplicationController
 
 
   def my_questions
+    q=params[:q]
+    if q.nil?
+      q=""
+    end
+    
     s=params[:sort]
     if s.nil?
       s = [1]
@@ -398,15 +404,10 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     if arr.size>0
-      @question_list = Question.questions_by_user(user=params[:user_id], args=arr, sort=s).page(params[:page])
+      @question_list = Question.questions_by_user(user=params[:user_id], q, args=arr, sort=s).page(params[:page])
       @question_list=@question_list.to_json
     else
-      @question_list = Question.questions_by_user(user=params[:user_id], args=[], sort=s).page(params[:page])
-    end
-
-    q=params[:q]
-    unless q.nil?
-      @question_list=@question_list.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+      @question_list = Question.questions_by_user(user=params[:user_id], q, args=[], sort=s).page(params[:page])
     end
 
     if @question_list.empty?
@@ -435,6 +436,11 @@ class API::V1::QuestionsController < ApplicationController
       s=sortar
     end
 
+    q=params[:q]
+    if q.nil?
+      q=""
+    end
+
     arr=[]
     el=params[:select_questions]
     unless el.nil?
@@ -444,14 +450,10 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     if arr.size>0
-      @postulate= Question.question_postulated(user=params[:user_id], args=arr, sort=s).page(params[:page])
+      @postulate= Question.question_postulated(user=params[:user_id], q, args=arr, sort=s).page(params[:page])
       @postulate=@postulate.to_json  
     else
-      @postulate= Question.question_postulated(user=params[:user_id], args=[], sort=s).page(params[:page])
-    end
-    q=params[:q]
-    unless q.nil?
-      @postulate=@postulate.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
+      @postulate= Question.question_postulated(user=params[:user_id], q, args=[], sort=s).page(params[:page])
     end
 
     if @postulate.empty?
@@ -479,6 +481,12 @@ class API::V1::QuestionsController < ApplicationController
         end
       s=sortar
     end
+
+    q=params[:q]
+    if q.nil?
+      q=""
+    end
+
     arr=[]
     el=params[:select_questions]
     unless el.nil?
@@ -488,15 +496,12 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     if arr.size>0
-      @question=Question.postulated_question(args=arr, sort=s).page(params[:page])
+      @question=Question.postulated_question(q, args=arr, sort=s).page(params[:page])
       @question=@question.to_json
     else
-      @question=Question.postulated_question(args=[], sort=s).page(params[:page])
+      @question=Question.postulated_question(q, args=[], sort=s).page(params[:page])
     end
-    q=params[:q]
-    unless q.nil?
-      @question=@question.where("lower(questions.title) LIKE ?", "%#{q.downcase}%")
-    end
+
 
     if @question.empty?
       render json: 
@@ -522,7 +527,11 @@ class API::V1::QuestionsController < ApplicationController
         end
       s=sortar
     end
-    
+    q=params[:q]
+    if q.nil?
+      q=""
+    end
+
     arr=[]
     el=params[:select_questions]
     unless el.nil?
@@ -532,10 +541,10 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     if arr.size>0
-      @question=Question.not_postulated_question(args=arr, sort=s).page(params[:page])
+      @question=Question.not_postulated_question(q, args=arr, sort=s).page(params[:page])
       @question=@question.to_json
     else
-      @question=Question.not_postulated_question(args=[], sort=s).page(params[:page])
+      @question=Question.not_postulated_question(q, args=[], sort=s).page(params[:page])
     end
 
     q=params[:q]
