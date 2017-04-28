@@ -68,13 +68,29 @@ class Question < ApplicationRecord
     end
     query1
   end
+  def self.parameters
+    parameters=['id', 'title', 'body', 'user_id', 'topic_id', 'difficulty','date_posted']
+    parameters
+  end
 
-  def self.load_questions(sort= 1, page = 1, per_page = 20)
-    g= Question.includes(:p_users, :topic, :question_attachments, question_has_tags: [:tag], user: [:rank, :domain_ranks, :p_questions])
-    g=Question.sort_by(g, sort)
+  def self.load_questions(args=[], sort= [1], page = 1, per_page = 20)
+    #por=args & Question.parameters
+    if args.size>0 
+      g= Question.all.select(args)
+    else
+      g= Question.all
+    end
+    for i in 0...sort.size do
+      g=Question.sort_by(g, sort[i])
+    end
+    
     g.paginate(:page => page,:per_page => per_page)
   end
 
+
+  def self.show_question(id, args)
+    Question.where("questions.id = ?", id).select(args).first
+  end
   #Retorna una pregunta por id
   def self.question_by_id(id)
     includes(:topic, :question_attachments, question_has_tags:[:tag], user: [:rank, :domain_ranks])
@@ -95,32 +111,56 @@ class Question < ApplicationRecord
   end
 
   #Consulta las preguntas hechas por un usuario
-  def self.questions_by_user(user, sort=1, page = 1, per_page = 20)
-    load_questions(sort, page, per_page)
-    .where(questions:{user_id: user})
-    .paginate(:page => page,:per_page => per_page)
+  def self.questions_by_user(user, args=[], sort=[1], page = 1, per_page = 20)
+    if (args.size>0)
+      g=Question.where(questions:{user_id: user}).select(args)
+    else
+      g=Question.where(questions:{user_id: user})
+    end
+    for i in 0...sort.size do
+      g=Question.sort_by(g, sort[i])
+    end
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas tienen o han tenido postulaciones
-  def self.postulated_question(sort=1, page = 1, per_page = 20)
-      g=joins(:postulates)
-      g=Question.sort_by(g, sort)
+  def self.postulated_question( args=[], sort=[1], page = 1, per_page = 20)
+      if (args.size>0)
+        g=joins(:postulates).select(args).distinct
+      else
+        g=joins(:postulates).distinct
+      end
+      for i in 0...sort.size do
+        g=Question.sort_by(g, sort[i])
+      end
       g.paginate(:page => page,:per_page => per_page)
   end
 
   #Consulta que preguntas NO tienen o NUNCA han tenido postulaciones
-  def self.not_postulated_question(sort=1, page = 1, per_page = 20)
+  def self.not_postulated_question(args=[], sort=[1], page = 1, per_page = 20)
     r=joins(:postulates)
-    g=where.not('id IN (?)', r.select('id'))
-    g=Question.sort_by(g, sort)
+    if(args.size>0)
+      g=where.not('id IN (?)', r.select('id')).select(args)
+    else
+      g=where.not('id IN (?)', r.select('id'))
+    end
+    for i in 0...sort.size do
+      g=Question.sort_by(g, sort[i])
+    end
     g.paginate(:page => page,:per_page => per_page)
   end
 
   #Me retorna preguntas en un tag
-  def self.questions_by_tag(tag, sort=1, page = 1, per_page = 20)
+  def self.questions_by_tag(tag, args=[], sort=[1], page = 1, per_page = 20)
     g=QuestionHasTag.where('tag_id = ?', tag).select("question_id").group("question_id")
-    m=where('questions.id in (?)', g)
-    g=Question.sort_by(m, sort)
+    if (args.size>0)
+      g=where('questions.id in (?)', g).select(args)
+    else
+      g=where('questions.id in (?)', g)
+    end
+    for i in 0...sort.size do
+      g=Question.sort_by(g, sort[i])
+    end
     g.paginate(:page => page,:per_page => per_page)
   end
 
@@ -138,9 +178,15 @@ class Question < ApplicationRecord
 
 
   #Retorna preguntas por tema
-  def self.questions_by_topic(topic, sort=1, page = 1, per_page = 20)
-    g=joins(:topic).where("topic_id= ?", topic)
-    g=Question.sort_by(g, sort)
+  def self.questions_by_topic(topic, args=[], sort=[1], page = 1, per_page = 20)
+    if args.size>0
+      g=where("topic_id= ?", topic).select(args)
+    else
+      g=where("topic_id= ?", topic)
+    end
+    for i in 0...sort.size do
+      g=Question.sort_by(g, sort[i])
+    end
     g.paginate(:page => page,:per_page => per_page)
   end
 
@@ -154,9 +200,15 @@ class Question < ApplicationRecord
     #where("questions.id=?", id).select("questions.id, questions.title", g)
   end
 
-  def self.question_postulated(user, sort=1, page = 1, per_page = 20)
-    g=joins(:postulates).where("postulates.user_id=?", user)
-    g=Question.sort_by(g, sort)
+  def self.question_postulated(user, args=[], sort=[1], page = 1, per_page = 20)
+    if args.size>0
+      g=joins(:postulates).where("postulates.user_id=?", user).select(args)
+    else
+      g=joins(:postulates).where("postulates.user_id=?", user)
+    end
+    for i in 0...sort.size do
+      g=Question.sort_by(g, sort[i])
+    end
     g.paginate(:page => page,:per_page => per_page)
   end
   
@@ -209,10 +261,6 @@ class Question < ApplicationRecord
       Question.find_by_id(-1)
     else
       samba=Question.where( questions: {id: ids})
-      puts "aaaaaaaaaaaaaaaaaaaa"
-      puts topics
-      puts "ids"
-      puts ids
       if topics.length>0
         samba=samba.where(questions: {topic_id: topics})
       end
