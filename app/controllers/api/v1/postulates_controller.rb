@@ -20,8 +20,10 @@ class API::V1::PostulatesController < ApplicationController
     user_id=params[:user_id]
     question_id=params[:question_id]
     @postulate = Postulate.new(:user_id => user_id, :question_id => question_id)
+    @question = Question.find_by_id(question_id)
+    
     if @postulate.save
-      render json: @postulate, status: :created
+      render json: @question  
     else
       render json: @postulate.errors, status: :unprocessable_entity
     end
@@ -43,6 +45,8 @@ class API::V1::PostulatesController < ApplicationController
     question_id=params[:question_id]
     @postulate = Postulate.find_by(:user_id => user_id, :question_id => question_id)
     @postulate.destroy
+    @question = Question.find_by_id(question_id)
+    render json: @question
   end
 
 
