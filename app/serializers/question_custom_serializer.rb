@@ -3,7 +3,15 @@ class QuestionCustomSerializer < ActiveModel::Serializer
   has_many :tags
   has_many :p_users
   has_many :question_attachments
-
+  
+  belongs_to :user
+  def user
+  	if scope.include?('user_id')
+  		object.user
+  	else
+  		nil
+  	end
+  end
   def attributes(ser, atrr)
   	  data={}
 	  if scope.include?('id')
@@ -16,7 +24,9 @@ class QuestionCustomSerializer < ActiveModel::Serializer
 	    data[:body] =object.body
 	  end
 	  if scope.include?('user_id')
-	    data[:user] =object.user
+	  	#belongs_to :user
+	    #data[:user] =object.user
+	    
 	  end
 	  if scope.include?('topic_id')
 	    data[:topic] =object.topic

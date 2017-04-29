@@ -8,6 +8,15 @@ class API::V1::QuestionsController < ApplicationController
     return por
   end
 
+  def includes(arr)
+    parameters=['user']
+    por = arr & parameters
+    ins=[]
+    unless por.nil?
+      ins.append([user: [:rank, :domain_ranks, :questions, :avatar]])
+    end
+    ins
+  end
   def translate(s)
     s=s.upcase
     case s
@@ -75,7 +84,14 @@ class API::V1::QuestionsController < ApplicationController
 
     @questions = Question.load_questions( arr, q, sort = s, page = p )
 
-    
+    ins=params[:includes]
+    if ins.nil?
+      ins = []
+    else
+      sortar=[]
+      ins=ins.split(",")
+      ins=includes(ins)
+    end
 
     if @questions.empty?
       render json: 
@@ -85,14 +101,30 @@ class API::V1::QuestionsController < ApplicationController
           }
         }
     else
-      if arr.size>0
-        if params[:nom].nil?
-          render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr
+      ins=params[:includes]
+      if ins.nil?
+        ins = []
+      else
+        sortar=[]
+        ins=ins.split(",")
+        ins=includes(ins)
+      end
+      if ins.size<=0
+        if arr.size>0
+          if params[:nom].nil?
+            render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr
+          else
+            render json: @questions, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          end
         else
-          render json: @questions, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          render json: @questions
         end
       else
-        render json: @questions
+        if arr.size>0
+          render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr, include: ins
+        else
+          render json: @questions, include: ins
+        end
       end
     end
   end
@@ -112,14 +144,30 @@ class API::V1::QuestionsController < ApplicationController
     else
       @question=Question.find(params[:id])
     end
-    if arr.size>0
+    ins=params[:includes]
+    if ins.nil?
+      ins = []
+    else
+      sortar=[]
+      ins=ins.split(",")
+      ins=includes(ins)
+    end
+    if ins.size<=0
+      if arr.size>0
         if params[:nom].nil?
           render json: @question, serializer: QuestionCustomSerializer, scope: arr
         else
           render json: @question, serializer: QuestionCustomNoRelSerializer, scope: arr
         end
+      else
+        render json: @question
+      end
     else
-      render json: @question
+      if arr.size>0
+        render json: @question, serializer: QuestionCustomSerializer, scope: arr, include: ins
+      else
+        render json: @question, include: ins
+      end
     end
    
   end
@@ -245,6 +293,7 @@ class API::V1::QuestionsController < ApplicationController
 
   def by_tag
     g = params[:tag]
+
     idds=[]
     g=g.split(",")
     q=params[:q]
@@ -259,10 +308,12 @@ class API::V1::QuestionsController < ApplicationController
     if size==1
       k= g[0]
       m = k.to_i
-      if m.to_s != g.to_s
-        u=Tag.tag_id_name(params[:tag])
+      if m.to_s != k.to_s
+        u=Tag.tag_id_name(k)
         k=u.to_i
       end
+
+
       s=params[:sort]
       if s.nil?
         s = [1]
@@ -283,17 +334,19 @@ class API::V1::QuestionsController < ApplicationController
         arr=getCols(arr)
       end
       if arr.size>0
-        @questions = Question.questions_by_tag(tag=g, q, arg=arr, sort=s).page(ps)
+        @questions = Question.questions_by_tag(tag=k, q, arg=arr, sort=s).page(ps)
       else
-        @questions = Question.questions_by_tag(tag=g, q, arg=[], sort=s).page(ps)
+        @questions = Question.questions_by_tag(tag=k, q, arg=[], sort=s).page(ps)
       end
 
     else
       idds=[]
       top=[]
+      arr=[]
       for j in 0...size
-        k=g[j].to_i
+        k=g[j]
         m = k.to_i
+        uff=0;
         titl=g[j].to_s
         if titl.size>3
           tre=titl[0,3]
@@ -303,14 +356,18 @@ class API::V1::QuestionsController < ApplicationController
               top.push(m)
             end
           end
-        elsif m.to_s != k.to_s
+        end
+
+        if m.to_s != k.to_s
           u=Tag.tag_id_name(k)
-          k=u.to_i
+          uff=u.to_i
         end
-        if k>0
-          idds.push(k)
+        if uff>0
+          idds.append(uff)
         end
+
       end
+
       @questions=Question.questions_by_manytags(ids=idds, topics=top, sort=s, page=ps)
     end
 
@@ -329,17 +386,41 @@ class API::V1::QuestionsController < ApplicationController
           }
         }
     else
-      if arr.size>0
-        if params[:nom].nil?
-          render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr
+      ins=params[:includes]
+      if ins.nil?
+        ins = []
+      else
+        sortar=[]
+        ins=ins.split(",")
+        ins=includes(ins)
+      end
+      if ins.size<=0
+        if arr.size>0
+          if params[:nom].nil?
+            render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr
+          else
+            render json: @questions, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          end
         else
-          render json: @questions, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          render json: @questions
         end
       else
-        render json: @questions
+        if arr.size>0
+          render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr, include: ins
+        else
+          render json: @questions, include: ins
+        end
       end
     end
   end
+
+
+
+
+
+
+
+
 
   def by_topic
     g=params[:topic]
@@ -389,14 +470,30 @@ class API::V1::QuestionsController < ApplicationController
           }
         }
     else
-      if arr.size>0
-        if params[:nom].nil?
-          render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr
+      ins=params[:includes]
+      if ins.nil?
+        ins = []
+      else
+        sortar=[]
+        ins=ins.split(",")
+        ins=includes(ins)
+      end
+      if ins.size<=0
+        if arr.size>0
+          if params[:nom].nil?
+            render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr
+          else
+            render json: @questions, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          end
         else
-          render json: @questions, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          render json: @questions
         end
       else
-        render json: @questions
+        if arr.size>0
+          render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr, include: ins
+        else
+          render json: @questions, include: ins
+        end
       end
     end
   end
@@ -430,12 +527,12 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     if arr.size>0
-      @question_list = Question.questions_by_user(user=params[:user_id], q, args=arr, sort=s).page(params[:page])
+      @questions = Question.questions_by_user(user=params[:user_id], q, args=arr, sort=s).page(params[:page])
     else
-      @question_list = Question.questions_by_user(user=params[:user_id], q, args=[], sort=s).page(params[:page])
+      @questions = Question.questions_by_user(user=params[:user_id], q, args=[], sort=s).page(params[:page])
     end
 
-    if @question_list.empty?
+    if @questions.empty?
       render json: 
         { data:
           {
@@ -443,14 +540,30 @@ class API::V1::QuestionsController < ApplicationController
           }
         }
       else
-        if arr.size>0
-          if params[:nom].nil?
-            render json: @question_list, each_serializer: QuestionCustomSerializer, scope: arr
+        ins=params[:includes]
+        if ins.nil?
+          ins = []
+        else
+          sortar=[]
+          ins=ins.split(",")
+          ins=includes(ins)
+        end
+        if ins.size<=0
+          if arr.size>0
+            if params[:nom].nil?
+              render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr
+            else
+              render json: @questions, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+            end
           else
-            render json: @question_list, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+            render json: @questions
           end
         else
-          render json: @question_list
+          if arr.size>0
+            render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr, include: ins
+          else
+            render json: @questions, include: ins
+          end
         end
       end
   end
@@ -483,12 +596,12 @@ class API::V1::QuestionsController < ApplicationController
     end
 
     if arr.size>0
-      @postulate= Question.question_postulated(user=params[:user_id], q, args=arr, sort=s).page(params[:page])
+      @questions= Question.question_postulated(user=params[:user_id], q, args=arr, sort=s).page(params[:page])
     else
-      @postulate= Question.question_postulated(user=params[:user_id], q, args=[], sort=s).page(params[:page])
+      @questions= Question.question_postulated(user=params[:user_id], q, args=[], sort=s).page(params[:page])
     end
 
-    if @postulate.empty?
+    if @questions.empty?
       render json: 
         { data:
           {
@@ -496,14 +609,30 @@ class API::V1::QuestionsController < ApplicationController
           }
         }
     else
-      if arr.size>0
-        if params[:nom].nil?
-          render json: @postulate, each_serializer: QuestionCustomSerializer, scope: arr
+      ins=params[:includes]
+      if ins.nil?
+        ins = []
+      else
+        sortar=[]
+        ins=ins.split(",")
+        ins=includes(ins)
+      end
+      if ins.size<=0
+        if arr.size>0
+          if params[:nom].nil?
+            render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr
+          else
+            render json: @questions, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          end
         else
-          render json: @postulate, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          render json: @questions
         end
       else
-        render json: @postulate
+        if arr.size>0
+          render json: @questions, each_serializer: QuestionCustomSerializer, scope: arr, include: ins
+        else
+          render json: @questions, include: ins
+        end
       end
     end
   end
@@ -557,7 +686,31 @@ class API::V1::QuestionsController < ApplicationController
           render json: @question, each_serializer: QuestionCustomNoRelSerializer, scope: arr
         end
       else
-        render json: @question
+        ins=params[:includes]
+        if ins.nil?
+          ins = []
+        else
+          sortar=[]
+          ins=ins.split(",")
+          ins=includes(ins)
+        end
+        if ins.size<=0
+          if arr.size>0
+            if params[:nom].nil?
+              render json: @question, each_serializer: QuestionCustomSerializer, scope: arr
+            else
+              render json: @question, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+            end
+          else
+            render json: @question
+          end
+        else
+          if arr.size>0
+            render json: @question, each_serializer: QuestionCustomSerializer, scope: arr, include: ins
+          else
+            render json: @question, include: ins
+          end
+        end
       end
     end
   end
@@ -606,14 +759,30 @@ class API::V1::QuestionsController < ApplicationController
           }
         }
     else
-      if arr.size>0
-        if params[:nom].nil?
-          render json: @question, each_serializer: QuestionCustomSerializer, scope: arr
+      ins=params[:includes]
+      if ins.nil?
+        ins = []
+      else
+        sortar=[]
+        ins=ins.split(",")
+        ins=includes(ins)
+      end
+      if ins.size<=0
+        if arr.size>0
+          if params[:nom].nil?
+            render json: @question, each_serializer: QuestionCustomSerializer, scope: arr
+          else
+            render json: @question, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          end
         else
-          render json: @question, each_serializer: QuestionCustomNoRelSerializer, scope: arr
+          render json: @question
         end
       else
-        render json: @question
+        if arr.size>0
+          render json: @question, each_serializer: QuestionCustomSerializer, scope: arr, include: ins
+        else
+          render json: @question, include: ins
+        end
       end
     end
   end
