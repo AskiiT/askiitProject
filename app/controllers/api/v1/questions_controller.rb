@@ -175,8 +175,8 @@ class API::V1::QuestionsController < ApplicationController
   # POST /questions
   def create
     @question = Question.new(question_params)
-    #@question.user_id= current_user.id
-    @question.user_id = params[:user_id]
+    @question.user_id= current_user.id
+    #@question.user_id = params[:user_id]
     g=params[:topic]
     if g.nil?
       render json: {data: {error: "Topic no puede estar vacio"}}
