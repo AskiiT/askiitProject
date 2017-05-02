@@ -17,13 +17,16 @@ class API::V1::PostulatesController < ApplicationController
   # POST /postulates
   def create
     user_id= current_user.id
-    #question_id=params[:question_id]
+    #user_id=params[:user_id]
+    question_id=params[:question_id]
     @postulate = Postulate.new(:user_id => user_id, :question_id => question_id)
     @question = Question.find_by_id(question_id)
     
     if @postulate.save
-      q_user_id=Question.find_by_id(question_id)
-      body=current_user.username+" se ha postulado a tu pregunta."
+      q_user_id=Question.find_by_id(question_id).user_id
+      username=current_user.username
+      #username=User.find_by_id(user_id).username
+      body=username+" se ha postulado a tu pregunta."
       @nota = Notification.new(:body=> body, :read=> 0, :user_id=>q_user_id, :question_id => question_id)
       @nota.save
       render json: @question
@@ -46,19 +49,10 @@ class API::V1::PostulatesController < ApplicationController
   def destroy
     user_id= current_user.id
     question_id=params[:question_id]
-    if (Question.find_by_id(question_id).user_id==user_id)
-      @postulate = Postulate.find_by(:user_id => user_id, :question_id => question_id)
-      @postulate.destroy
-      @question = Question.find_by_id(question_id)
-      render json: @question
-    else
-      render json: 
-        { data:
-          {
-            error: "Usted no puede borrar esta postulación."
-          }
-        }
-    end
+    @postulate = Postulate.find_by(:user_id => user_id, :question_id => question_id)
+    @postulate.destroy
+    @question = Question.find_by_id(question_id)
+    render json: @question
   end
 
 

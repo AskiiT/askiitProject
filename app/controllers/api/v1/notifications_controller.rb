@@ -4,7 +4,7 @@ class API::V1::NotificationsController < ApplicationController
 
   # GET /postulates
   def index
-    user_id=current_user.user_id
+    user_id=current_user.id
 
     @notifications = Notification.where("user_id = ?", user_id)
     if @notifications.empty?
@@ -47,7 +47,7 @@ class API::V1::NotificationsController < ApplicationController
 
   # DELETE /notifications/1
   def destroy
-    user_id=current_user.user_id
+    user_id=current_user.id
     if(@notification.user_id != user_id)
       render json: 
         { data:
@@ -60,7 +60,7 @@ class API::V1::NotificationsController < ApplicationController
     end
   end
   def clear
-    user_id=current_user.user_id
+    user_id=current_user.id
     @notifications = Notification.where("user_id = ?", user_id)
     @notifications.destroy_all
     render json: 
