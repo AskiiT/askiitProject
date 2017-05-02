@@ -7,5 +7,5 @@ class QuestionSerializer < ActiveModel::Serializer
   belongs_to :user  
   has_many :p_users
   has_many :question_attachments
- 
+  has_many :notifications
 end

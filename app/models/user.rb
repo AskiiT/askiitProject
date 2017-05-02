@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   after_initialize :default_avatar
   after_create :ranks_and_domains
-
+  has_many :notifications
   has_one :rank
   has_many :domain_ranks
   has_many :questions

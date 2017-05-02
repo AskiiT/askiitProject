@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     namespace :v1 do      
       #resources :avatars
-
+      resources :notifications, only: [:index, :destroy] do
+        collection do
+          delete 'clear', to: 'notifications#clear'
+        end
+      end
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
             scope :search do 

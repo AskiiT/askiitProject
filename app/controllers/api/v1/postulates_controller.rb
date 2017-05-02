@@ -17,12 +17,16 @@ class API::V1::PostulatesController < ApplicationController
   # POST /postulates
   def create
     user_id= current_user.id
-    question_id=params[:question_id]
+    #question_id=params[:question_id]
     @postulate = Postulate.new(:user_id => user_id, :question_id => question_id)
     @question = Question.find_by_id(question_id)
     
     if @postulate.save
-      render json: @question  
+      q_user_id=Question.find_by_id(question_id)
+      body=current_user.username+" se ha postulado a tu pregunta."
+      @nota = Notification.new(:body=> body, :read=> 0, :user_id=>q_user_id, :question_id => question_id)
+      @nota.save
+      render json: @question
     else
       render json: @postulate.errors, status: :unprocessable_entity
     end

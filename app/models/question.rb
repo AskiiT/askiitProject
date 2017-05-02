@@ -22,7 +22,8 @@ class Question < ApplicationRecord
   has_many :question_has_tags
   has_many :p_users, through: :postulates, source: :user
   has_many :postulates
-
+  has_many :notifications
+  
   validates :title, :difficulty, :date_posted, presence: true
   validates :title, length: { in: 12..140 }
   validates_inclusion_of :difficulty, in: 1..10

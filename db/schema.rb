@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502195350) do
+ActiveRecord::Schema.define(version: 20170502223804) do
 
   create_table "avatars", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -37,6 +37,17 @@ ActiveRecord::Schema.define(version: 20170502195350) do
     t.datetime "updated_at",  null: false
     t.index ["followed_id"], name: "index_followers_on_followed_id"
     t.index ["follower_id"], name: "index_followers_on_follower_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "body"
+    t.integer  "read",        default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "user_id"
+    t.integer  "question_id"
+    t.index ["question_id"], name: "index_notifications_on_question_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -74,13 +85,13 @@ ActiveRecord::Schema.define(version: 20170502195350) do
   create_table "questions", force: :cascade do |t|
     t.string   "title",                                       null: false
     t.text     "body"
-    t.datetime "date_posted", default: '2017-05-02 19:59:34', null: false
+    t.datetime "date_posted", default: '2017-05-02 22:39:55', null: false
     t.integer  "difficulty",  default: 1,                     null: false
     t.integer  "user_id"
     t.integer  "topic_id"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.datetime "end_time",    default: '2017-05-03 12:38:36'
+    t.datetime "end_time",    default: '2017-05-03 15:18:57'
     t.index ["topic_id"], name: "index_questions_on_topic_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
@@ -131,7 +142,7 @@ ActiveRecord::Schema.define(version: 20170502195350) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-05-02 19:59:33', null: false
+    t.datetime "date_created",           default: '2017-05-02 22:39:54', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false
