@@ -105,6 +105,12 @@ class User < ActiveRecord::Base
      self.avatar ||= Avatar.find_by_id(1)
   end
 
+  after_create :default_date
+  def default_date
+     self.date_created = self.created_at;
+     self.save
+  end
+
   def ranks_and_domains
     us=self.id
     r=Rank.new

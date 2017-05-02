@@ -35,6 +35,12 @@ class Question < ApplicationRecord
       end
   end
 
+  after_create :default_date
+  def default_date
+     self.date_posted = self.created_at;
+     self.save
+  end
+
   def self.sort_by(query1, sort)
     case sort
     when 1
@@ -75,11 +81,13 @@ class Question < ApplicationRecord
 
   def self.load_questions(args=[], q="", sort= [1], page = 1, per_page = 20)
     #por=args & Question.parameters
+
     if args.size>0 
       g= Question.all.where("questions.title LIKE ?", "%#{q.downcase}%").select(args)
     else
       g= Question.all.where("questions.title LIKE ?", "%#{q.downcase}%")
     end
+    g=g.where.not("questions.end_time < ?", DateTime.now)
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])
     end

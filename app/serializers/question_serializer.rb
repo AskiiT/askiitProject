@@ -1,7 +1,7 @@
 class QuestionSerializer < ActiveModel::Serializer
   type 'data'
 
-  attributes :id, :title, :body, :difficulty, :date_posted
+  attributes :id, :title, :body, :difficulty, :date_posted, :end_time
   belongs_to :topic
   has_many :tags
   belongs_to :user  

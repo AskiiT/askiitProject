@@ -175,7 +175,8 @@ class API::V1::QuestionsController < ApplicationController
   # POST /questions
   def create
     @question = Question.new(question_params)
-    @question.user_id= current_user.id
+    #@question.user_id= current_user.id
+    @question.user_id = params[:user_id]
     g=params[:topic]
     if g.nil?
       render json: {data: {error: "Topic no puede estar vacio"}}
@@ -189,6 +190,9 @@ class API::V1::QuestionsController < ApplicationController
       @question.topic_id=g
 
       if @question.save
+        time=params[:time]
+        @question.end_time= @question.date_posted + time.to_i.minutes
+        @question.save
         question_id=@question.id
         tags=params[:tags]
         valid=true
@@ -788,6 +792,6 @@ class API::V1::QuestionsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def question_params
-      params.require(:question).permit(:title, :body, :date_posted, :difficulty, :user_id)
+      params.require(:question).permit(:title, :body, :difficulty, :user_id)
     end
 end

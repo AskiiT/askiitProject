@@ -243,10 +243,7 @@ end
  q.difficulty=rand(1..10)
  q.topic_id=rand(1..10)
  q.user_id=rand(1..100)
- date=DateTime.now - Faker::Number.number(3).to_i.days - Faker::Number.number(3).to_i.hours
- q.date_posted=date
- q.date_posted=date
- q.date_posted=date
+ q.end_time= DateTime.now+9999.to_i.minutes;
  until q.valid? do	
 	 q.title= Faker::Lorem.sentence
 	 q.body= Faker::Lorem.paragraph
@@ -254,11 +251,8 @@ end
 	 q.difficulty=rand(1..10)
 	 q.topic_id=rand(1..10)
 	 q.user_id=rand(1..100)
-	 date=DateTime.now - Faker::Number.number(3).to_i.days - Faker::Number.number(3).to_i.hours
-	 q.date_posted=date
-	 q.date_posted=date
-	 q.date_posted=date
  end
+
  q.save
  tags_amount=rand(0..3)
  question_id=Question.all.last.id
