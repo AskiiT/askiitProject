@@ -1,0 +1,203 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Z: Authentications 2",
+		"_postman_id": "83616c0f-29c0-1648-9613-00d5a601d834",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sign_up with JSON",
+			"request": {
+				"url": "localhost:3000/api/v1/auth",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\t{\n\t\"email\": \"juasmartinezbel@unal.edu.co\",\n    \"first_name\": \"Juan Sebastian\",\n    \"last_name\": \"Martinez Beltran\",\n    \"username\": \"juasmartinezbel\",\n    \"password\": \"123456789\",\n    \"color\": \"#551A88\"\n\t}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "log_in",
+			"request": {
+				"url": "localhost:3000/api/v1/auth/sign_in",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"juasmartinezbel@unal.edu.co\",\n\t\"password\": \"123456789\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "log out",
+			"request": {
+				"url": "localhost:3000/api/v1/auth/sign_out",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Mensaje de bienvenida",
+			"request": {
+				"url": "localhost:3000/api/v1/home",
+				"method": "GET",
+				"header": [
+					{
+						"key": "access-token",
+						"value": "vfDDjzxoUrCbH7eXHEhB0w",
+						"description": ""
+					},
+					{
+						"key": "client",
+						"value": "IVFKRqn1yFQAjX5tmDLYQA",
+						"description": ""
+					},
+					{
+						"key": "expiry",
+						"value": "1494898338",
+						"description": ""
+					},
+					{
+						"key": "token-type",
+						"value": "Bearer",
+						"description": ""
+					},
+					{
+						"key": "uid",
+						"value": "juasmartinezbel@unal.edu.co",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Creating a Question",
+			"request": {
+				"url": "localhost:3000/api/v1/questions",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"¿Qué es la mitocondria?\",\n\t\"body\": \"En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.\",\n\t\"topic\": \"biologia\",\n\t\"difficulty\": 5,\n\t\"tags\": [\"Celula\", \"mitocondria\", \"Nucleo\"]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Edit the new question",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/307",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"question\":\n\t{\n\t\t\"difficulty\": 10\n\t}\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the new question",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/307",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Postulate to a Question",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/300/postulate",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Unpostulate to a Question",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/300/unpostulate",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Following an User",
+			"request": {
+				"url": "localhost:3000/api/v1/users/1/follow",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Unfollowing an User",
+			"request": {
+				"url": "localhost:3000/api/v1/users/1/unfollow",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

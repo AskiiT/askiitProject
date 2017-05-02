@@ -1,6 +1,6 @@
 class API::V1::PostulatesController < ApplicationController
   before_action :set_postulate, only: [:show, :update]
-  #before_action :authenticate_user!, only:[:create, :destroy]
+  before_action :authenticate_user!, only:[:create, :destroy]
 
   # GET /postulates
   def index
@@ -16,8 +16,7 @@ class API::V1::PostulatesController < ApplicationController
 
   # POST /postulates
   def create
-    #user_id= current_user.id
-    user_id=params[:user_id]
+    user_id= current_user.id
     question_id=params[:question_id]
     @postulate = Postulate.new(:user_id => user_id, :question_id => question_id)
     @question = Question.find_by_id(question_id)
@@ -31,22 +30,31 @@ class API::V1::PostulatesController < ApplicationController
 
   # PATCH/PUT /postulates/1
   def update
-    if @postulate.update(postulate_params)
-      render json: @postulate
-    else
-      render json: @postulate.errors, status: :unprocessable_entity
-    end
+    render json: 
+        { data:
+          {
+            error: "No puede editar postulaciones. Solo borrarlas y crearlas."
+          }
+    }
   end
 
   # DELETE /postulates/1
   def destroy
-    #user_id= current_user.id
-    user_id=params[:user_id]
+    user_id= current_user.id
     question_id=params[:question_id]
-    @postulate = Postulate.find_by(:user_id => user_id, :question_id => question_id)
-    @postulate.destroy
-    @question = Question.find_by_id(question_id)
-    render json: @question
+    if (Question.find_by_id(question_id).user_id==user_id)
+      @postulate = Postulate.find_by(:user_id => user_id, :question_id => question_id)
+      @postulate.destroy
+      @question = Question.find_by_id(question_id)
+      render json: @question
+    else
+      render json: 
+        { data:
+          {
+            error: "Usted no puede borrar esta postulación."
+          }
+        }
+    end
   end
 
 

@@ -169,9 +169,9 @@ class API::V1::FollowersController < ApplicationController
     followed = params[:user_id]
 
     @follower = Follower.new(:followed_id => followed, :follower_id => my_id)
-
+    @user_id=User.user_followers(followed)
     if @follower.save
-      render json: @follower, status: :created
+      render json: @user_id, status: :created
     else
       render json: @follower.errors, status: :unprocessable_entity
     end
@@ -184,6 +184,8 @@ class API::V1::FollowersController < ApplicationController
 
     @follower = Follower.find_by(:followed_id => followed, :follower_id => my_id)
     @follower.destroy
+    @user_id=User.user_followers(followed)
+    render json: @user_id
   end
 
   private

@@ -1,12 +1,12 @@
 class API::V1::UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy]
-	before_action :authenticate_user!, only:[:welcum]
-  def welcum
+	before_action :authenticate_user!, only:[:welcome]
+  def welcome
     @user= current_user
     render json:          
     { data:
             {
-              message: "Welcum "+current_user.username
+              message: ""+current_user.username
             }
           }
   end

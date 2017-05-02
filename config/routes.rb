@@ -49,7 +49,7 @@ Rails.application.routes.draw do
           get 'who-postulated',         to: 'users#who_postulated'  #api/v1/users/:user_id/who-postulated
           get 'who-it-postulated',      to: 'users#who_it_postulated'
       end
-          get 'home', to: 'users#welcum'
+          get 'home', to: 'users#welcome'
 
       resources :questions do
           collection do

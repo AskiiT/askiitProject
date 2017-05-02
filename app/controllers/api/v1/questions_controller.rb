@@ -1,6 +1,6 @@
 class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:update, :destroy]
-  #before_action :authenticate_user!, only:[:create, :destroy, :update]
+  before_action :authenticate_user!, only:[:create, :destroy, :update]
 
   def getCols(arr)
     parameters=['id', 'title', 'body', 'user_id', 'topic_id', 'difficulty','date_posted']
@@ -175,7 +175,7 @@ class API::V1::QuestionsController < ApplicationController
   # POST /questions
   def create
     @question = Question.new(question_params)
-    #@question.user_id= current_user.id
+    @question.user_id= current_user.id
     g=params[:topic]
     if g.nil?
       render json: {data: {error: "Topic no puede estar vacio"}}
@@ -222,50 +222,39 @@ class API::V1::QuestionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /questions/1
-  # def update
-  #   if @question.user_id == current_user.id
-  #     if @question.update(question_params)
-  #       render json: @question
-  #     else
-  #       render json: @question.errors, status: :unprocessable_entity
-  #     end
-  #   else
-  #     render json: 
-  #       { data:
-  #         {
-  #           error: "Usted no puede editar esta pregunta."
-  #         }
-  #       }
-  #   end  
-  # end
-
-  # DELETE /questions/1
-  # def destroy
-  #   if @question.user_id==current_user.id
-  #     @question.destroy
-  #   else
-  #     render json: 
-  #       { data:
-  #         {
-  #           error: "Usted no puede eliminar esta pregunta."
-  #         }
-  #       }
-  #     end
-  # end
-
-  def destroy
-    @question.destroy
-  end
-  
+ # PATCH/PUT /questions/1
   def update
-    if @question.update(question_params)
-      render json: @question
+    if @question.user_id == current_user.id
+      if @question.update(question_params)
+        render json: @question
+      else
+        render json: @question.errors, status: :unprocessable_entity
+      end
     else
-      render json: @question.errors, status: :unprocessable_entity
-    end 
+      render json: 
+        { data:
+          {
+            error: "Usted no puede editar esta pregunta."
+          }
+        }
+    end  
   end
-  ###############################
+
+ # DELETE /questions/1
+  def destroy
+    if @question.user_id==current_user.id
+      @question.destroy
+    else
+      render json: 
+        { data:
+          {
+            error: "Usted no puede eliminar esta pregunta."
+          }
+        }
+      end
+  end
+
+  ###########################
   ###Custom methods
   ###############################
 
