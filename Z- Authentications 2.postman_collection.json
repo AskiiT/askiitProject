@@ -109,7 +109,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"title\": \"¿Qué es la mitocondria?\",\n\t\"body\": \"En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.\",\n\t\"topic\": \"biologia\",\n\t\"difficulty\": 5,\n\t\"tags\": [\"Celula\", \"mitocondria\", \"Nucleo\"]\n}"
+					"raw": "{\n\t\"title\": \"¿Qué es la mitocondria?\",\n\t\"body\": \"En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.\",\n\t\"topic\": \"biologia\",\n\t\"difficulty\": 5,\n\t\"tags\": [\"Celula\", \"mitocondria\", \"Nucleo\"],\n\t\"time\": 5\n}"
 				},
 				"description": ""
 			},

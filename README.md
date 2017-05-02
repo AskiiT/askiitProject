@@ -290,22 +290,22 @@ xhr.send(data);
   "title": "¿Qué es la mitocondria?",
   "body": "En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.",
   "topic": "biologia",
-  "user_id": 1,
   //"difficulty": 5, <- Este es opcional, default es 1
-  "tags": ["Celula", "mitocondria", "Nucleo"]
+  "tags": ["Celula", "mitocondria", "Nucleo"],
+  "time": 5 //En minutos
 }
 /********************Codigo******************************/
 var data = JSON.stringify({
   "title": "¿Qué es la mitocondria?",
   "body": "En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.",
   "topic": "biologia",
-  "user_id": 1,
   "difficulty": 5,
   "tags": [
     "Celula",
     "mitocondria",
     "Nucleo"
-  ]
+  ],
+  "time": 5,
 });
 
 var xhr = new XMLHttpRequest();
@@ -368,7 +368,6 @@ xhr.send(data);
 ```javascript
 /*********************JSON******************/
 {
-  "user_id": 2
 }
 
 /*****************Codigo*****************/
@@ -392,4 +391,87 @@ xhr.setRequestHeader("cache-control", "no-cache");
 xhr.setRequestHeader("postman-token", "e67e01cb-727c-ec5f-4eee-dc05a37e2ccf");
 
 xhr.send(data);
+```
+## 4. Log In:
+> POST: localhost:3000/api/v1/auth/sign_in
+
+```javascript
+{
+  "email": "juasmartinezbel@unal.edu.co",
+  "password": "123456789"
+}
+/**************************Codigo************************************/
+var data = JSON.stringify({
+  "email": "juasmartinezbel@unal.edu.co",
+  "password": "123456789"
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://localhost:3000/api/v1/auth/sign_in");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.setRequestHeader("postman-token", "8d52f876-47bb-60bd-5b1a-801e2a0f383d");
+
+xhr.send(data);
+```
+#### Esto responderá con un JSON:
+```json
+{
+  "data": {
+    "avatar_id": 1,
+    "id": 101,
+    "email": "juasmartinezbel@unal.edu.co",
+    "first_name": "Juan Sebastian",
+    "last_name": "Martinez Beltran",
+    "username": "juasmartinezbel",
+    "description": "",
+    "provider": "email",
+    "uid": "juasmartinezbel@unal.edu.co",
+    "date_created": "2017-05-02T20:21:55.957Z",
+    "color": "#551A88"
+  }
+}
+```
+
+#### Y estos headers:
+```ruby
+Access-Control-Allow-Credentials →true
+Access-Control-Allow-Methods →GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD
+Access-Control-Allow-Origin →chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop
+Access-Control-Max-Age →1728000
+Cache-Control →max-age=0, private, must-revalidate
+Content-Type →application/json; charset=utf-8
+ETag →W/"c8104f0ab9ef885ac0d32b07e93b441d"
+Transfer-Encoding →chunked
+Vary →Origin
+X-Content-Type-Options →nosniff
+X-Frame-Options →SAMEORIGIN
+X-Request-Id →e89bf5e4-fb39-4851-b1dd-8d150f2f6ff4
+X-Runtime →0.708970
+X-XSS-Protection →1; mode=block
+access-token →kKH_oJejAlGGCfdzl0Hvdw
+client →M6R2bgpNyyUqstbT9nADpA
+expiry →1494966118
+token-type →Bearer
+uid →juasmartinezbel@unal.edu.co
+```
+#### A lo que ustedes solo necesitarán:
+```
+access-token →kKH_oJejAlGGCfdzl0Hvdw
+client →M6R2bgpNyyUqstbT9nADpA
+expiry →1494966118
+token-type →Bearer
+uid →juasmartinezbel@unal.edu.co
+```
+
+```diff
+-Esto segun lo muestra y usa Postman
 ```
