@@ -167,6 +167,7 @@ class Question < ApplicationRecord
     else
       g=where('questions.id in (?)', g).where("questions.title LIKE ?", "%#{q.downcase}%")
     end
+    g=g.where.not("questions.end_time < ?", DateTime.now)
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])
     end
@@ -193,6 +194,7 @@ class Question < ApplicationRecord
     else
       g=where("topic_id= ?", topic).where("questions.title LIKE ?", "%#{q.downcase}%")
     end
+    g=g.where.not("questions.end_time < ?", DateTime.now)
     for i in 0...sort.size do
       g=Question.sort_by(g, sort[i])
     end
@@ -273,7 +275,7 @@ class Question < ApplicationRecord
       if topics.length>0
         samba=samba.where(questions: {topic_id: topics})
       end
-
+      samba=samba.where.not("questions.end_time < ?", DateTime.now)
       if samba.empty?
         samba
       elsif samba.nil?
@@ -281,7 +283,6 @@ class Question < ApplicationRecord
       elsif samba.size == 1
         samba
       else
-
         samba=Question.sort_by(samba, sort)
         puts samba.size
         samba.paginate(:page => page,:per_page => per_page)

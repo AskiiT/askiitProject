@@ -163,7 +163,17 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 * Returna las preguntas que no tienen postulados
 * ?page=x&sort=y
 ```
-
+```diff
+- api/v1/tagsearch con multiples tags
++ api/v1/tagsearch/tag1,tag2,tag3,to_topic1
+-No importa el orden
+-Tag puede ser nombre o id
+-to_topic no puede estar solo. En su defecto usar [topicsearch]
+-En to_topic, topic es el nombre del topic especifico
+-Si se busca más de un tag, se buscan las preguntas que sean la intersección de las que tengan ese tag
+-Si se busca más de un topic, se busca las preguntas que tengan esos tags y topics
+-No mostrará las preguntas a las que se les haya pasado el límite de tiempo
+```
 ## Rutas para Topics
 
 ```
