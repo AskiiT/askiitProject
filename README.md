@@ -33,7 +33,18 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 ```diff
 - Cuando es sort=z es sort de usuarios, y cuando es sort=y, es para preguntas.
 ```
+## Notificaciones
 
+```
+>api/v1/notifications
+*Retorna las notificaciones leidas y no leidas.
+
+>api/v1/notifications/:id
+*Elimina una notificación especifica
+
+>api/v1/notifications/clear
+*Elimina todas las notificaciones
+```
 
 ## Rutas para Users
 
@@ -97,6 +108,9 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 > api/v1/users/:id/who-it-postulated                       
 * Retorna a que usuarios se postuló este usuario
+
+> api/v1/users/:user_id/subscribed                       
+* Retorna a que tags está subscrito el usuario
 ```
 
 

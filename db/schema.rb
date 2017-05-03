@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170502223804) do
+ActiveRecord::Schema.define(version: 20170503004912) do
 
   create_table "avatars", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -85,13 +85,13 @@ ActiveRecord::Schema.define(version: 20170502223804) do
   create_table "questions", force: :cascade do |t|
     t.string   "title",                                       null: false
     t.text     "body"
-    t.datetime "date_posted", default: '2017-05-02 22:39:55', null: false
+    t.datetime "date_posted", default: '2017-05-03 02:05:57', null: false
     t.integer  "difficulty",  default: 1,                     null: false
     t.integer  "user_id"
     t.integer  "topic_id"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.datetime "end_time",    default: '2017-05-03 15:18:57'
+    t.datetime "end_time",    default: '2017-05-03 18:44:59'
     t.index ["topic_id"], name: "index_questions_on_topic_id"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
@@ -104,6 +104,15 @@ ActiveRecord::Schema.define(version: 20170502223804) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.index ["user_id"], name: "index_ranks_on_user_id"
+  end
+
+  create_table "subscribed_to_tags", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_subscribed_to_tags_on_tag_id"
+    t.index ["user_id"], name: "index_subscribed_to_tags_on_user_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -142,7 +151,7 @@ ActiveRecord::Schema.define(version: 20170502223804) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-05-02 22:39:54', null: false
+    t.datetime "date_created",           default: '2017-05-03 02:05:56', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false

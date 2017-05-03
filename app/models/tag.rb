@@ -2,7 +2,8 @@ class Tag < ApplicationRecord
  	require 'will_paginate/array'
  	has_many :questions, through: :question_has_tags
  	has_many :question_has_tags
-
+  has_many :users, through: :subscribed_to_tag
+  has_many :subscribed_to_tag
  	validates :tag_name, presence: true
 	validates :tag_name, uniqueness: true
 	validates :tag_name, length: { minimum: 2, maximum: 30 }

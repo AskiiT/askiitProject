@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  
   #mount_devise_token_auth_for 'User', at: 'auth'
   mount_devise_token_auth_for 'User', at: 'api/v1/auth', skip: [:omniauth_callback]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -21,12 +22,11 @@ Rails.application.routes.draw do
               get 'email/:email',             to: 'users#search_email'         #api/v1/users/search/email/:email (get)
 
             end
-
             #///part of others\\\\:
             get '/sort', to: 'users#sort'
             get 'by-level', to: 'users#by_level'
           end
-          
+          get 'subscribed', to: 'subscribed_to_tags#index'
 
           get 'my-questions',           to: 'questions#my_questions'    #api/v1/users/:id/my-questions (get)
 
@@ -96,12 +96,16 @@ Rails.application.routes.draw do
       end
 
       resources :tags do
-        get 'used-by', to: "tags#used_by"
+        
         collection do
          get 'search/:tag_name',  to: 'tags#search'
           #//otras\\
          get ':tag/questions', to: "questions#by_tag"
         end
+        get 'used-by', to: "tags#used_by"
+        post 'subscribe', to: 'subscribed_to_tags#create'
+        delete 'unsubscribe', to: 'subscribed_to_tags#destroy'
+
       end
 
       #resources :postulates

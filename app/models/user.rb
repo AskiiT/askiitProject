@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
   has_many :followers, :foreign_key => :follower_id
   has_many :followed, :through => :followers, :source => :followed_id
   belongs_to :avatar
+  has_many :tags, through: :subscribed_to_tag
+  has_many :subscribed_to_tag
 
   # Include default devise modules.
   devise :database_authenticatable, :registerable,

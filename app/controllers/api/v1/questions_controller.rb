@@ -201,6 +201,7 @@ class API::V1::QuestionsController < ApplicationController
           if siz>3
             siz=3
           end
+          @sended_to=[]
           for j in 0...siz do
             @question_has_tag = QuestionHasTag.new
             tag_id=tags[j]
@@ -214,6 +215,22 @@ class API::V1::QuestionsController < ApplicationController
             @question_has_tag.tag_id=ta_id
             @question_has_tag.question_id=question_id
             @question_has_tag.save
+            @users_subs=SubscribedToTag.subscribedTo(ta_id)
+            @users_subs=@users_subs.to_a
+            size2=@users_subs.size
+            for m in 0...size2 do
+                subs=@users_subs[m]
+                idsss=@users_subs[m].user_id
+                if idsss != current_user.id
+                  unless @sended_to.include?(idsss)
+                    
+                    body="Se ha postulado a tu pregunta sobre "+name+"."
+                    @nota = Notification.new(:body=> body, :read=> 0, :user_id=>idsss, :question_id => question_id)
+                    @nota.save
+                    @sended_to.push(idsss)
+                  end
+              end
+            end
           end
         end
 

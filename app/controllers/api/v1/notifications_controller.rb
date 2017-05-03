@@ -5,8 +5,11 @@ class API::V1::NotificationsController < ApplicationController
   # GET /postulates
   def index
     user_id=current_user.id
-
-    @notifications = Notification.where("user_id = ?", user_id)
+    p=params[:page]
+    if p.nil?
+      p=1
+    end
+    @notifications = Notification.load_notifications(user_id).page(p)
     if @notifications.empty?
       render json: 
         { data:
@@ -16,6 +19,7 @@ class API::V1::NotificationsController < ApplicationController
        }
     else
       render json: @notifications
+      @notifications=Notification.where("user_id = ?", user_id)
       @notifications.update_all(read: 1)
     end
   end

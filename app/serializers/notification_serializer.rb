@@ -1,3 +1,4 @@
 class NotificationSerializer < ActiveModel::Serializer
-  attributes :id, :body, :read
+  attributes :body, :read, :user_id, :question_id
+  belongs_to :question
 end
