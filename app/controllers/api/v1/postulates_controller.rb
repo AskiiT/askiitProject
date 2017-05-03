@@ -1,6 +1,6 @@
 class API::V1::PostulatesController < ApplicationController
   before_action :set_postulate, only: [:show, :update]
-  before_action :authenticate_user!, only:[:create, :destroy]
+  #before_action :authenticate_user!, only:[:create, :destroy]
 
   # GET /postulates
   def index

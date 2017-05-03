@@ -41,6 +41,16 @@ end
 	lvlP.save
 end
 
+10.times do |j|
+	m=j+1
+	lvl10='100'+m.to_s
+	route="#{Rails.root}/public/robot/robots/lvl10/r"+m.to_s+".png"
+	lvl10=lvl10.to_i
+
+	lvlP=Picture.new(:level_picture=> File.new(route))
+	lvlP.id=lvl10
+	lvlP.save
+end
 
 colors=[
 '#E73434',
@@ -191,10 +201,10 @@ t.save
 				dr.level=rand(56...214)
 			elsif prob < 70
 				dr.level=rand(214...667)
-			elsif prob < 90
+			elsif prob < 80
 				dr.level=rand(667...1973)
 			else
-				dr.level=rand(1973...3368)
+				dr.level=rand(1973...5741)
 			end
 		 	dr.save
  	end

@@ -1,6 +1,6 @@
 class API::V1::QuestionsController < ApplicationController
   before_action :set_question, only: [:update, :destroy]
-  before_action :authenticate_user!, only:[:create, :destroy, :update]
+  before_action :authenticate_user!, only:[:create, :destroy, :update, :report]
 
   def getCols(arr)
     parameters=['id', 'title', 'body', 'user_id', 'topic_id', 'difficulty','date_posted']
@@ -171,7 +171,45 @@ class API::V1::QuestionsController < ApplicationController
     end
    
   end
-
+  def report
+    reporter_id=current_user.id
+    username=current_user.username
+    admins_id=[101]
+    question_id=params[:question_id]
+    reason=params[:reason]
+    reported_user=Question.find_by_id(question_id).user_id
+    if(reporter_id==reported_user)
+      render json:{ data:
+          {
+            error: "Usted no puede reportar esta pregunta."
+          }
+        }
+    else
+        message="El usuario "+username+" ha reportado una pregunta por: \""
+        message=message+reason+"\""
+        ex=Notification.find_by(:body => message, :question_id => question_id)
+        unless ex.nil?
+          render json:{ data:
+          {
+            error: "Usted ya reportó esta pregunta."
+          }
+          }
+        else
+          message0="Se ha reportado tu pregunta por: \""
+          message0=message0+reason+"\""
+          newNot=Notification.new(:body => message0, :question_id => question_id, :user_id => reported_user)
+          newNot.save
+          admins_size=admins_id.size
+          for ids in 0...admins_size do
+            admin_id=admins_id[ids]
+            newNot=Notification.new(:body => message, :question_id => question_id, :user_id => admin_id)
+            newNot.save
+          end
+          @question_id=Question.find_by_id(question_id)
+          render json: @question_id
+        end
+    end
+  end
   # POST /questions
   def create
     @question = Question.new(question_params)
@@ -224,7 +262,7 @@ class API::V1::QuestionsController < ApplicationController
                 if idsss != current_user.id
                   unless @sended_to.include?(idsss)
                     
-                    body="Se ha postulado a tu pregunta sobre "+name+"."
+                    body="Se ha postulado una pregunta sobre "+name+"."
                     @nota = Notification.new(:body=> body, :read=> 0, :user_id=>idsss, :question_id => question_id)
                     @nota.save
                     @sended_to.push(idsss)

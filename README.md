@@ -36,14 +36,24 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 ## Notificaciones
 
 ```
->api/v1/notifications
+>CLEAR api/v1/notifications
 *Retorna las notificaciones leidas y no leidas.
 
->api/v1/notifications/:id
+>DELETE api/v1/notifications/:id
 *Elimina una notificación especifica
 
->api/v1/notifications/clear
+> DELETE api/v1/notifications/clear
 *Elimina todas las notificaciones
+
+
+>POST api/v1/question/:question_id/report
+*Envía una notificación anónima al usuario sobre quien envió un reporte y a los admins de quien envió el reporte.
+
+>POST api/v1/question/:question_id/postulate
+*Envía una notificación al usuario de quien se postuló a tu pregunta
+
+>POST api/v1/question/
+*Envía una notificación a usuarios subscritos a ese tag 
 ```
 
 ## Rutas para Users

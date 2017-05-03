@@ -41,8 +41,14 @@ class DomainRank < ApplicationRecord
         tplvl= tplvl.to_i
         
         self.picture = Picture.find_by_id(tplvl)
-      else
+      elsif lvl < 3369
         tplvl= "90"+top.to_s
+        #print "El nivel actual es: "+tplvl+"\n\n"
+        tplvl= tplvl.to_i
+        
+        self.picture = Picture.find_by_id(tplvl)
+      else
+        tplvl= "100"+top.to_s
         #print "El nivel actual es: "+tplvl+"\n\n"
         tplvl= tplvl.to_i
         

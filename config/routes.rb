@@ -81,7 +81,7 @@ Rails.application.routes.draw do
         post    'postulate',    to: 'postulates#create'
         delete  'unpostulate',  to: 'postulates#destroy'
         get 'postulated-to-this', to: 'users#postulated_to'
-
+        post 'report', to: 'questions#report'
       end
 
       resources :topics do
@@ -91,7 +91,6 @@ Rails.application.routes.draw do
           #//otras\\
           get ':topic/questions', to: "questions#by_topic"
         end
-
 
       end
 
