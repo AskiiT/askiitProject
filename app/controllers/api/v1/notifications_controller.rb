@@ -1,6 +1,6 @@
 class API::V1::NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :update, :destroy]
-   before_action :authenticate_user!, only:[:index, :destroy, :clear, :read_all]
+   before_action :authenticate_user!, only:[:index, :destroy, :clear, :read, :read_all]
 
   # GET /postulates
   def index
@@ -34,6 +34,7 @@ class API::V1::NotificationsController < ApplicationController
     render json: @notification
   end
   def read
+    user_id=current_user.id
     @notifications=Notification.find_by_id(params[:notification_id])
     @notifications.read=1
     @notifications.save
