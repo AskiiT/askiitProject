@@ -97,14 +97,18 @@ class Question < ApplicationRecord
   end
 
   def self.expired_questions( )
-    now_time = DateTime.now
     collection = Array.new
     Question.all.each do |question|
       if( TimeDifference.between( DateTime.now, question.date_posted).in_hours > 2 )
-        collection << question
+        collection << question.id
       end
     end
-    collection
+    Question.all.where(id: [collection])
+  end
+
+  def self.execute_cleaning()
+    @expired = 
+    @expired.destroy_all
   end
 
 
