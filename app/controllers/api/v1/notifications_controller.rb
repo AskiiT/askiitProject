@@ -14,11 +14,18 @@ class API::V1::NotificationsController < ApplicationController
       render json: 
         { data:
           {
-            message: "No hay notificaciones para mostrar"
+            message: "No hay notificaciones para mostrar",
+            not_readed: 0
           }
        }
     else
-      render json: @notifications
+      amount=Notification.where("user_id = ? AND read = ?", user_id, 0).size
+      render json: {data:
+        {
+        notifications: @notifications,
+        not_readed: amount
+        }
+      }
       @notifications=Notification.where("user_id = ?", user_id)
       @notifications.update_all(read: 1)
     end
@@ -70,7 +77,8 @@ class API::V1::NotificationsController < ApplicationController
     render json: 
         { data:
           {
-            message: "No hay notificaciones para mostrar"
+            message: "No hay notificaciones para mostrar",
+            not_readed: 0
           }
        }
   end

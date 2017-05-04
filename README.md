@@ -10,6 +10,7 @@ Cinco rutas pedidas para que el Front End Consuma:
  *  Información de todas las preguntas
  *  ?page=x&sort=y
 
+
  >  api/v1/users/:id
  *  Información de un usuario dado su id:
  
@@ -36,8 +37,41 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 ## Notificaciones
 
 ```
->CLEAR api/v1/notifications
+>api/v1/notifications
 *Retorna las notificaciones leidas y no leidas.
+
+{
+  "data": {
+    "message": "No hay notificaciones para mostrar",
+    "not_readed": 0
+  }
+}
+
+{
+  "data": {
+    "notifications": [
+      {
+        "id": 2,
+        "body": "MUAnabelle1 se ha postulado a tu pregunta.",
+        "read": 0,
+        "created_at": "2017-05-04T01:53:56.641Z",
+        "updated_at": "2017-05-04T01:53:56.641Z",
+        "user_id": 101,
+        "question_id": 301
+      },
+      {
+        "id": 1,
+        "body": "Fer4Sau se ha postulado a tu pregunta.", //Cuerpo
+        "read": 0, // ¿Fue leido?
+        "created_at": "2017-05-04T01:53:53.974Z",
+        "updated_at": "2017-05-04T01:53:53.974Z",
+        "user_id": 101, //Usuario a quien se le envía la notificación
+        "question_id": 301 //Pregunta motivo de la notificación
+      }
+    ],
+    "not_readed": 2 //Preguntas no leidas
+  }
+}
 
 >DELETE api/v1/notifications/:id
 *Elimina una notificación especifica
@@ -48,6 +82,12 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 >POST api/v1/question/:question_id/report
 *Envía una notificación anónima al usuario sobre quien envió un reporte y a los admins de quien envió el reporte.
+* Parametro:
+
+{
+  "reason": "Pregunta en topic equivocado"
+}
+
 
 >POST api/v1/question/:question_id/postulate
 *Envía una notificación al usuario de quien se postuló a tu pregunta
