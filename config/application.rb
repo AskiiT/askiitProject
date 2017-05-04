@@ -10,7 +10,6 @@ require "action_mailer/railtie"
 require "action_view/railtie" 
 require "action_cable/engine"
 require 'rack/throttle'
-require 'memcached'
 # require "sprockets/railtie" 
 require "rails/test_unit/railtie"
 # Require the gems listed in Gemfile, including any gems
@@ -24,5 +23,14 @@ module AskiitProject
     # -- all .rb files in that directory are automatically loaded.
     config.api_only = true
     config.middleware.use Rack::Throttle::Minute, :max => 50
+    config.middleware.use Rack::Cors do
+      allow do
+        origins '*'
+        resource '*',
+          :headers => :any,
+          :expose => :any,
+          :methods => [:get,:post,:options,:delete,:put,:patch,:head]
+      end
+    end
   end
 end
