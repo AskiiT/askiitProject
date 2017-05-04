@@ -55,6 +55,9 @@ gem 'active_model_serializers', '~> 0.10.5'
 #Too lazy to do differences
 gem 'time_difference', '~> 0.5.0'
 
+#Cron Job
+gem 'whenever', '~> 0.9.7'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
