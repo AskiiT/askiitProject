@@ -1,6 +1,6 @@
 class API::V1::NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :update, :destroy]
-   before_action :authenticate_user!, only:[:index, :destroy, :clear]
+   before_action :authenticate_user!, only:[:index, :destroy, :clear, :read_all]
 
   # GET /postulates
   def index
@@ -14,7 +14,7 @@ class API::V1::NotificationsController < ApplicationController
       render json: 
         { data:
           {
-            message: "No hay notificaciones para mostrar",
+            notifications: "No hay notificaciones para mostrar",
             not_readed: 0
           }
        }
@@ -26,8 +26,6 @@ class API::V1::NotificationsController < ApplicationController
         not_readed: amount
         }
       }
-      @notifications=Notification.where("user_id = ?", user_id)
-      @notifications.update_all(read: 1)
     end
   end
 
@@ -35,7 +33,35 @@ class API::V1::NotificationsController < ApplicationController
   def show
     render json: @notification
   end
+  def read
+    @notifications=Notification.find_by_id(params[:notification_id])
+    @notifications.read=1
+    @notifications.save
+    @notification=Notification.load_notifications(user_id).page(p)
+    amount=Notification.where("user_id = ? AND read = ?", user_id, 0).size
+    render json: {data:
+        {
+        notifications: @notification,
+        not_readed: amount
+        }
+      }
+  end
 
+  def read_all
+    user_id=current_user.id
+    @notifications=Notification.where("user_id = ?", user_id)
+    unless @notifications.nil?
+      @notifications.update_all(read: 1)
+    end
+    @notification=Notification.load_notifications(user_id).page(p)
+    amount=Notification.where("user_id = ? AND read = ?", user_id, 0).size
+    render json: {data:
+        {
+        notifications: @notification,
+        not_readed: amount
+        }
+    }
+  end
   # POST /notifications
   def create
     @notification = Notification.new(notification_params)
@@ -77,7 +103,7 @@ class API::V1::NotificationsController < ApplicationController
     render json: 
         { data:
           {
-            message: "No hay notificaciones para mostrar",
+            notifications: "No hay notificaciones para mostrar",
             not_readed: 0
           }
        }

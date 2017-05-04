@@ -39,14 +39,17 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 ```
 >api/v1/notifications
 *Retorna las notificaciones leidas y no leidas.
+*Esto es lo que va a retornar: 
+//Si no hay nada:
 
 {
   "data": {
-    "message": "No hay notificaciones para mostrar",
+    "notifications": "No hay notificaciones para mostrar",
     "not_readed": 0
   }
 }
 
+//Si hay notficiaciones
 {
   "data": {
     "notifications": [
@@ -78,6 +81,12 @@ Acá un listado de todas las rutas hechas hasta ahora para GET.
 
 > DELETE api/v1/notifications/clear
 *Elimina todas las notificaciones
+
+>POST api/v1/notifications/:notification_id/read
+*Me lee esa notificaciones en especifico
+
+>POST api/v1/notifications/read-all
+*Me lee todas las notificaciones
 
 
 >POST api/v1/question/:question_id/report
