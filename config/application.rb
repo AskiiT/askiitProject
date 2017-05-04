@@ -32,6 +32,5 @@ module AskiitProject
           :methods => [:get,:post,:options,:delete,:put,:patch,:head]
       end
     end
-    config.logger = Logger.new("#{Rails.root}/log/cronjob.log")
   end
 end

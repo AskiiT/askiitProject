@@ -106,12 +106,6 @@ class Question < ApplicationRecord
     Question.all.where(id: [collection])
   end
 
-  def self.execute_cleaning()
-    @expired = 
-    @expired.destroy_all
-  end
-
-
   def self.show_question(id, args)
     Question.where("questions.id = ?", id).select(args).first
   end
