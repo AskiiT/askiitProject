@@ -317,6 +317,21 @@ class API::V1::QuestionsController < ApplicationController
   ###Custom methods
   ###############################
 
+  def expired_questions
+    @expired = Question.expired_questions( )
+    if @expired.nil?
+      render json:
+      {
+        data:
+        {
+          error: "No expired questions yet."
+        }
+      }
+    else
+      render json: @expired, status: :ok
+    end
+  end
+
   def questions_by_title
     s= params[:sort]
     if s.nil?
@@ -461,14 +476,6 @@ class API::V1::QuestionsController < ApplicationController
       end
     end
   end
-
-
-
-
-
-
-
-
 
   def by_topic
     g=params[:topic]

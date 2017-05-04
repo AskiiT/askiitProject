@@ -96,6 +96,17 @@ class Question < ApplicationRecord
     g.paginate(:page => page,:per_page => per_page)
   end
 
+  def self.expired_questions( )
+    now_time = DateTime.now
+    collection = Array.new
+    Question.all.each do |question|
+      if( TimeDifference.between( DateTime.now, question.date_posted).in_hours > 2 )
+        collection << question
+      end
+    end
+    collection
+  end
+
 
   def self.show_question(id, args)
     Question.where("questions.id = ?", id).select(args).first
