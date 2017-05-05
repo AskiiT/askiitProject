@@ -28,7 +28,9 @@ class API::V1::PostulatesController < ApplicationController
       #username=User.find_by_id(user_id).username
       body=username+" se ha postulado a tu pregunta."
       @nota = Notification.new(:body=> body, :read=> 0, :user_id=>q_user_id, :question_id => question_id)
-      @nota.save
+      if @nota.save
+        NotificationMailer.notificate(2, body, User.find(q_user_id)).deliver
+      end
       render json: @question
     else
       render json: @postulate.errors, status: :unprocessable_entity

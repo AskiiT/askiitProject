@@ -1,13 +1,12 @@
 class API::V1::UsersController < ApplicationController
   before_action :set_user, only: [:update, :destroy]
-	before_action :authenticate_user!, only:[:welcome]
-  
-  def welcome
+	before_action :authenticate_user!, only:[:welcum]
+  def welcum
     @user= current_user
     render json:          
     { data:
             {
-              message: ""+current_user.username
+              message: "Welcum "+current_user.username
             }
           }
   end
@@ -92,6 +91,11 @@ class API::V1::UsersController < ApplicationController
     if s.nil?
       s = 14
     else
+      s = split(",")
+      s.each do |i|
+        order = translate(i)
+        @users = User.load_users(sort=s)
+      end
       s = translate(s)
     end
 

@@ -198,12 +198,16 @@ class API::V1::QuestionsController < ApplicationController
           message0="Se ha reportado tu pregunta por: \""
           message0=message0+reason+"\""
           newNot=Notification.new(:body => message0, :question_id => question_id, :user_id => reported_user)
-          newNot.save
+          if newNot.save
+            NotificationMailer.notificate(1, message0, User.find(reported_user)).deliver
+          end
           admins_size=admins_id.size
           for ids in 0...admins_size do
             admin_id=admins_id[ids]
             newNot=Notification.new(:body => message, :question_id => question_id, :user_id => admin_id)
-            newNot.save
+            if newNot.save
+              NotificationMailer.notificate(11, message, User.find(admin_id)).deliver
+            end
           end
           @question_id=Question.find_by_id(question_id)
           render json: @question_id
@@ -264,7 +268,9 @@ class API::V1::QuestionsController < ApplicationController
                     
                     body="Se ha postulado una pregunta sobre "+name+"."
                     @nota = Notification.new(:body=> body, :read=> 0, :user_id=>idsss, :question_id => question_id)
-                    @nota.save
+                    if @nota.save
+                      NotificationMailer.notificate(3, body, User.find(idsss)).deliver
+                    end
                     @sended_to.push(idsss)
                   end
               end
