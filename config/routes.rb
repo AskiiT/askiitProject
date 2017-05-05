@@ -4,9 +4,6 @@ Rails.application.routes.draw do
   #mount_devise_token_auth_for 'User', at: 'auth'
   mount_devise_token_auth_for 'User', at: 'api/v1/auth', skip: [:omniauth_callback]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  # mount_devise_token_auth_for 'User', at: 'api/v1/auth', skip: [:omniauth_callbacks], controllers: {
-  #   registrations: 'overrides/registrations_controller'
-  # }
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do      

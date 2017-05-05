@@ -98,9 +98,10 @@ class Question < ApplicationRecord
 
   def self.expired_questions( )
     collection = Array.new
-    Question.all.each do |question|
-      if( TimeDifference.between( DateTime.now, question.date_posted).in_hours > 2 )
-        collection << question.id
+    @all = Question.all
+    @all.each do |q|
+      if( TimeDifference.between( DateTime.now, q.date_posted).in_hours > 2 )
+        collection << q.id
       end
     end
     Question.all.where(id: [collection])
