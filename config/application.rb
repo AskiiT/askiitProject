@@ -24,14 +24,5 @@ module AskiitProject
     config.api_only = true
     config.time_zone = "Bogota"
     config.middleware.use Rack::Throttle::Minute, :max => 50
-    config.middleware.use Rack::Cors do
-      allow do
-        origins '*'
-        resource '*',
-          :headers => :any,
-          :expose => :any,
-          :methods => [:get,:post,:options,:delete,:put,:patch,:head]
-      end
-    end
   end
 end
