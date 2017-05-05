@@ -1,6 +1,6 @@
 class API::V1::NotificationsController < ApplicationController
   before_action :set_notification, only: [:show, :update, :destroy]
-   before_action :authenticate_user!, only:[:index, :destroy, :clear]
+  before_action :authenticate_user!, only:[:index, :destroy, :clear]
 
   # GET /postulates
   def index
@@ -14,13 +14,18 @@ class API::V1::NotificationsController < ApplicationController
       render json: 
         { data:
           {
-            message: "No hay notificaciones para mostrar"
+            notifications: "No hay notificaciones para mostrar",
+            not_readed: 0
           }
        }
     else
-      render json: @notifications
-      @notifications=Notification.where("user_id = ?", user_id)
-      @notifications.update_all(read: 1)
+      amount=Notification.where("user_id = ? AND read = ?", user_id, 0).size
+      render json: {data:
+        {
+        notifications: @notifications,
+        not_readed: amount
+        }
+      }
     end
   end
 
@@ -29,6 +34,55 @@ class API::V1::NotificationsController < ApplicationController
     render json: @notification
   end
 
+  def read
+    user_id=current_user.id
+    unless user_id.nil?
+      @notifications=Notification.find_by_id(params[:notification_id])
+      @notifications.read=1
+      @notifications.save
+      @notification=Notification.load_notifications(user_id).page(p)
+      amount=Notification.where("user_id = ? AND read = ?", user_id, 0).size
+      render json: {data:
+          {
+          notifications: @notification,
+          not_readed: amount
+          }
+        }
+    else
+      render json: {data:
+        {
+        notifications: "Esto no debería pasar",
+        not_readed: 0
+        }
+      }
+    end
+  end
+
+  def read_all
+    user_id=current_user.id
+    unless user_id.nil?
+      @notifications=Notification.where("user_id = ?", user_id)
+      unless @notifications.nil?
+        @notifications.update_all(read: 1)
+      end
+      @notification=Notification.load_notifications(user_id).page(p)
+      amount=Notification.where("user_id = ? AND read = ?", user_id, 0).size
+      render json: {data:
+          {
+          notifications: @notification,
+          not_readed: amount
+          }
+      }
+    else
+      render json: {data:
+        {
+        notifications: "Esto no debería pasar",
+        not_readed: 0
+        }
+      }
+    end
+
+  end
   # POST /notifications
   def create
     @notification = Notification.new(notification_params)
@@ -70,7 +124,8 @@ class API::V1::NotificationsController < ApplicationController
     render json: 
         { data:
           {
-            message: "No hay notificaciones para mostrar"
+            notifications: "No hay notificaciones para mostrar",
+            not_readed: 0
           }
        }
   end

@@ -254,40 +254,57 @@ class Question < ApplicationRecord
   def self.questions_by_tags(tags, topics, queries, sort=1, page = 1, per_page = 20)
     ids=[]
     i=tags.length
-    for j in 0...i do
-      h=queries[j].size
-      tmpArr=[]
-      for k in 0...h do
-        if j>0
-          id=queries[j].limit(1).offset(k).first.question_id;
-          tmpArr.append(id)
+   
+    if i>0
+      for j in 0...i do
+        h=queries[j].size
+        tmpArr=[]
+        for k in 0...h do
+          if j>0
+            id=queries[j].limit(1).offset(k).first.question_id;
+            tmpArr.append(id)
+          else
+            ids.append(queries[j].limit(1).offset(k).first.question_id)
+            tmpArr=ids
+          end
+        end
+        ids=tmpArr | ids
+      end
+
+      siz=ids.length
+      
+      if siz==1
+        gu=Question.where(id: ids[0])
+        if topics.length>0
+          gu.where(questions: {topic_id: topics})
         else
-          ids.append(queries[j].limit(1).offset(k).first.question_id)
-          tmpArr=ids
+          gu
+        end
+      elsif siz==0
+        Question.find_by_id(-1)
+      else
+        samba=Question.where( questions: {id: ids})
+        if topics.length>0
+          samba=samba.where(questions: {topic_id: topics})
+        end
+        samba=samba.where.not("questions.end_time < ?", DateTime.now)
+        if samba.empty?
+          samba
+        elsif samba.nil?
+          samba
+        elsif samba.size == 1
+          samba
+        else
+          samba=Question.sort_by(samba, sort)
+          puts samba.size
+          samba.paginate(:page => page,:per_page => per_page)
         end
       end
-      ids=tmpArr & ids
-    end
-
-    siz=ids.length
-    
-    if siz==1
-      gu=Question.where(id: ids[0])
-      if topics.length>0
-        gu.where(questions: {topic_id: topics})
-      else
-        gu
-      end
-    elsif siz==0
-      Question.find_by_id(-1)
     else
-      samba=Question.where( questions: {id: ids})
-      if topics.length>0
-        samba=samba.where(questions: {topic_id: topics})
-      end
+      samba=Question.where(questions: {topic_id: topics})
       samba=samba.where.not("questions.end_time < ?", DateTime.now)
       if samba.empty?
-        samba
+          samba
       elsif samba.nil?
         samba
       elsif samba.size == 1

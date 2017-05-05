@@ -21,7 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "\t{\n\t\"email\": \"juasmartinezbel@unal.edu.co\",\n    \"first_name\": \"Juan Sebastian\",\n    \"last_name\": \"Martinez Beltran\",\n    \"username\": \"juasmartinezbel\",\n    \"password\": \"123456789\",\n    \"color\": \"#551A88\"\n\t}\n"
+					"raw": "\t{\n\t\"\tid\": 9324827213,\n\t\t\"email\": \"juasmartinezbel@unal.edu.co\",\n    \t\"first_name\": \"Juan Sebastian\",\n    \t\"last_name\": \"Martinez Beltran\",\n    \t\"username\": \"juasmartinezbel\",\n    \t\"password\": \"123456789\",\n\t    \"color\": \"#551A88\"\n\t}\n"
 				},
 				"description": ""
 			},
@@ -41,7 +41,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"juasmartinezbel@unal.edu.co\",\n\t\"password\": \"123456789\"\n}"
+					"raw": "{\n\t\"email\": \"juasmartinezbel@unal.edu.co\",\n\t\"password\": \"Crispary2017\"\n}"
 				},
 				"description": ""
 			},
@@ -104,6 +104,31 @@
 					{
 						"key": "Content-Type",
 						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "access-token",
+						"value": "akJQ4IitjxWynoVnshvm1g",
+						"description": ""
+					},
+					{
+						"key": "client",
+						"value": "D4TtNITdWKejs2khixbgEA",
+						"description": ""
+					},
+					{
+						"key": "expiry",
+						"value": "1588459908",
+						"description": ""
+					},
+					{
+						"key": "token-type",
+						"value": "Bearer",
+						"description": ""
+					},
+					{
+						"key": "uid",
+						"value": "juasmartinezbel@unal.edu.co",
 						"description": ""
 					}
 				],
@@ -194,6 +219,147 @@
 				"url": "localhost:3000/api/v1/users/1/unfollow",
 				"method": "DELETE",
 				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Subscribe",
+			"request": {
+				"url": "localhost:3000/api/v1/tags/2/subscribe",
+				"method": "POST",
+				"header": [
+					{
+						"key": "access-token",
+						"value": "BhltJWpy3qkrTZB7qK3bnQ",
+						"description": ""
+					},
+					{
+						"key": "client",
+						"value": "KlFeCL8yIMLTy7Pvg3TBUw",
+						"description": ""
+					},
+					{
+						"key": "expiry",
+						"value": "1588469275",
+						"description": ""
+					},
+					{
+						"key": "token-type",
+						"value": "Bearer",
+						"description": ""
+					},
+					{
+						"key": "uid",
+						"value": "juasmartinezbel@unal.edu.co",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Subscribe",
+			"request": {
+				"url": "localhost:3000/api/v1/tags/2/unsubscribe",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "access-token",
+						"value": "BhltJWpy3qkrTZB7qK3bnQ",
+						"description": ""
+					},
+					{
+						"key": "client",
+						"value": "KlFeCL8yIMLTy7Pvg3TBUw",
+						"description": ""
+					},
+					{
+						"key": "expiry",
+						"value": "1588469275",
+						"description": ""
+					},
+					{
+						"key": "token-type",
+						"value": "Bearer",
+						"description": ""
+					},
+					{
+						"key": "uid",
+						"value": "juasmartinezbel@unal.edu.co",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "QUESTIONS FOR NOTIFICATIONS",
+			"request": {
+				"url": "localhost:3000/api/v1/questions",
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"¿Qué es la mitocondria?\",\n\t\"body\": \"En serio, he visto eso tantas veces en el colegio que al fin ni tengo claro que es, necesito ayuda.\",\n\t\"topic\": \"biologia\",\n\t\"difficulty\": 5,\n\t\"tags\": [\"ERGONOMIC EXPLICIT FLEXIBILITY\", \"SYNCHRONISED BACKGROUND MODEL\"],\n\t\"time\": 5\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Notifications",
+			"request": {
+				"url": "localhost:3000/api/v1/notifications",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Report",
+			"request": {
+				"url": "localhost:3000/api/v1/questions/90/report",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					},
+					{
+						"key": "access-token",
+						"value": "HYFVCpWFLZ-SF6a2ipwmXA",
+						"description": ""
+					},
+					{
+						"key": "client",
+						"value": "2_By6Rd7Ssx7uL237a1P_Q",
+						"description": ""
+					},
+					{
+						"key": "expiry",
+						"value": "1588530746",
+						"description": ""
+					},
+					{
+						"key": "token-type",
+						"value": "Bearer",
+						"description": ""
+					},
+					{
+						"key": "uid",
+						"value": "juasmartinezbel2@unal.edu.co",
+						"description": ""
+					}
+				],
 				"body": {},
 				"description": ""
 			},
