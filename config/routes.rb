@@ -11,10 +11,10 @@ Rails.application.routes.draw do
       resources :notifications, only: [:index, :destroy] do
         collection do
           delete 'clear', to: 'notifications#clear'
-          post 'read-all', to: 'notifications#read_all'
+          get 'read-all', to: 'notifications#read_all'
         end
         
-        post 'read', to: 'notifications#read'
+        get 'read', to: 'notifications#read'
       end
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
