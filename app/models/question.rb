@@ -258,7 +258,7 @@ class Question < ApplicationRecord
             tmpArr=ids
           end
         end
-        ids=tmpArr & ids
+        ids=tmpArr | ids
       end
 
       siz=ids.length
