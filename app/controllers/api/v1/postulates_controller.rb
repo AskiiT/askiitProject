@@ -31,7 +31,11 @@ class API::V1::PostulatesController < ApplicationController
       if @nota.save
         NotificationMailer.notificate(2, body, User.find(q_user_id)).deliver
       end
-      render json: @question
+      @nota=[@nota]
+      render json: {
+                question: @question,
+                notifications: @nota
+            }
     else
       render json: @postulate.errors, status: :unprocessable_entity
     end

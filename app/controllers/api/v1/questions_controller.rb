@@ -174,7 +174,7 @@ class API::V1::QuestionsController < ApplicationController
   def report
     reporter_id=current_user.id
     username=current_user.username
-    admins_id=[101]
+    admins_id=[1,2,3,4,5]
     question_id=params[:question_id]
     reason=params[:reason]
     reported_user=Question.find_by_id(question_id).user_id
@@ -198,6 +198,7 @@ class API::V1::QuestionsController < ApplicationController
           message0="Se ha reportado tu pregunta por: \""
           message0=message0+reason+"\""
           newNot=Notification.new(:body => message0, :question_id => question_id, :user_id => reported_user)
+          @notification=[newNot]
           if newNot.save
             NotificationMailer.notificate(1, message0, User.find(reported_user)).deliver
           end
@@ -210,7 +211,10 @@ class API::V1::QuestionsController < ApplicationController
             end
           end
           @question_id=Question.find_by_id(question_id)
-          render json: @question_id
+          render json:{
+                        question: @question_id,
+                        notifications: @notification
+                      }
         end
     end
   end
@@ -277,8 +281,12 @@ class API::V1::QuestionsController < ApplicationController
             end
           end
         end
-
-        render json: @question, status: :created 
+        @notifications = Notification.where("question_id = ?", question_id)
+        render json: {
+                      question: @question,
+                      notifications: @notifications
+                    },
+        status: :created 
 
 
       else
