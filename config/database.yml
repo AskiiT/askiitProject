@@ -8,6 +8,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: 5
+  timeout: 5000
   host: localhost
 
 development:
@@ -21,11 +22,10 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  
-  database: askiit_test
+  database: askiit_test  
   username: askiit
   password: 123
 
 production:
   <<: *default
-  database: db/askiit_production.sqlite3
+  database: askiit_production

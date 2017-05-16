@@ -28,9 +28,9 @@ ActiveRecord::Schema.define(version: 20170503004912) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.integer  "picture_id"
-    t.index ["picture_id"], name: "index_domain_ranks_on_picture_id"
-    t.index ["topic_id"], name: "index_domain_ranks_on_topic_id"
-    t.index ["user_id"], name: "index_domain_ranks_on_user_id"
+    t.index ["picture_id"], name: "index_domain_ranks_on_picture_id", using: :btree
+    t.index ["topic_id"], name: "index_domain_ranks_on_topic_id", using: :btree
+    t.index ["user_id"], name: "index_domain_ranks_on_user_id", using: :btree
   end
 
   create_table "followers", force: :cascade do |t|
@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20170503004912) do
     t.datetime "updated_at",              null: false
     t.integer  "user_id"
     t.integer  "question_id"
-    t.index ["question_id"], name: "index_notifications_on_question_id"
-    t.index ["user_id"], name: "index_notifications_on_user_id"
+    t.index ["question_id"], name: "index_notifications_on_question_id", using: :btree
+    t.index ["user_id"], name: "index_notifications_on_user_id", using: :btree
   end
 
   create_table "pictures", force: :cascade do |t|
@@ -88,15 +88,15 @@ ActiveRecord::Schema.define(version: 20170503004912) do
   create_table "questions", force: :cascade do |t|
     t.string   "title",                                       null: false
     t.text     "body"
-    t.datetime "date_posted", default: '2017-05-13 19:56:52', null: false
+    t.datetime "date_posted", default: '2017-05-16 15:52:23', null: false
     t.integer  "difficulty",  default: 1,                     null: false
     t.integer  "user_id"
     t.integer  "topic_id"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.datetime "end_time",    default: '2017-05-14 12:35:54'
-    t.index ["topic_id"], name: "index_questions_on_topic_id"
-    t.index ["user_id"], name: "index_questions_on_user_id"
+    t.datetime "end_time",    default: '2017-05-17 08:31:25'
+    t.index ["topic_id"], name: "index_questions_on_topic_id", using: :btree
+    t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
   end
 
   create_table "ranks", force: :cascade do |t|
@@ -114,15 +114,15 @@ ActiveRecord::Schema.define(version: 20170503004912) do
     t.integer  "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tag_id"], name: "index_subscribed_to_tags_on_tag_id"
-    t.index ["user_id"], name: "index_subscribed_to_tags_on_user_id"
+    t.index ["tag_id"], name: "index_subscribed_to_tags_on_tag_id", using: :btree
+    t.index ["user_id"], name: "index_subscribed_to_tags_on_user_id", using: :btree
   end
 
   create_table "tags", force: :cascade do |t|
     t.string   "tag_name",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tag_name"], name: "index_tags_on_tag_name", unique: true
+    t.index ["tag_name"], name: "index_tags_on_tag_name", unique: true, using: :btree
   end
 
   create_table "topics", force: :cascade do |t|
@@ -154,23 +154,26 @@ ActiveRecord::Schema.define(version: 20170503004912) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-05-13 19:56:52', null: false
+    t.datetime "date_created",           default: '2017-05-16 15:52:22', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false
     t.datetime "updated_at",                                             null: false
     t.string   "color",                  default: "ffffff"
     t.integer  "avatar_id",              default: 1
-    t.index ["avatar_id"], name: "index_users_on_avatar_id"
-    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
-    t.index ["username"], name: "index_users_on_username", unique: true
+    t.index ["avatar_id"], name: "index_users_on_avatar_id", using: :btree
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
+    t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "domain_ranks", "pictures"
   add_foreign_key "domain_ranks", "topics"
   add_foreign_key "domain_ranks", "users"
+  add_foreign_key "notifications", "questions"
+  add_foreign_key "notifications", "users"
   add_foreign_key "postulates", "questions"
   add_foreign_key "postulates", "users"
   add_foreign_key "question_attachments", "questions"
@@ -179,7 +182,7 @@ ActiveRecord::Schema.define(version: 20170503004912) do
   add_foreign_key "questions", "topics"
   add_foreign_key "questions", "users"
   add_foreign_key "ranks", "users"
-  add_foreign_key "tags", "topics"
+  add_foreign_key "subscribed_to_tags", "tags"
+  add_foreign_key "subscribed_to_tags", "users"
   add_foreign_key "users", "avatars"
-  add_foreign_key "users", "topics"
 end

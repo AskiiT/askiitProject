@@ -18,12 +18,12 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-env :PATH, ENV['PATH']
+# env :PATH, ENV['PATH']
 
-set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"}
+# set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"}
 
-every 1.day, :at => '10:53 pm' do
-	#puts "Inside task now #{Time.now}"
-	rake "expired_questions:drop_questions",  :environment => "development"
-end
+# every 1.year, :at => '3:00 am' do
+# 	#puts "Inside task now #{Time.now}"
+# 	rake "expired_questions:drop_questions",  :environment => "development"
+# end
 

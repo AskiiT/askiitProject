@@ -1,3 +1,5 @@
+ruby "2.3.1"
+
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
@@ -9,9 +11,9 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.2'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+#gem 'sqlite3'
 # Use postgresql as the database for Active Record
-#gem 'pg'
+gem 'pg', '~> 0.20.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 
@@ -56,7 +58,7 @@ gem 'active_model_serializers', '~> 0.10.5'
 gem 'time_difference', '~> 0.5.0'
 
 #Cron Job
-gem 'whenever', '~> 0.9.7'
+#gem 'whenever', '~> 0.9.7'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
