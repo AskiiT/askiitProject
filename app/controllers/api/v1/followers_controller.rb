@@ -171,6 +171,7 @@ class API::V1::FollowersController < ApplicationController
     @follower = Follower.new(:followed_id => followed, :follower_id => my_id)
     @user_id=User.user_followers(followed)
     if @follower.save
+      FollowersMailer.followed(User.find(followed), User.find(my_id)).deliver
       render json: @user_id, status: :created
     else
       render json: @follower.errors, status: :unprocessable_entity
