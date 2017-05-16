@@ -11,28 +11,126 @@ class API::V1::UsersController < ApplicationController
           }
   end
   
+  def getCols(arr, query)
+    parameters=['first_name', 'last_name', 'username', 'email', 'color', 'date_created', 'id']
+    por=arr & parameters
+    cols=[]
+    endjson=query
+    unless por.empty?
+      if por.include?('id')
+        cols.push(:id)
+      end
+      if por.include?('username')
+        cols.push(:username)
+      end
+      if por.include?('email')
+        cols.push(:email)
+      end
+      if por.include?('first_name')
+        cols.push(:first_name)
+      end
+      if por.include?('last_name')
+        cols.push(:last_name)
+      end
+      if por.include?('color')
+        cols.push(:color)
+      end
+      if por.include?('date_created')
+        cols.push(:date_created)
+      end
+      cols.push(:rank)
+      endjson=endjson.to_json(:only => cols)
+    end
+    endjson
+  end
+  
+  def translate(s)
+    s=s.upcase
+    case s
+    when '-DATE'
+      s=1
+    when 'DATE'
+      s=2
+    when'-USERNAME'
+      s=3
+    when 'USERNAME'
+      s=4
+    when '-FIRST_NAME'
+      s=5
+    when 'FIRST_NAME'
+      s=6
+    when '-LAST_NAME'
+      s=7
+    when 'LAST_NAME'
+      s=8
+    when '-DESCRIPTION'
+      s=9
+    when 'DESCRIPTION'
+      s=10
+    when '-EMAIL'
+      s=11
+    when 'EMAIL'
+      s=12
+    when '-ID'
+      s=13
+    when 'ID'
+      s=14
+    when '-COLOR'
+      s=15
+    when 'COLOR'
+      s=16
+    else
+      s=14
+    end
+  end
+
 	def index
 		p = params[:page]
+
+    s = params[:sort]
+    if s.nil?
+      s = 14
+    else
+      s = split(",")
+      s.each do |i|
+        order = translate(i)
+        @users = User.load_users(sort=s)
+      end
+      s = translate(s)
+    end
+
 		unless p.nil?
-			@users = User.load_users( p )
+			@users = User.load_users(sort=s).page(p)
 		else
-			@users = User.all
+			@users = User.whole(sort=s)
 		end
-    	if @users.empty?
-  			render json: 
-  				{ data:
-  					{
-  						error: "No more users to show."
-  					}
-  				}
-  		else
-    		render json: @users
-  		end
+    q=params[:q]
+    unless q.nil?
+      @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @users=getCols(el, @users)
+    end
+  	if @users.empty?
+			render json: 
+				{ data:
+					{
+						error: "No more users to show."
+					}
+				}
+		else
+  		render json: @users
+		end
   	end
   	
 	def show
 		g=params[:id]
 		m=g.to_i
+
 
 		if m.to_s == g.to_s
 			@user = User.find(params[:id])
@@ -40,16 +138,24 @@ class API::V1::UsersController < ApplicationController
 			@user = User.user_username(params[:id])
 		end
 
-    # if @user.empty?
-    #   render json: 
-    #     { data:
-    #       {
-    #         error: "User wasn't found"
-    #       }
-    #     }
-    # else      
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
+
+
+    if @user.nil?
+       render json: 
+         { data:
+           {
+             error: "User wasn't found"
+           }
+         }
+     else      
     render json: @user
-    # end
+     end
   end
 
   def create
@@ -79,10 +185,28 @@ class API::V1::UsersController < ApplicationController
 	#####
 	#Custom Routes 
 	#####
-  	#Encuentra un usuario por coincidencia
+  #Encuentra un usuario por coincidencia
 	def search_username
-		@users=User.users_by_username(params[:username]).page(params[:page])
+		s = params[:sort]
+    if s.nil?
+      s = 14
+    else
+      s = translate(s)
+    end
 
+    @users=User.users_by_username(params[:username], sort=s).page(params[:page])
+    
+    q=params[:q]
+    unless q.nil?
+      @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
 		if @users.empty?
   			render json: 
   				{ data:
@@ -96,8 +220,22 @@ class API::V1::UsersController < ApplicationController
 	end
 
 	def search_firstname
-		@users=User.users_by_firstname(params[:username]).page(params[:page])
+    s = params[:sort]
+    if s.nil?
+      s = 14
+    else
+      s = translate(s)
+    end
+		@users=User.users_by_firstname(params[:username], sort=s).page(params[:page])
 
+
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
 		if @users.empty?
   			render json: 
   				{ data:
@@ -111,8 +249,20 @@ class API::V1::UsersController < ApplicationController
 	end
 	
 	def search_lastname
-		@users=User.users_by_firstname(params[:username]).page(params[:page])
+    s = params[:sort]
+    if s.nil?
+      s = 14
+    else
+      s = translate(s)
+    end
+		@users=User.users_by_firstname(params[:username], sort=s).page(params[:page])
 
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
 		if @users.empty?
   			render json: 
   				{ data:
@@ -125,19 +275,34 @@ class API::V1::UsersController < ApplicationController
   		end
 	end
 
-	def my_questions
-		@my_questions = Question.questions_by_user( params[:user_id] ).page(params[:page])
-		  if @my_questions.empty?
-      render json: 
-        { data:
-          {
-            error: "No more questions to show."
-          }
-        }
+  def search_email
+    s = params[:sort]
+    if s.nil?
+      s = 14
     else
-      render json: @my_questions
+      s = translate(s)
     end
-	end
+    email = params[:email]
+    @users=User.user_by_email(email.gsub('*', '.'), sort=s)
+
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @user=getCols(el, @user)
+    end
+    if @users.empty?
+        render json: 
+          { data:
+            {
+              error: "There is no user with this email."
+            }
+          }
+      else
+        render json: @users
+      end
+  end
 
 
   #####
@@ -145,6 +310,20 @@ class API::V1::UsersController < ApplicationController
   #####
   def who_postulated
     @users=User.postulated_to_user(params[:user_id]).page(params[:page])
+    
+
+    q=params[:q]
+    unless q.nil?
+      @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @users=getCols(el, @users)
+    end
+
     if @users.empty?
     render json: 
         { data:
@@ -158,6 +337,19 @@ class API::V1::UsersController < ApplicationController
   end
   def who_it_postulated
     @users=User.who_it_postulated(params[:user_id]).page(params[:page])
+    
+    q=params[:q]
+    unless q.nil?
+      @users=@users.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @users=getCols(el, @users)
+    end
+
     if @users.empty?
     render json: 
         { data:
@@ -233,6 +425,38 @@ class API::V1::UsersController < ApplicationController
     end
   end
 
+  def postulated_to
+    s = params[:sort]
+    if s.nil?
+      s = 14
+    else
+      s = translate(s)
+    end
+    @postulate=User.users_by_question(params[:question_id], sort=s).page(params[:page])
+    
+    q=params[:q]
+    unless q.nil?
+      @postulate=@postulate.where("lower(users.username) LIKE ?", "%#{q.downcase}%")
+    end
+
+    el=params[:select_users]
+    unless el.nil?
+      el=el.split(",")
+      el=el.map(&:downcase)
+      @postulate=getCols(el, @postulate)
+    end
+    
+    if @postulate.empty?
+        render json: 
+          { data:
+            {
+              error: "No more postulates to show."
+            }
+          }
+    else
+        render json: @postulate
+    end
+  end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -241,7 +465,7 @@ class API::V1::UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :username, :color, :topic_id, :avatar_id, :date_created, :description, :password)
+      params.require(:user).permit(:first_name, :last_name, :email, :username, :color, :avatar_id, :date_created, :description, :password)
     end
 
 end

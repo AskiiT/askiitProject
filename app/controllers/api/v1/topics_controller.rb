@@ -11,6 +11,11 @@ class API::V1::TopicsController < ApplicationController
       @topics = Topic.all
     end
 
+    q=params[:q]
+    unless q.nil?
+      @topics=@topics.where("lower(topics.topic_name) LIKE ?", "%#{q.downcase}%")
+    end
+
     if @topics.empty?
       render json: 
         { data:

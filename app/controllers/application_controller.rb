@@ -4,8 +4,8 @@ class ApplicationController < ActionController::API
 
   def configure_permitted_parameters
       if resource_class == User 
-          devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :first_name, :last_name, :color, :email, :topic_id])
-          devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :color, :topic_id])
+          devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :first_name, :last_name, :color, :email])
+          devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :color])
       end
   end
 end

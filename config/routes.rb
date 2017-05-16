@@ -1,38 +1,37 @@
 Rails.application.routes.draw do
 
+  
   #mount_devise_token_auth_for 'User', at: 'auth'
   mount_devise_token_auth_for 'User', at: 'api/v1/auth', skip: [:omniauth_callback]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   namespace :api, defaults: {format: :json} do
     namespace :v1 do      
-      resources :avatars
-
+      #resources :avatars
+      resources :notifications, only: [:index, :destroy] do
+        collection do
+          delete 'clear', to: 'notifications#clear'
+          get 'read-all', to: 'notifications#read_all'
+        end
+        
+        get 'read', to: 'notifications#read'
+      end
       resources :users do                                               #api/v1/users(get,post)  api/v1/users/:id(put,patch,delete)
           collection do   
             scope :search do 
-              get 'username/:username',       to: 'users#search_username'     #api/v1/users/search/username/:name (get)
+              get 'username/:username',       to: 'users#search_username'      #api/v1/users/search/username/:name (get)
               get 'first-name/:username',     to: 'users#search_firstname'     #api/v1/users/search/first-name/:name (get)
-              get 'last-name/:username',      to: 'users#search_lastname'     #api/v1/users/search/last-name/:name (get)
+              get 'last-name/:username',      to: 'users#search_lastname'      #api/v1/users/search/last-name/:name (get)
+              get 'email/:email',             to: 'users#search_email'         #api/v1/users/search/email/:email (get)
 
             end
-
             #///part of others\\\\:
             get '/sort', to: 'users#sort'
             get 'by-level', to: 'users#by_level'
           end
-          
+          get 'subscribed', to: 'subscribed_to_tags#index'
 
           get 'my-questions',           to: 'questions#my_questions'    #api/v1/users/:id/my-questions (get)
-
-          ###
-          #Falta poder seguir a alguien y dejar de seguir
-          ###
-
-          #api/v1/users/:id_followed/follow   followers#create
-          #api/v1/users/:id_followed/unfollow folowers#destroy
-
-          #api/v1/users/:id_users/follow?=my_id 
 
           resources :followers,         only: [:index] 
               #api/v1/users/:id/followers (get) Me muestra mis seguidores
@@ -57,21 +56,23 @@ Rails.application.routes.draw do
           get 'who-postulated',         to: 'users#who_postulated'  #api/v1/users/:user_id/who-postulated
           get 'who-it-postulated',      to: 'users#who_it_postulated'
       end
-          get 'home', to: 'users#welcum'
+          get 'home', to: 'users#welcome'
 
       resources :questions do
           collection do
             get 'questions-by-title/:title/', to: "questions#questions_by_title"
             scope :tagsearch do
-              get ':tag', to: "questions#by_tag"
+              get ':tag(/:second_tag(/:third_tag))', to: "questions#by_tag"
             end
-
+            get 'tagsearch', to: "questions#by_tag"
             scope :topicsearch do
               get ':topic', to: "questions#by_topic"
             end
 
             get 'has-postulated', to: 'questions#has_postulated'
             get 'has-not-postulated', to: 'questions#has_not_postulated'
+
+            get 'expired', to: 'questions#expired_questions'
           end
 
         resources :question_attachments #De todo
@@ -84,12 +85,11 @@ Rails.application.routes.draw do
 
         post    'postulate',    to: 'postulates#create'
         delete  'unpostulate',  to: 'postulates#destroy'
-        get 'postulated-to-this', to: 'postulates#postulated_to'
-
+        get 'postulated-to-this', to: 'users#postulated_to'
+        post 'report', to: 'questions#report'
       end
 
       resources :topics do
-        get 'tags', to: "tags#topic_tags"
         get 'used-by', to: "topics#used_by"
         collection do
           get 'search/:topic_name',  to: 'topics#search'
@@ -97,16 +97,19 @@ Rails.application.routes.draw do
           get ':topic/questions', to: "questions#by_topic"
         end
 
-
       end
 
       resources :tags do
-        get 'used-by', to: "tags#used_by"
+        
         collection do
          get 'search/:tag_name',  to: 'tags#search'
           #//otras\\
          get ':tag/questions', to: "questions#by_tag"
         end
+        get 'used-by', to: "tags#used_by"
+        post 'subscribe', to: 'subscribed_to_tags#create'
+        delete 'unsubscribe', to: 'subscribed_to_tags#destroy'
+
       end
 
       #resources :postulates
@@ -131,7 +134,7 @@ end
 #api/v1/questions/topicsearch/(:topic_id|:topic_name)     : Busca preguntas por topic
 #api/v1/questions/:question_id/topic                      : Retorna el topic del question
 #api/v1/questions/:question_id/tags                       : Retorna el tags
-#api/v1/questions/:question_id/postulated                 : Retorna los usuarios postulados a una pregunta
+#api/v1/questions/:question_id/postulated-to-this         : Retorna los usuarios postulados a una pregunta
 #api/v1/question/has-postulated                           : Retorna las preguntas que tienen postulados
 #api/v1/question/has-not-postulated                       : Returna las preguntas que no tienen postulados
 

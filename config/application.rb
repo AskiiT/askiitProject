@@ -8,7 +8,8 @@ require "active_record/railtie"
 require "action_controller/railtie" 
 require "action_mailer/railtie" 
 require "action_view/railtie" 
-require "action_cable/engine" 
+require "action_cable/engine"
+require 'rack/throttle'
 # require "sprockets/railtie" 
 require "rails/test_unit/railtie"
 # Require the gems listed in Gemfile, including any gems
@@ -21,5 +22,7 @@ module AskiitProject
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     config.api_only = true
+    config.time_zone = "Bogota"
+    config.middleware.use Rack::Throttle::Minute, :max => 1000
   end
 end

@@ -2,20 +2,19 @@ class Topic < ApplicationRecord
 	has_many :tags
 	has_many :questions
 	has_many :domain_ranks
-	has_many :users
-	
+		
 	validates :topic_name, presence: true
 	validates :topic_name, uniqueness: true
 	validates :topic_name, length: { minimum: 2, maximum: 30 }
 	validates :topic_description, length: { maximum: 200 }
 
 	def self.load_topics(page = 1, per_page = 10)
-    	includes(:tags, questions: [:question_attachments, :user, :question_has_tags], domain_ranks:[:user])
+    	includes( questions: [:question_attachments, :user, :question_has_tags], domain_ranks:[:user])
     	.paginate(:page => page,:per_page => per_page)
   	end
 
   	def self.topic_by_id(id)
-    	includes(:tags, questions: [:question_attachments, :user, :question_has_tags], domain_ranks:[:user])
+    	includes( questions: [:question_attachments, :user, :question_has_tags], domain_ranks:[:user])
     	.find_by_id(id)
   	end
 
