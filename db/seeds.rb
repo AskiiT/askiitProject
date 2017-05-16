@@ -135,6 +135,50 @@ t.topic_description="Pregunta sobre quimica"
 t.color=colors[1]
 t.save
 
+u= User.new
+u.first_name= "David Julian"
+u.last_name= "Guzman Cardenas"
+u.email="djguzmanc@unal.edu.co"
+u.username="djguzmanc"
+u.password="popocaliente"
+u.color="#B0E940"
+u.save
+
+u= User.new
+u.first_name= "Cristian"
+u.last_name= "Rojas"
+u.email="crarojasca@unal.edu.co"
+u.username="crarojasca"
+u.password="neolike93"
+u.color="#e51b1b"
+u.save
+
+u= User.new
+u.first_name= "Luis Ernesto"
+u.last_name= "Gil Castellanos"
+u.email="luegilca@unal.edu.co"
+u.username="luegilca"
+u.password="Crispary2017"
+u.color="#116487"
+u.save
+
+u= User.new
+u.first_name= "Juan Sebastián"
+u.last_name= "Martínez Beltrán"
+u.email="juasmartinezbel@unal.edu.co"
+u.username="juasmartinezbel"
+u.password="Crispary2017"
+u.color="#551A88"
+u.save
+
+u= User.new
+u.first_name= "Juan Sebastián"
+u.last_name= "Vivero Jauregui"
+u.email="jsviveroj@unal.edu.co"
+u.username="jsviveroj"
+u.password="Crispary2017"
+u.color="#551A88"
+u.save
 
 
 100.times do |i|

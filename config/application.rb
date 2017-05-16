@@ -23,6 +23,6 @@ module AskiitProject
     # -- all .rb files in that directory are automatically loaded.
     config.api_only = true
     config.time_zone = "Bogota"
-    config.middleware.use Rack::Throttle::Minute, :max => 50
+    config.middleware.use Rack::Throttle::Minute, :max => 1000
   end
 end
