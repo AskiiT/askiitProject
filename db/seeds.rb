@@ -1,135 +1,184 @@
 require 'securerandom'
-lvl0=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/lvl0/robot.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-
+lvl0=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/robots/lvl1.png"))
 lvl0.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/1.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/2.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/3.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/4.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/5.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/6.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/7.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/8.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/9.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/10.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/11.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/12.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/13.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
-gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/14.png"),
-				:shirt=> File.new("#{Rails.root}/public/robot/lvl0/shirt.png"))
-gen.save
+14.times do |j|
+	i=j+1
+	gen=Avatar.new(:avatars=> File.new("#{Rails.root}/public/robot/gen/"+i.to_s+".png"))
+	gen.save
+end
+
+lvl1=Picture.new(:level_picture=> File.new("#{Rails.root}/public/robot/robots/lvl1.png"))
+lvl1.id=1
+lvl1.save
+
+lvl3=Picture.new(:level_picture=> File.new("#{Rails.root}/public/robot/robots/lvl3.png"))
+lvl3.id=3
+lvl3.save
+
+lvl5=Picture.new(:level_picture=> File.new("#{Rails.root}/public/robot/robots/lvl5.png"))
+lvl5.id=5
+lvl5.save
+
+10.times do |j|
+	m=j+1
+	lvl7='70'+m.to_s
+	route="#{Rails.root}/public/robot/robots/lvl7/r"+m.to_s+".png"
+	lvl7=lvl7.to_i
+
+	lvlP=Picture.new(:level_picture=> File.new(route))
+	lvlP.id=lvl7
+	lvlP.save
+end
+
+10.times do |j|
+	m=j+1
+	lvl9='90'+m.to_s
+	route="#{Rails.root}/public/robot/robots/lvl9/r"+m.to_s+".png"
+	lvl9=lvl9.to_i
+
+	lvlP=Picture.new(:level_picture=> File.new(route))
+	lvlP.id=lvl9
+	lvlP.save
+end
+
+10.times do |j|
+	m=j+1
+	lvl10='100'+m.to_s
+	route="#{Rails.root}/public/robot/robots/lvl10/r"+m.to_s+".png"
+	lvl10=lvl10.to_i
+
+	lvlP=Picture.new(:level_picture=> File.new(route))
+	lvlP.id=lvl10
+	lvlP.save
+end
 
 colors=[
-'E73434',
-'FFAA2A',
-'B0E940',
-'16E978',
-'25C8F1',
-'616FD5',
-'C373BB',
-'33335C',
-'03461D',
-'460337']
+'#E73434',
+'#FFAA2A',
+'#B0E940',
+'#16E978',
+'#25C8F1',
+'#616FD5',
+'#C373BB',
+'#33335C',
+'#03461D',
+'#460337']
+
 
 t=Topic.new
 t.id=1
-t.topic_name="Quimica"
-t.topic_description="Pregunta sobre quimica"
-t.color=colors[1]
-t.save
-
-t=Topic.new
-t.id=2
-t.topic_name="Computacion e Informatica"
-t.topic_description="Pregunta sobre Computacion e Informatica"
-t.color=colors[2]
-t.save
-
-t=Topic.new
-t.id=3
-t.topic_name="Matematica"
-t.topic_description="Pregunta sobre Matematica"
-t.color=colors[3]
-t.save
-
-
-t=Topic.new
-t.id=4
-t.topic_name="Fisica"
-t.topic_description="Pregunta sobre Fisica"
-t.color=colors[4]
-t.save
-
-t=Topic.new
-t.id=5
-t.topic_name="Electricidad y Electronica"
-t.topic_description="Pregunta sobre Electricidad y Electronica"
-t.color=colors[5]
-t.save
-
-t=Topic.new
-t.id=6
-t.topic_name="Ciencias Sociales"
-t.topic_description="Pregunta sobre Ciencias Sociales"
-t.color=colors[6]
-t.save
-
-t=Topic.new
-t.id=7
 t.topic_name="Artes Musicales"
 t.topic_description="Pregunta sobre Artes Musicales"
 t.color=colors[7]
 t.save
 
 t=Topic.new
-t.id=8
+t.id=2
 t.topic_name="Artes Plasticas"
 t.topic_description="Pregunta sobre Artes Plasticas"
 t.color=colors[8]
 t.save
 
 t=Topic.new
-t.id=9
+t.id=3
+t.topic_name="Biologia"
+t.topic_description="Pregunta sobre Biologia"
+t.color=colors[0]
+t.save
+
+t=Topic.new
+t.id=4
+t.topic_name="Ciencias Sociales"
+t.topic_description="Pregunta sobre Ciencias Sociales"
+t.color=colors[6]
+t.save
+
+t=Topic.new
+t.id=5
+t.topic_name="Computacion e Informatica"
+t.topic_description="Pregunta sobre Computacion e Informatica"
+t.color=colors[2]
+t.save
+
+t=Topic.new
+t.id=6
+t.topic_name="Electricidad y Electronica"
+t.topic_description="Pregunta sobre Electricidad y Electronica"
+t.color=colors[5]
+t.save
+
+t=Topic.new
+t.id=7
+t.topic_name="Fisica"
+t.topic_description="Pregunta sobre Fisica"
+t.color=colors[4]
+t.save
+
+t=Topic.new
+t.id=8
 t.topic_name="Lenguaje y Literatura"
 t.topic_description="Pregunta sobre Lenguaje y Literatura"
 t.color=colors[9]
 t.save
 
 t=Topic.new
-t.id=10
-t.topic_name="Biologia"
-t.topic_description="Pregunta sobre Biologia"
-t.color=colors[0]
+t.id=9
+t.topic_name="Matematica"
+t.topic_description="Pregunta sobre Matematica"
+t.color=colors[3]
 t.save
 
+t=Topic.new
+t.id=10
+t.topic_name="Quimica"
+t.topic_description="Pregunta sobre quimica"
+t.color=colors[1]
+t.save
 
+u= User.new
+u.first_name= "David Julian"
+u.last_name= "Guzman Cardenas"
+u.email="djguzmanc@unal.edu.co"
+u.username="djguzmanc"
+u.password="popocaliente"
+u.color="#B0E940"
+u.save
+
+u= User.new
+u.first_name= "Cristian"
+u.last_name= "Rojas"
+u.email="crarojasca@unal.edu.co"
+u.username="crarojasca"
+u.password="neolike93"
+u.color="#e51b1b"
+u.save
+
+u= User.new
+u.first_name= "Luis Ernesto"
+u.last_name= "Gil Castellanos"
+u.email="luegilca@unal.edu.co"
+u.username="luegilca"
+u.password="Crispary2017"
+u.color="#116487"
+u.save
+
+u= User.new
+u.first_name= "Juan Sebastián"
+u.last_name= "Martínez Beltrán"
+u.email="juasmartinezbel@unal.edu.co"
+u.username="juasmartinezbel"
+u.password="Crispary2017"
+u.color="#551A88"
+u.save
+
+u= User.new
+u.first_name= "Juan Sebastián"
+u.last_name= "Vivero Jauregui"
+u.email="jsviveroj@unal.edu.co"
+u.username="jsviveroj"
+u.password="Crispary2017"
+u.color="#551A88"
+u.save
 
 
 100.times do |i|
@@ -143,10 +192,9 @@ t.save
 	u.username=us[userCho]
 	u.password="12345678"
 	u.description= Faker::Lorem.paragraph
-	u.topic_id=rand(1..10)
 	color_index=rand(0..10)
 	u.color=SecureRandom.hex(3)
-	u.color=u.color.upcase;
+	u.color="#"+u.color.upcase;
 	newb=rand(0.0..10.0)
 	u.avatar_id=1
 	if newb>3.5 
@@ -162,13 +210,14 @@ t.save
 		u.username=us[userCho]
 		u.password="12345678"
 		u.description= Faker::Lorem.paragraph
-		u.topic_id=rand(1..10)
 		color_index=rand(0..10)
 		u.color=SecureRandom.hex(3)
-		u.color=u.color.upcase;
+		u.color="#"+u.color.upcase;
 	end
 	u.save
-	
+	u=User.all.last
+	u.date_created = DateTime.now - Faker::Number.number(3).to_i.days - Faker::Number.number(3).to_i.hours
+	u.save
 	r=Rank.last
 	r.clarity=rand(0..5741)
 	r.quickness=rand(0..5741)
@@ -176,8 +225,31 @@ t.save
 	r.save
 	user_id=User.all.last.id
 	for j in 1..10 do
+  		 	#Lv1: 0-20
+		    #Lv2: 21-55
+		    #Lv3: 56-114
+		    #Lv4: 115-213
+		    #Lv5: 214-381
+		    #Lv6: 382-666
+		    #Lv7: 667-1150
+		    #Lv8: 1151-1972
+		    #Lv9: 1973-3368
+		    #Lv10: 3369-5740
+		    #MAX > 5741
   		 	dr=DomainRank.find_by_id((user_id.to_s+'010'+j.to_s).to_i)
-			dr.level=rand(0..5741)
+			#dr.level=rand(0..5741)
+			prob=rand(0..100)
+			if prob < 30
+				dr.level=rand(0...56)
+			elsif prob < 50
+				dr.level=rand(56...214)
+			elsif prob < 70
+				dr.level=rand(214...667)
+			elsif prob < 80
+				dr.level=rand(667...1973)
+			else
+				dr.level=rand(1973...5741)
+			end
 		 	dr.save
  	end
 	# t= Topic.new
@@ -205,12 +277,10 @@ end
 
  ta.tag_name=Faker::Company.catch_phrase
  ta.tag_name=ta.tag_name.upcase
- ta.topic_id=rand(1..10)
  
 	until ta.valid? do	
 	 ta.tag_name=Faker::Company.catch_phrase
 	 ta.tag_name=ta.tag_name.upcase
-	 ta.topic_id=rand(1..10)
 	end
  ta.save
 
@@ -225,21 +295,22 @@ end
  q.title= Faker::Lorem.sentence
  q.body= Faker::Lorem.paragraph
  q.difficulty=rand(1..10)
- q.date_posted= Date.today - Faker::Number.number(3).to_i.days 
  q.topic_id=rand(1..10)
  q.user_id=rand(1..100)
+ q.end_time= DateTime.now+9999.to_i.minutes;
  until q.valid? do	
 	 q.title= Faker::Lorem.sentence
 	 q.body= Faker::Lorem.paragraph
+	 q.date_posted= 
 	 q.difficulty=rand(1..10)
-	 q.date_posted= Date.today - Faker::Number.number(3).to_i.days 
 	 q.topic_id=rand(1..10)
 	 q.user_id=rand(1..100)
  end
- q.save
 
- 	tags_amount=rand(0..3)
-	question_id=Question.all.last.id
+ q.save
+ tags_amount=rand(0..3)
+ question_id=Question.all.last.id
+
 	if tags_amount !=0
 		for j in 1..tags_amount do
 			t=QuestionHasTag.new
@@ -256,7 +327,6 @@ end
 	end
 
 end
-
 
 500.times do |i|
 	f=Follower.new
@@ -303,7 +373,7 @@ end
 
 ##  until t.valid? do
 ## 	question_id=rand(1..300)
-## 	tag_id=rand(1..300)
+## 	tapg_id=rand(1..300)
 ## 	t.question_id=question_id
 ## 	t.tag_id=tag_id
 ##  end

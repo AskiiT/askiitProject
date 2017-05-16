@@ -1,10 +1,7 @@
 class User < ActiveRecord::Base
-
-  scope :order_by_date_created, -> { order("users.date_created DESC") }
-  scope :order_by_created_at, -> { order("users.created_at DESC") }
   after_initialize :default_avatar
   after_create :ranks_and_domains
-
+  has_many :notifications
   has_one :rank
   has_many :domain_ranks
   has_many :questions
@@ -12,8 +9,9 @@ class User < ActiveRecord::Base
   has_many :postulates
   has_many :followers, :foreign_key => :follower_id
   has_many :followed, :through => :followers, :source => :followed_id
-  belongs_to :topic
   belongs_to :avatar
+  has_many :tags, through: :subscribed_to_tag
+  has_many :subscribed_to_tag
 
   # Include default devise modules.
   devise :database_authenticatable, :registerable,
@@ -38,13 +36,81 @@ class User < ActiveRecord::Base
   # attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :username, :date_created, :description
 
   include DeviseTokenAuth::Concerns::User
-  def self.load_users(page = 1, per_page = 10)
-    includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags, :p_users])
-    .paginate(:page => page,:per_page => per_page)
+  scope :order_newest, -> { order("users.date_created DESC") }
+  scope :order_oldest, -> { order("users.date_created ASC") }
+  scope :order_usn, -> { order("users.username DESC") }
+  scope :order_asc_usn, -> { order("users.username ASC") }
+  scope :order_fst, -> { order("users.first_name DESC") }
+  scope :order_asc_fst, -> { order("users.first_name ASC") }
+  scope :order_lst, -> { order("users.last_name DESC") }
+  scope :order_asc_lst, -> { order("users.last_name ASC") }
+  scope :order_desc, -> { order("users.description DESC") }
+  scope :order_asc_desc, -> { order("users.description ASC") }
+  scope :order_email, -> { order("users.email DESC") }
+  scope :order_asc_email, -> { order("users.email ASC") }
+  scope :order_id, -> { order("users.id DESC") }
+  scope :order_asc_id, -> { order("users.id ASC") }
+  scope :order_color, -> { order("users.color DESC") }
+  scope :order_asc_color, -> { order("users.color ASC") }
+
+  def self.sort_by(query1, sort)
+    case sort
+    when 1
+      query1= query1.order_newest
+    when 2
+      query1= query1.order_oldest
+    when 3
+      query1= query1.order_usn
+    when 4
+      query1= query1.order_asc_usn
+    when 5
+      query1= query1.order_fst
+    when 6
+      query1= query1.order_asc_fst
+    when 7
+      query1= query1.order_lst
+    when 8
+      query1= query1.order_asc_lst
+    when 9
+      query1= query1.order_desc
+    when 10
+      query1= query1.order_asc_desc
+    when 11
+      query1= query1.order_email
+    when 12
+      query1= query1.order_asc_email
+    when 13
+      query1= query1.order_id
+    when 14
+      query1= query1.order_asc_id
+    when 15
+      query1= query1.order_color
+    when 16
+      query1= query1.order_asc_color
+    end
+    query1
   end
-  
+
+
+  def self.load_users(sort=13, page = 1, per_page = 10)
+    g=includes(:p_questions,:rank, domain_ranks: [:topic], questions:[:question_attachments, :topic, :question_has_tags, :p_users])
+    g=User.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
+  end
+
+  def self.whole (sort=13)
+    g=all
+    g=User.sort_by(g, sort)
+  end
+
   def default_avatar
      self.avatar ||= Avatar.find_by_id(1)
+  end
+
+  after_create :default_date
+  def default_date
+     self.date_created = self.created_at;
+     self.save
   end
 
   def ranks_and_domains
@@ -76,9 +142,10 @@ class User < ActiveRecord::Base
   end
 
   #Busca coincidencias con el nombre de usuario
-  def self.users_by_username(username, page = 1, per_page = 10)
-    where("users.username LIKE ?", "#{username.downcase}%")
-    .paginate(:page => page,:per_page => per_page)
+  def self.users_by_username(username, sort=13, page = 1, per_page = 10)
+    g=where("users.username LIKE ?", "%#{username.downcase}%")
+    g=User.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   def self.user_username(username)
@@ -86,15 +153,22 @@ class User < ActiveRecord::Base
   end
 
   #Busca coincidencias del nombre de un usuario
-  def self.users_by_firstname(first_name, page = 1, per_page = 10)
-      where("users.first_name LIKE ?", "%#{first_name.downcase}%")
-      .paginate(:page => page,:per_page => per_page)
+  def self.users_by_firstname(first_name, sort=13, page = 1, per_page = 10)
+      g=where("users.first_name LIKE ?", "%#{first_name.downcase}%")
+      g=User.sort_by(g, sort)
+      g.paginate(:page => page,:per_page => per_page)
   end
 
   #Busca coincidencias del apellido de un usuario
-  def self.users_by_lastname(last_name, page = 1, per_page = 10)
-      where("users.last_name LIKE ?", "%#{last_name.downcase}%")
+  def self.users_by_lastname(last_name, sort=13, page = 1, per_page = 10)
+      g=where("users.last_name LIKE ?", "%#{last_name.downcase}%")
+      g=User.sort_by(g, sort)
       .paginate(:page => page,:per_page => per_page)
+  end
+
+  #Busca coincidencias exactas de correo electrónico
+  def self.user_by_email(email, sort=13)
+      g=where("users.email LIKE ?", "#{email}")
   end
 
   #Ordena los usuarios según su rango en el tema dado
@@ -133,10 +207,10 @@ class User < ActiveRecord::Base
   end
 
   # Consulta los usuarios que  están postulados a una pregunta específica
-  def self.users_by_question(queid, page = 1, per_page = 10)
-    joins( postulates: :question)
-    .where(["postulates.question_id = ?",queid])
-    .paginate(:page => page,:per_page => per_page)
+  def self.users_by_question(queid, sort=13, page = 1, per_page = 10)
+    g=joins( postulates: :question).where(["postulates.question_id = ?",queid])
+    g=User.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   def self.users_id_name(name)
@@ -144,10 +218,10 @@ class User < ActiveRecord::Base
   end
 
   # Ver los seguidores de un usuario por su id
-  def self.user_followers(userid, page = 1, per_page = 10)
-    joins(:followers)
-    .where(["followers.followed_id = ?",userid])
-    .paginate(:page => page,:per_page => per_page)
+  def self.user_followers(userid, sort=13, page = 1, per_page = 10)
+    g=joins(:followers).where(["followers.followed_id = ?",userid])
+    g=User.sort_by(g, sort)
+    g.paginate(:page => page,:per_page => per_page)
   end
 
   # Ver los seguidos de un usuario por su id

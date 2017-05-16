@@ -1,4 +1,4 @@
 class AvatarSerializer < ActiveModel::Serializer
   type 'data'
-  attributes :id, :avatars, :shirt
+  attributes :id, :avatars
 end

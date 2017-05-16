@@ -4,6 +4,5 @@ class UserSerializer < ActiveModel::Serializer
   has_one :rank
   belongs_to :avatar
   has_many :domain_ranks
-  belongs_to :topic, class_name: 'favorite_topic'
-
+  has_many :tags
 end
