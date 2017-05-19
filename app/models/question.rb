@@ -22,7 +22,7 @@ class Question < ApplicationRecord
   has_many :question_has_tags
   has_many :p_users, through: :postulates, source: :user
   has_many :postulates
-  has_many :notifications
+  has_many :notifications, :dependent => :delete_all
   
   validates :title, :difficulty, :date_posted, presence: true
   validates :title, length: { in: 12..140 }

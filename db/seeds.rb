@@ -136,7 +136,6 @@ t.color=colors[1]
 t.save
 
 
-
 100.times do |i|
 	u= User.new
 	u.first_name= Faker::Name.first_name
@@ -253,7 +252,7 @@ end
  q.difficulty=rand(1..10)
  q.topic_id=rand(1..10)
  q.user_id=rand(1..100)
- q.end_time= DateTime.now+9999.to_i.minutes;
+ q.end_time= DateTime.now+2.to_i.weeks;
  until q.valid? do	
 	 q.title= Faker::Lorem.sentence
 	 q.body= Faker::Lorem.paragraph
