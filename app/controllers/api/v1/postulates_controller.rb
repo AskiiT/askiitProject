@@ -29,7 +29,7 @@ class API::V1::PostulatesController < ApplicationController
       body=username+" se ha postulado a tu pregunta."
       @nota = Notification.new(:body=> body, :read=> 0, :user_id=>q_user_id, :question_id => question_id)
       if @nota.save
-        NotificationMailer.notificate(2, body, User.find(q_user_id)).deliver
+      #  NotificationMailer.notificate(2, body, User.find(q_user_id)).deliver_later(wait: 1.minute)
       end
       @nota=[@nota]
       render json: {

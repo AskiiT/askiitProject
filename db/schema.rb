@@ -88,13 +88,13 @@ ActiveRecord::Schema.define(version: 20170503004912) do
   create_table "questions", force: :cascade do |t|
     t.string   "title",                                       null: false
     t.text     "body"
-    t.datetime "date_posted", default: '2017-05-16 15:52:23', null: false
+    t.datetime "date_posted", default: '2017-05-20 16:40:34', null: false
     t.integer  "difficulty",  default: 1,                     null: false
     t.integer  "user_id"
     t.integer  "topic_id"
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
-    t.datetime "end_time",    default: '2017-05-17 08:31:25'
+    t.datetime "end_time",    default: '2017-05-21 09:19:36'
     t.index ["topic_id"], name: "index_questions_on_topic_id", using: :btree
     t.index ["user_id"], name: "index_questions_on_user_id", using: :btree
   end
@@ -154,7 +154,7 @@ ActiveRecord::Schema.define(version: 20170503004912) do
     t.string   "last_name",                                              null: false
     t.string   "email",                                                  null: false
     t.string   "username",                                               null: false
-    t.datetime "date_created",           default: '2017-05-16 15:52:22', null: false
+    t.datetime "date_created",           default: '2017-05-20 16:40:34', null: false
     t.text     "description",            default: ""
     t.text     "tokens"
     t.datetime "created_at",                                             null: false

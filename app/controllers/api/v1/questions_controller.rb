@@ -200,14 +200,14 @@ class API::V1::QuestionsController < ApplicationController
           newNot=Notification.new(:body => message0, :question_id => question_id, :user_id => reported_user)
           @notification=[newNot]
           if newNot.save
-            NotificationMailer.notificate(1, message0, User.find(reported_user)).deliver
+            #NotificationMailer.notificate(1, message0, User.find(reported_user)).deliver_later(wait: 1.minute)
           end
           admins_size=admins_id.size
           for ids in 0...admins_size do
             admin_id=admins_id[ids]
             newNot=Notification.new(:body => message, :question_id => question_id, :user_id => admin_id)
             if newNot.save
-              NotificationMailer.notificate(11, message, User.find(admin_id)).deliver
+              #NotificationMailer.notificate(11, message, User.find(admin_id)).deliver_later(wait: 1.minute)
             end
           end
           @question_id=Question.find_by_id(question_id)
@@ -273,7 +273,7 @@ class API::V1::QuestionsController < ApplicationController
                     body="Se ha postulado una pregunta sobre "+name+"."
                     @nota = Notification.new(:body=> body, :read=> 0, :user_id=>idsss, :question_id => question_id)
                     if @nota.save
-                      NotificationMailer.notificate(3, body, User.find(idsss)).deliver
+                      #NotificationMailer.notificate(3, body, User.find(idsss)).deliver_later(wait: 1.minute)
                     end
                     @sended_to.push(idsss)
                   end
